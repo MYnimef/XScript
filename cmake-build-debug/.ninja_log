@@ -1,0 +1,9 @@
+# ninja log v5
+0	301	1646521696163188044	CMakeFiles/dsl.dir/main.cpp.o	a2dbbc108b482a8a
+1	190	1646521726841835058	CMakeFiles/dsl.dir/Token.cpp.o	4985ddf499825f4
+616	651	1646521727304114104	dsl	eccd0a4742016520
+1	616	1646521727265829097	CMakeFiles/dsl.dir/Lexer.cpp.o	2a5def3050c068ce
+0	185	1646521790792973896	CMakeFiles/dsl.dir/source/Token.cpp.o	e8f3dec61caf4ada
+0	299	1646521790906433955	CMakeFiles/dsl.dir/source/main.cpp.o	206be3941b475a1d
+0	613	1646521791219686358	CMakeFiles/dsl.dir/source/Lexer.cpp.o	e45a44f508992ccf
+613	644	1646521791253492438	dsl	b8fdfcec015edb80
