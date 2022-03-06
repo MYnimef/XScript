@@ -17,4 +17,7 @@ add_executable(
 
         src/compiler/sources/Lexer.cpp
         src/compiler/headers/Lexer.h
+
+        src/compiler/headers/Parser.h
+        src/compiler/sources/Parser.cpp
 )
