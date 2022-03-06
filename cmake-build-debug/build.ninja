@@ -72,23 +72,26 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 
 build cmake_object_order_depends_target_dsl: phony || CMakeFiles/dsl.dir
 
-build CMakeFiles/dsl.dir/source/main.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/source/main.cpp || cmake_object_order_depends_target_dsl
-  DEP_FILE = CMakeFiles/dsl.dir/source/main.cpp.o.d
+build CMakeFiles/dsl.dir/src/compiler/sources/main.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/sources/main.cpp || cmake_object_order_depends_target_dsl
+  DEP_FILE = CMakeFiles/dsl.dir/src/compiler/sources/main.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -std=gnu++2a
+  INCLUDES = -I/Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/headers
   OBJECT_DIR = CMakeFiles/dsl.dir
-  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/source
+  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/src/compiler/sources
 
-build CMakeFiles/dsl.dir/source/Token.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/source/Token.cpp || cmake_object_order_depends_target_dsl
-  DEP_FILE = CMakeFiles/dsl.dir/source/Token.cpp.o.d
+build CMakeFiles/dsl.dir/src/compiler/sources/Token.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/sources/Token.cpp || cmake_object_order_depends_target_dsl
+  DEP_FILE = CMakeFiles/dsl.dir/src/compiler/sources/Token.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -std=gnu++2a
+  INCLUDES = -I/Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/headers
   OBJECT_DIR = CMakeFiles/dsl.dir
-  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/source
+  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/src/compiler/sources
 
-build CMakeFiles/dsl.dir/source/Lexer.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/source/Lexer.cpp || cmake_object_order_depends_target_dsl
-  DEP_FILE = CMakeFiles/dsl.dir/source/Lexer.cpp.o.d
+build CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/sources/Lexer.cpp || cmake_object_order_depends_target_dsl
+  DEP_FILE = CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o.d
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk -std=gnu++2a
+  INCLUDES = -I/Users/ivanmarkov/Desktop/coding/clion/dsl/src/compiler/headers
   OBJECT_DIR = CMakeFiles/dsl.dir
-  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/source
+  OBJECT_FILE_DIR = CMakeFiles/dsl.dir/src/compiler/sources
 
 
 # =============================================================================
@@ -98,7 +101,7 @@ build CMakeFiles/dsl.dir/source/Lexer.cpp.o: CXX_COMPILER__dsl_Debug /Users/ivan
 #############################################
 # Link the executable dsl
 
-build dsl: CXX_EXECUTABLE_LINKER__dsl_Debug CMakeFiles/dsl.dir/source/main.cpp.o CMakeFiles/dsl.dir/source/Token.cpp.o CMakeFiles/dsl.dir/source/Lexer.cpp.o
+build dsl: CXX_EXECUTABLE_LINKER__dsl_Debug CMakeFiles/dsl.dir/src/compiler/sources/main.cpp.o CMakeFiles/dsl.dir/src/compiler/sources/Token.cpp.o CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o
   FLAGS = -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk
   OBJECT_DIR = CMakeFiles/dsl.dir
   POST_BUILD = :
