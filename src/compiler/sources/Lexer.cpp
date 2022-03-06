@@ -8,17 +8,22 @@
 using namespace std;
 
 Lexer::Lexer(): lexems({
-    { VAR, regex( "[a-z][a-zA-Z0-9]*" ) },  // lower-case style of definition
-    { DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
+    { ID, regex( "[a-z][a-zA-Z0-9]*" ) },  // lower-case style of definition
+    { DOUBLE_DIGIT, regex( "(0|([1-9][0-9]*))\\.*[0-9]*" ) }, // can be 0 but can't start with 0
+    { INT_DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
     { STRING, regex( R"("[0-9a-zA-Z\*\\/&\s]*")" ) },
-    { FUNC, regex( "[a-z][a-zA-Z]*" ) },    // lower-case style of definition, only literals
     { IF_KW, regex( "if" ) },
     { ELSE_KW, regex( "else" ) },
+    { FUNC_KW, regex( "func" ) },
     { L_BRACKET, regex( R"(\()" ) },       // can be only (
     { R_BRACKET, regex( R"(\))" ) },       // can be only )
     { L_BRACE, regex( R"(\{)" ) },         // can be only {
     { R_BRACE, regex( R"(\})" ) },         // can be only }
     { ASSIGN_OP, regex( "=" ) },
+    { PLUS_OP, regex( "\\+" ) },
+    { MINUS_OP, regex( "-" ) },
+    { MULTIPLY_OP, regex( "\\*" ) },
+    { DIVIDE_OP, regex( "/" ) },
 }) {
     tokens = list<Token*>();
 }
