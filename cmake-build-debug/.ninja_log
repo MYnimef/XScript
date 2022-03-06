@@ -16,3 +16,9 @@
 277	309	1646549564276131472	dsl	f48285e47303be4
 1	598	1646549599648461197	CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o	607f466bbddb369
 598	630	1646549599682406051	dsl	f48285e47303be4
+1	309	1646556848373777126	CMakeFiles/dsl.dir/src/compiler/sources/main.cpp.o	fb24efb766e831d3
+1	623	1646556848687188438	CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o	607f466bbddb369
+623	655	1646556848721814963	dsl	f48285e47303be4
+1	300	1646557506854331580	CMakeFiles/dsl.dir/src/compiler/sources/main.cpp.o	fb24efb766e831d3
+1	608	1646557507163404155	CMakeFiles/dsl.dir/src/compiler/sources/Lexer.cpp.o	607f466bbddb369
+608	646	1646557507203735453	dsl	f48285e47303be4

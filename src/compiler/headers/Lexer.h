@@ -12,12 +12,12 @@
 
 class Lexer {
 private:
-    static const std::map<Type, std::regex> lexems;
+    const std::map<Type, std::regex> lexems;
     std::list<Token*> tokens;
 
 public:
     Lexer();
     ~Lexer();
-    void addToken(const std::string& input);
+    void addToken(const std::string&);
     std::list<Token*> getTokens();
 };
