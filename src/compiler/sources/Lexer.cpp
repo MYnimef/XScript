@@ -48,11 +48,12 @@ void Lexer::scanFile(const string& filename) {
                     if (newStr == " ") {
                         startIndex++;
                         continue;
-                    } else if (regex_match(newStr, regex(".* "))) {
-                        addToken(oldStr);
+                    } else if (!checkToken(newStr)) {
+                        addToken(oldStr.empty() ? newStr : oldStr, i);
+                        endIndex--;
                         startIndex = endIndex;
                     } else if (endIndex == line.size()) {
-                        addToken(newStr);
+                        addToken(newStr, i);
                     }
 
                     oldStr = newStr;
@@ -62,7 +63,16 @@ void Lexer::scanFile(const string& filename) {
     }
 }
 
-void Lexer::addToken(const string& input) {
+bool Lexer::checkToken(const string& input) {
+    for (const auto& lexem: lexems) {
+        if (regex_match(input, lexem.second)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Lexer::addToken(const string& input, const int& lineNum) {
     Token* token = nullptr;
     for (const auto& lexem: lexems) {
         if (regex_match(input, lexem.second)) {
@@ -75,7 +85,7 @@ void Lexer::addToken(const string& input) {
     if (token) {
         tokens.push_back(token);
     } else {
-        throw invalid_argument( "wrong syntax" );
+        throw invalid_argument("wrong syntax at line " + to_string(lineNum + 1) + ": " + input);
     }
 }
 

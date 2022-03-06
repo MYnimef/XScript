@@ -8,7 +8,7 @@ include_directories(src/compiler/headers)
 add_executable(
         dsl
 
-        src/compiler/sources/main.cpp
+        src/compiler/main.cpp
 
         src/compiler/sources/Token.cpp
         src/compiler/headers/Token.h

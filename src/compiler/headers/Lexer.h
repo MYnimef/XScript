@@ -15,7 +15,8 @@ private:
     const std::map<Type, std::regex> lexems;
     std::list<Token*> tokens;
 
-    void addToken(const std::string&);
+    void addToken(const std::string& input, const int& lineNum);
+    bool checkToken(const std::string&);
 
 public:
     Lexer();
