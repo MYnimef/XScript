@@ -10,7 +10,7 @@
 #include "Type.h"
 #include "Token.h"
 
-class Lexer {
+class Lexer final {
 private:
     const std::map<Type, std::regex> lexems;
     std::list<Token*> tokens;
@@ -18,6 +18,7 @@ private:
 public:
     Lexer();
     ~Lexer();
+    void scanFile(const std::string&);
     void addToken(const std::string&);
     std::list<Token*> getTokens();
 };

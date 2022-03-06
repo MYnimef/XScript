@@ -2,6 +2,8 @@
 // Created by Ivan Markov on 05.03.2022.
 //
 
+#include <fstream>
+#include <iostream>
 #include "Lexer.h"
 
 using namespace std;
@@ -25,6 +27,19 @@ Lexer::Lexer(): lexems({
 Lexer::~Lexer() {
     for (auto token: tokens) {
         delete token;
+    }
+}
+
+void Lexer::scanFile(const string& filename) {
+    ifstream file(filename);
+
+    if (!file.is_open()) {
+        throw invalid_argument( "can't open file " + filename );
+    }
+
+    string line;
+    for (int i = 0; getline(file, line); i++) {
+        cout << line << endl;
     }
 }
 
