@@ -3,15 +3,7 @@
 
 int main() {
     Lexer lexer;
-
-    lexer.scanFile("../src/main.dsl");
-
-    lexer.addToken("(");
-    lexer.addToken("99");
-    lexer.addToken("abc");
-    lexer.addToken("\"\"");
-    lexer.addToken("\"hi\"");
-    lexer.addToken("\"hi99\"");
+    lexer.scanFile("main.dsl");
 
     for (auto token: lexer.getTokens()) {
         std::cout << token->toString() << std::endl;

@@ -3,7 +3,6 @@
 //
 
 #include <fstream>
-#include <iostream>
 #include "Lexer.h"
 
 using namespace std;
@@ -31,7 +30,7 @@ Lexer::~Lexer() {
 }
 
 void Lexer::scanFile(const string& filename) {
-    ifstream file(filename);
+    ifstream file("../src/" + filename);
 
     if (!file.is_open()) {
         throw invalid_argument( "can't open file " + filename );
@@ -39,7 +38,27 @@ void Lexer::scanFile(const string& filename) {
 
     string line;
     for (int i = 0; getline(file, line); i++) {
-        cout << line << endl;
+        if (!line.empty()) {
+            string oldStr;
+
+            for (int startIndex = 0, endIndex = 1; endIndex <= line.size(); endIndex++) {
+                if (startIndex < endIndex) {
+                    string newStr = line.substr(startIndex, endIndex - startIndex);
+
+                    if (newStr == " ") {
+                        startIndex++;
+                        continue;
+                    } else if (regex_match(newStr, regex(".* "))) {
+                        addToken(oldStr);
+                        startIndex = endIndex;
+                    } else if (endIndex == line.size()) {
+                        addToken(newStr);
+                    }
+
+                    oldStr = newStr;
+                }
+            }
+        }
     }
 }
 

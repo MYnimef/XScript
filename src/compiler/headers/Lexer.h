@@ -15,10 +15,11 @@ private:
     const std::map<Type, std::regex> lexems;
     std::list<Token*> tokens;
 
+    void addToken(const std::string&);
+
 public:
     Lexer();
     ~Lexer();
     void scanFile(const std::string&);
-    void addToken(const std::string&);
     std::list<Token*> getTokens();
 };

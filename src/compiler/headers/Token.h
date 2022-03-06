@@ -7,7 +7,7 @@
 #include <string>
 #include "Type.h"
 
-class Token {
+class Token final {
 public:
     Token(const Type &type, const std::string& value);
     std::string toString();
