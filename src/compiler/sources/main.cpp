@@ -2,15 +2,9 @@
 #include "Lexer.h"
 
 int main() {
-#if (CMAKE_BUILD_TYPE == Debug)
-    printf("RUNNING DEBUG BUILD\n");
-#else
-    printf("Running... this is a release build.\n");
-#endif
-
     Lexer lexer;
 
-    //lexer.scanFile("~/main.dsl");
+    lexer.scanFile("../src/main.dsl");
 
     lexer.addToken("(");
     lexer.addToken("99");
