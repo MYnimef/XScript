@@ -20,9 +20,9 @@ Lexer::Lexer(): lexems({
     { L_BRACE, regex( R"(\{)" ) },         // can be only {
     { R_BRACE, regex( R"(\})" ) },         // can be only }
     { ASSIGN_OP, regex( "=" ) },
-    { PLUS_OP, regex( "\\+" ) },
+    { PLUS_OP, regex( R"(\+)" ) },
     { MINUS_OP, regex( "-" ) },
-    { MULTIPLY_OP, regex( "\\*" ) },
+    { MULTIPLY_OP, regex( R"(\*)" ) },
     { DIVIDE_OP, regex( "/" ) },
 }) {
     tokens = list<Token*>();
@@ -52,6 +52,8 @@ void Lexer::scanFile(const string& filename) {
 
                     if (newStr == " ") {
                         startIndex++;
+                        continue;
+                    } else if (regex_match(newStr, regex(R"("[^"]*)"))) {
                         continue;
                     } else if (!checkToken(newStr)) {
                         addToken(oldStr.empty() ? newStr : oldStr, i);

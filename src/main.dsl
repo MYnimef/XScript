@@ -13,3 +13,8 @@ if (a = 3) {
 double = 3.14
 
 p=4
+
+x = int(123)
+if (x) {
+    print("positive 23423")
+}
