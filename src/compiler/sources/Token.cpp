@@ -9,6 +9,14 @@ Token::Token(const Type &type, const std::string& value)
 
 }
 
+Type Token::getType() {
+    return type;
+}
+
+std::string Token::getValue() {
+    return value;
+}
+
 std::string Token::toString() {
     return "Token: " + typeToString(type) + ", Value: " + value;
 }

@@ -3,3 +3,11 @@
 //
 
 #pragma once
+
+class Parser final {
+private:
+
+public:
+    Parser();
+    ~Parser();
+};

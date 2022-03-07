@@ -20,4 +20,7 @@ add_executable(
 
         src/compiler/headers/Parser.h
         src/compiler/sources/Parser.cpp
+
+        src/compiler/headers/Node.h
+        src/compiler/sources/Node.cpp
 )

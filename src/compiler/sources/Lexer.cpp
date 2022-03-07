@@ -8,7 +8,7 @@
 using namespace std;
 
 Lexer::Lexer(): lexems({
-    { ID, regex( "[a-z][a-zA-Z0-9]*" ) },  // lower-case style of definition
+    { ID, regex( "[a-zA-Z][a-zA-Z0-9]*" ) },
     { DOUBLE_DIGIT, regex( "(0|([1-9][0-9]*))\\.*[0-9]*" ) }, // can be 0 but can't start with 0
     { INT_DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
     { STRING, regex( R"("[0-9a-zA-Z\*\\/&\s]*")" ) },
@@ -68,6 +68,8 @@ void Lexer::scanFile(const string& filename) {
             }
         }
     }
+
+    file.close();
 }
 
 bool Lexer::checkToken(const string& input) {

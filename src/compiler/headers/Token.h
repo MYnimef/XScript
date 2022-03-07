@@ -8,12 +8,13 @@
 #include "Type.h"
 
 class Token final {
-public:
-    Token(const Type &type, const std::string& value);
-    std::string toString();
-
 private:
     Type type;
     std::string value;
 
+public:
+    Token(const Type&, const std::string&);
+    Type getType();
+    std::string getValue();
+    std::string toString();
 };
