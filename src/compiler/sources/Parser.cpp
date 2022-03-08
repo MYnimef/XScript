@@ -3,7 +3,6 @@
 //
 
 #include <stack>
-#include <iostream>
 #include "Parser.h"
 
 Parser::Parser() {
@@ -30,10 +29,6 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             case KEY_WORD: {
                 if (semicolon) {
                     semicolon = false;
-                    for (auto tk: postfix) {
-                        std::cout << tk->getValue() << " ";
-                    }
-                    std::cout << std::endl;
                     tree->addChildBack(addNode(postfix));
                 }
 
@@ -153,8 +148,6 @@ Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
     std::stack<Node*> st;
 
     for (auto tk: postfix) {
-        std::cout << tk->getValue() << " ";
-
         Node* node = new Node(*tk);
         if (node->getType() == OPERATOR) {
             node->addChildFront(st.top());
@@ -164,7 +157,6 @@ Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
         }
         st.push(node);
     }
-    std::cout << std::endl;
 
     postfix.clear();
     Node* result = st.top();

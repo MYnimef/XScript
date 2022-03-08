@@ -2,7 +2,6 @@
 // Created by Ivan Markov on 08.03.2022.
 //
 
-#include <iostream>
 #include "Compiler.h"
 
 void Compiler::execute(Node* tree) {
@@ -51,29 +50,29 @@ void Compiler::execute(Node* tree) {
         } else {
             execute(right);
             if (op == "+") {
-                if (integerStack.size() == 2) {
+                if (integerStack.size() >= 2) {
                     similarPlus(integerStack);
-                } else if (doubleStack.size() == 2) {
+                } else if (doubleStack.size() >= 2) {
                     similarPlus(doubleStack);
-                } else if (stringStack.size() == 2) {
+                } else if (stringStack.size() >= 2) {
                     similarPlus(stringStack);
                 }
             } else if (op == "-") {
-                if (integerStack.size() == 2) {
+                if (integerStack.size() >= 2) {
                     similarMinus(integerStack);
-                } else if (doubleStack.size() == 2) {
+                } else if (doubleStack.size() >= 2) {
                     similarMinus(doubleStack);
                 }
             } else if (op == "*") {
-                if (integerStack.size() == 2) {
+                if (integerStack.size() >= 2) {
                     similarMux(integerStack);
-                } else if (doubleStack.size() == 2) {
+                } else if (doubleStack.size() >= 2) {
                     similarMux(doubleStack);
                 }
             } else if (op == "/") {
-                if (integerStack.size() == 2) {
+                if (integerStack.size() >= 2) {
                     similarDivide(integerStack);
-                } else if (doubleStack.size() == 2) {
+                } else if (doubleStack.size() >= 2) {
                     similarDivide(doubleStack);
                 }
             }
