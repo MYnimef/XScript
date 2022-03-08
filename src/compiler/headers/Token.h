@@ -17,8 +17,8 @@ public:
     ~Token();
     Token(const Token&);
 
-    EType getType();
-    std::string getValue();
+    EType getType() const;
+    std::string getValue() const;
 
     std::string toString();
 };

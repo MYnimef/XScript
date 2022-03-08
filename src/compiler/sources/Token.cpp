@@ -18,11 +18,11 @@ Token::Token(const Token& token)
 
 }
 
-EType Token::getType() {
+EType Token::getType() const {
     return type.getType();
 }
 
-std::string Token::getValue() {
+std::string Token::getValue() const {
     return value;
 }
 

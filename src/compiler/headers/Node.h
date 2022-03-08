@@ -18,8 +18,11 @@ public:
 
     EType getType();
     std::string getValue();
+    Token getToken();
 
-    void addChild(Node*);
+    void addChildFront(Node *child);
+    void addChildBack(Node *child);
+    std::list<Node*> getChild();
 
     std::string printChild(int = 0);
 };

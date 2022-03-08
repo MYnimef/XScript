@@ -20,7 +20,11 @@ std::string Node::getValue() {
     return token.getValue();
 }
 
-void Node::addChild(Node* child) {
+void Node::addChildFront(Node* child) {
+    nodes.push_front(child);
+}
+
+void Node::addChildBack(Node* child) {
     nodes.push_back(child);
 }
 
@@ -36,4 +40,12 @@ std::string Node::printChild(int gen) {
     }
 
     return res;
+}
+
+std::list<Node *> Node::getChild() {
+    return nodes;
+}
+
+Token Node::getToken() {
+    return token;
 }

@@ -13,7 +13,7 @@ TokenType::~TokenType() {
 
 }
 
-EType TokenType::getType() {
+EType TokenType::getType() const {
     return type;
 }
 

@@ -24,4 +24,7 @@ add_executable(
 
         src/compiler/headers/Node.h
         src/compiler/sources/Node.cpp
+
+        src/compiler/sources/Compiler.cpp
+        src/compiler/headers/Compiler.h
 )

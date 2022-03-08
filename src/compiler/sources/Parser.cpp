@@ -30,7 +30,11 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             case KEY_WORD: {
                 if (semicolon) {
                     semicolon = false;
-                    tree->addChild(addNode(postfix));
+                    for (auto tk: postfix) {
+                        std::cout << tk->getValue() << " ";
+                    }
+                    std::cout << std::endl;
+                    tree->addChildBack(addNode(postfix));
                 }
 
                 op = false;
@@ -109,11 +113,7 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
         postfix.push_back(operators.top());
         operators.pop();
     }
-
-    std::cout << std::endl;
-    for (auto token: postfix) {
-        std::cout << token->getValue() << " ";
-    }
+    tree->addChildBack(addNode(postfix));
 }
 
 short Parser::operatorPriority(const std::string& op) {
@@ -133,25 +133,43 @@ short Parser::operatorPriority(const std::string& op) {
 }
 
 Node* Parser::addNode(std::list<Token*>& postfix) {
-    std::cout << std::endl;
-    for (auto token: postfix) {
-        std::cout << token->getValue() << " ";
-    }
-
     Node* node = new Node(*postfix.back());
     postfix.pop_back();
 
-    node->addChild(new Node(*postfix.front()));
+    node->addChildFront(new Node(*postfix.front()));
     postfix.pop_front();
 
     if (postfix.size() == 1) {
-        node->addChild(new Node(*postfix.front()));
+        node->addChildFront(new Node(*postfix.front()));
         postfix.pop_front();
     } else if (!postfix.empty()) {
-        node->addChild(addNode(postfix));
+        node->addChildFront(addNodeExpr(postfix));
     }
 
     return node;
+}
+
+Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
+    std::stack<Node*> st;
+
+    for (auto tk: postfix) {
+        std::cout << tk->getValue() << " ";
+
+        Node* node = new Node(*tk);
+        if (node->getType() == OPERATOR) {
+            node->addChildFront(st.top());
+            st.pop();
+            node->addChildFront(st.top());
+            st.pop();
+        }
+        st.push(node);
+    }
+    std::cout << std::endl;
+
+    postfix.clear();
+    Node* result = st.top();
+    st.pop();
+    return result;
 }
 
 Node *Parser::getTree() {

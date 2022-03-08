@@ -28,7 +28,7 @@ public:
     TokenType(EType);
     ~TokenType();
 
-    EType getType();
+    EType getType() const;
 
     std::string toString();
 
