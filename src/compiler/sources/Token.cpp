@@ -9,8 +9,17 @@ Token::Token(const Type &type, const std::string& value)
 
 }
 
-Type Token::getType() {
-    return type;
+Token::~Token() {
+
+}
+
+Token::Token(const Token& token)
+: type(token.type), value(token.value) {
+
+}
+
+EType Token::getType() {
+    return type.getType();
 }
 
 std::string Token::getValue() {
@@ -18,5 +27,5 @@ std::string Token::getValue() {
 }
 
 std::string Token::toString() {
-    return "Token: " + typeToString(type) + ", Value: " + value;
+    return "Token: " + type.toString() + ", Value: " + value;
 }

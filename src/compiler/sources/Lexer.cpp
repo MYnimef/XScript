@@ -12,18 +12,13 @@ Lexer::Lexer(): lexems({
     { DOUBLE_DIGIT, regex( "(0|([1-9][0-9]*))\\.*[0-9]*" ) }, // can be 0 but can't start with 0
     { INT_DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
     { STRING, regex( R"("[0-9a-zA-Z\*\\/&\s]*")" ) },
-    { IF_KW, regex( "if" ) },
-    { ELSE_KW, regex( "else" ) },
-    { FUNC_KW, regex( "func" ) },
+    { KEY_WORD, regex( "if|else|func" ) },
     { L_BRACKET, regex( R"(\()" ) },       // can be only (
     { R_BRACKET, regex( R"(\))" ) },       // can be only )
     { L_BRACE, regex( R"(\{)" ) },         // can be only {
     { R_BRACE, regex( R"(\})" ) },         // can be only }
-    { ASSIGN_OP, regex( "=" ) },
-    { PLUS_OP, regex( R"(\+)" ) },
-    { MINUS_OP, regex( "-" ) },
-    { MULTIPLY_OP, regex( R"(\*)" ) },
-    { DIVIDE_OP, regex( "/" ) },
+    { OPERATOR, regex( R"([=\-+\/\*]|==|\|\||&&)" ) },
+    { SEMICOLON, regex( ";" )},
 }) {
     tokens = list<Token*>();
 }
@@ -61,6 +56,7 @@ void Lexer::scanFile(const string& filename) {
                         startIndex = endIndex;
                     } else if (endIndex == line.size()) {
                         addToken(newStr, i);
+                        addToken(";", i);
                     }
 
                     oldStr = newStr;
@@ -98,6 +94,6 @@ void Lexer::addToken(const string& input, const int& lineNum) {
     }
 }
 
-list<Token *> Lexer::getTokens() {
+list<Token*> Lexer::getTokens() {
     return tokens;
 }

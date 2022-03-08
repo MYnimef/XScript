@@ -14,6 +14,7 @@ add_executable(
         src/compiler/headers/Token.h
 
         src/compiler/headers/Type.h
+        src/compiler/sources/Type.cpp
 
         src/compiler/sources/Lexer.cpp
         src/compiler/headers/Lexer.h

@@ -14,7 +14,11 @@ private:
 
 public:
     Token(const Type&, const std::string&);
-    Type getType();
+    ~Token();
+    Token(const Token&);
+
+    EType getType();
     std::string getValue();
+
     std::string toString();
 };
