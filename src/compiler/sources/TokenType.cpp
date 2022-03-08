@@ -2,22 +2,22 @@
 // Created by Ivan Markov on 08.03.2022.
 //
 
-#include "Type.h"
+#include "TokenType.h"
 
-Type::Type(EType type)
+TokenType::TokenType(EType type)
 : type(type) {
 
 }
 
-Type::~Type() {
+TokenType::~TokenType() {
 
 }
 
-EType Type::getType() {
+EType TokenType::getType() {
     return type;
 }
 
-std::string Type::toString() {
+std::string TokenType::toString() {
     switch (type) {
         case ID:
             return "id pointer";
@@ -44,7 +44,7 @@ std::string Type::toString() {
     }
 }
 
-bool Type::operator <(const Type& another) const {
+bool TokenType::operator <(const TokenType& another) const {
     return this->type < another.type;
 }
 

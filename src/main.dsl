@@ -18,6 +18,8 @@ p=4
 x = int(123)
 if (x) {
     print("positive 23423")
+    c = 2
+    d = 3
 }
 
 s = 4

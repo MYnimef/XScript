@@ -7,12 +7,12 @@
 #include <map>
 #include <list>
 #include <regex>
-#include "Type.h"
+#include "TokenType.h"
 #include "Token.h"
 
 class Lexer final {
 private:
-    const std::map<Type, std::regex> lexems;
+    const std::map<TokenType, std::regex> lexems;
     std::list<Token*> tokens;
 
     void addToken(const std::string& input, const int& lineNum);

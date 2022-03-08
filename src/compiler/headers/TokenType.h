@@ -20,17 +20,17 @@ enum EType {
     SEMICOLON,
 };
 
-class Type final {
+class TokenType final {
 private:
     EType type;
 
 public:
-    Type(EType);
-    ~Type();
+    TokenType(EType);
+    ~TokenType();
 
     EType getType();
 
     std::string toString();
 
-    bool operator <(const Type&) const;
+    bool operator <(const TokenType&) const;
 };

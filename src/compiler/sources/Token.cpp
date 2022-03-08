@@ -4,7 +4,7 @@
 
 #include "Token.h"
 
-Token::Token(const Type &type, const std::string& value)
+Token::Token(const TokenType &type, const std::string& value)
 : type(type), value(value) {
 
 }

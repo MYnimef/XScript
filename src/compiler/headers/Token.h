@@ -5,15 +5,15 @@
 #pragma once
 
 #include <string>
-#include "Type.h"
+#include "TokenType.h"
 
 class Token final {
 private:
-    Type type;
+    TokenType type;
     std::string value;
 
 public:
-    Token(const Type&, const std::string&);
+    Token(const TokenType&, const std::string&);
     ~Token();
     Token(const Token&);
 

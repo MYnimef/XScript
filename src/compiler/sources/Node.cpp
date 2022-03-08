@@ -2,20 +2,17 @@
 // Created by Ivan Markov on 07.03.2022.
 //
 
+#include <iostream>
 #include "Node.h"
 
 Node::Node(const Token& token)
 : token(token) {
-    left = nullptr;
-    right = nullptr;
 }
 
 Node::~Node() {
-    delete right;
-    delete left;
 }
 
-Type Node::getType() {
+EType Node::getType() {
     return token.getType();
 }
 
@@ -23,18 +20,20 @@ std::string Node::getValue() {
     return token.getValue();
 }
 
-void Node::setLeft(Node* node) {
-    left = node;
+void Node::addChild(Node* child) {
+    nodes.push_back(child);
 }
 
-const Node& Node::getLeft() {
-    return *left;
-}
+std::string Node::printChild(int gen) {
+    std::string tab;
+    for (int i = 0; i < gen; i++) {
+        tab += "    ";
+    }
 
-void Node::setRight(Node* node) {
-    right = node;
-}
+    std::string res = getValue();
+    for (auto node: nodes) {
+        res += "\n" + tab + node->printChild(gen + 1);
+    }
 
-const Node& Node::getRight() {
-    return *right;
+    return res;
 }

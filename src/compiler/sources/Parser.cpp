@@ -7,7 +7,7 @@
 #include "Parser.h"
 
 Parser::Parser() {
-
+    tree = new Node(Token(ID, ""));
 }
 
 Parser::~Parser() {
@@ -20,6 +20,7 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
 
     bool op = false;
     bool semicolon = false;
+
     for (auto token: tokens) {
         switch (token->getType()) {
             case ID:
@@ -27,8 +28,12 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             case INT_DIGIT:
             case STRING:
             case KEY_WORD: {
+                if (semicolon) {
+                    semicolon = false;
+                    tree->addChild(addNode(postfix));
+                }
+
                 op = false;
-                semicolon = false;
                 postfix.push_back(token);
                 break;
             }
@@ -46,8 +51,10 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             }
             case L_BRACE: {
                 operators.push(token);
+
                 op = false;
                 semicolon = false;
+
                 postfix.push_back(token);
                 break;
             }
@@ -57,8 +64,10 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
                     operators.pop();
                 }
                 operators.pop();
+
                 op = false;
                 semicolon = false;
+
                 postfix.push_back(token);
                 break;
             }
@@ -121,4 +130,30 @@ short Parser::operatorPriority(const std::string& op) {
     } else {
         return -1;
     }
+}
+
+Node* Parser::addNode(std::list<Token*>& postfix) {
+    std::cout << std::endl;
+    for (auto token: postfix) {
+        std::cout << token->getValue() << " ";
+    }
+
+    Node* node = new Node(*postfix.back());
+    postfix.pop_back();
+
+    node->addChild(new Node(*postfix.front()));
+    postfix.pop_front();
+
+    if (postfix.size() == 1) {
+        node->addChild(new Node(*postfix.front()));
+        postfix.pop_front();
+    } else if (!postfix.empty()) {
+        node->addChild(addNode(postfix));
+    }
+
+    return node;
+}
+
+Node *Parser::getTree() {
+    return tree;
 }
