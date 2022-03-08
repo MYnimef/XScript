@@ -9,7 +9,7 @@
 
 class Parser final {
 private:
-    int operatorPriority(char);
+    short operatorPriority(const std::string&);
 
 public:
     Parser();

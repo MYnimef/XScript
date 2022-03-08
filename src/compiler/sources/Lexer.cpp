@@ -17,7 +17,7 @@ Lexer::Lexer(): lexems({
     { R_BRACKET, regex( R"(\))" ) },       // can be only )
     { L_BRACE, regex( R"(\{)" ) },         // can be only {
     { R_BRACE, regex( R"(\})" ) },         // can be only }
-    { OPERATOR, regex( R"([=\-+\/\*]|==|\|\||&&)" ) },
+    { OPERATOR, regex( R"([=\-+\/\*]|(={2})|(\|{2})|(\&{2}))" ) },
     { SEMICOLON, regex( ";" )},
 }) {
     tokens = list<Token*>();
@@ -48,7 +48,7 @@ void Lexer::scanFile(const string& filename) {
                     if (newStr == " ") {
                         startIndex++;
                         continue;
-                    } else if (regex_match(newStr, regex(R"("[^"]*)"))) {
+                    } else if (regex_match(newStr, regex(R"(("[^"]*)|(\|)|(&))"))) {
                         continue;
                     } else if (!checkToken(newStr)) {
                         addToken(oldStr.empty() ? newStr : oldStr, i);

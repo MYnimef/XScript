@@ -71,7 +71,7 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
 
                 op = true;
                 while (!operators.empty() &&
-                operatorPriority(token->getValue().c_str()[0]) <= operatorPriority(operators.top()->getValue().c_str()[0])) {
+                operatorPriority(token->getValue()) <= operatorPriority(operators.top()->getValue())) {
                     postfix.push_back(operators.top());
                     operators.pop();
                 }
@@ -107,17 +107,18 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
     }
 }
 
-int Parser::operatorPriority(char op) {
-    switch (op) {
-        case '=':
-            return 0;
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
-        default:
-            return -1;
+short Parser::operatorPriority(const std::string& op) {
+    if (op == "*" || op == "/") {
+        return 4;
+    } else if (op == "+" || op == "-") {
+        return 3;
+    } else if (op == "=" || op == "==") {
+        return 2;
+    } else if (op == "&&") {
+        return 1;
+    } else if (op == "||") {
+        return 0;
+    } else {
+        return -1;
     }
 }
