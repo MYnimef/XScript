@@ -13,7 +13,6 @@ private:
     Node* tree;
 
     short operatorPriority(const std::string&);
-    Node* addNode(std::list<Token*>&);
     Node* addNodeExpr(std::list<Token*>&);
 
 public:

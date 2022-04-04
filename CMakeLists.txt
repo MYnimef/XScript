@@ -27,4 +27,7 @@ add_executable(
 
         src/compiler/sources/Compiler.cpp
         src/compiler/headers/Compiler.h
+
+        src/compiler/headers/Variable.h
+        src/compiler/sources/Variable.cpp
 )

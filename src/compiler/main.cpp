@@ -22,16 +22,8 @@ int main() {
     compiler.execute(parser.getTree());
 
     std::cout << std::endl;
-    for (const auto& var: compiler.getIntegerVariables()) {
-        std::cout << std::endl << var.first + " = " + std::to_string(var.second);
-    }
-
-    for (const auto& var: compiler.getDoubleVariables()) {
-        std::cout << std::endl << var.first + " = " + std::to_string(var.second);
-    }
-
-    for (const auto& var: compiler.getStringVariables()) {
-        std::cout << std::endl << var.first + " = " + var.second;
+    for (const auto& var: compiler.getVariables()) {
+        std::cout << std::endl << var.first + " = " + var.second.toString();
     }
     std::cout << std::endl;
 

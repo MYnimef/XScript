@@ -24,5 +24,5 @@ public:
     void addChildBack(Node *child);
     std::list<Node*> getChild();
 
-    std::string printChild(int = 0);
+    std::string printChild(int = 1);
 };

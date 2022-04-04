@@ -6,7 +6,7 @@
 #include "Parser.h"
 
 Parser::Parser() {
-    tree = new Node(Token(ID, ""));
+    tree = new Node(Token(ID, "main"));
 }
 
 Parser::~Parser() {
@@ -29,7 +29,7 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             case KEY_WORD: {
                 if (semicolon) {
                     semicolon = false;
-                    tree->addChildBack(addNode(postfix));
+                    tree->addChildBack(addNodeExpr(postfix));
                 }
 
                 op = false;
@@ -108,7 +108,7 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
         postfix.push_back(operators.top());
         operators.pop();
     }
-    tree->addChildBack(addNode(postfix));
+    tree->addChildBack(addNodeExpr(postfix));
 }
 
 short Parser::operatorPriority(const std::string& op) {
@@ -125,23 +125,6 @@ short Parser::operatorPriority(const std::string& op) {
     } else {
         return -1;
     }
-}
-
-Node* Parser::addNode(std::list<Token*>& postfix) {
-    Node* node = new Node(*postfix.back());
-    postfix.pop_back();
-
-    node->addChildFront(new Node(*postfix.front()));
-    postfix.pop_front();
-
-    if (postfix.size() == 1) {
-        node->addChildFront(new Node(*postfix.front()));
-        postfix.pop_front();
-    } else if (!postfix.empty()) {
-        node->addChildFront(addNodeExpr(postfix));
-    }
-
-    return node;
 }
 
 Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
@@ -161,6 +144,7 @@ Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
     postfix.clear();
     Node* result = st.top();
     st.pop();
+
     return result;
 }
 

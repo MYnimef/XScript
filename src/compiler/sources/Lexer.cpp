@@ -8,11 +8,11 @@
 using namespace std;
 
 Lexer::Lexer(): lexems({
-    { ID, regex( "[a-zA-Z][a-zA-Z0-9]*" ) },
+    { ID, regex( "[a-zA-Z][a-zA-Z0-9_]*" ) },
     { DOUBLE_DIGIT, regex( "(0|([1-9][0-9]*))\\.*[0-9]*" ) }, // can be 0 but can't start with 0
     { INT_DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
-    { STRING, regex( R"("[0-9a-zA-Z\*\\/&\s]*")" ) },
-    { KEY_WORD, regex( "if|else|func" ) },
+    { STRING, regex( R"("[^"]*")" ) },
+    { KEY_WORD, regex( "if|else|while|for|func" ) },
     { L_BRACKET, regex( R"(\()" ) },       // can be only (
     { R_BRACKET, regex( R"(\))" ) },       // can be only )
     { L_BRACE, regex( R"(\{)" ) },         // can be only {
