@@ -16,9 +16,10 @@ private:
     Node* addNodeExpr(std::list<Token*>&);
 
 public:
-    Parser();
+    explicit Parser(const std::string& name);
     ~Parser();
 
-    void toPostfix(const std::list<Token*>&);
+    void addTokens(const std::list<Token*>&);
+    void addTokensLine(const std::list<Token*>&);
     Node* getTree();
 };

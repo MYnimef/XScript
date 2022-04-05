@@ -13,8 +13,8 @@ int main() {
         }
     }
 
-    Parser parser;
-    parser.toPostfix(lexer.getTokens());
+    Parser parser("main");
+    parser.addTokens(lexer.getTokens());
 
     std::cout << std::endl << parser.getTree()->printChild();
 

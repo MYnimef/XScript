@@ -30,4 +30,6 @@ add_executable(
 
         src/compiler/headers/Variable.h
         src/compiler/sources/Variable.cpp
+
+        src/compiler/headers/Expression.h
 )

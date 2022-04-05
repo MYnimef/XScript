@@ -3,22 +3,74 @@
 //
 
 #include <stack>
+#include <iostream>
 #include "Parser.h"
 
-Parser::Parser() {
-    tree = new Node(Token(ID, "main"));
+Parser::Parser(const std::string& name) {
+    tree = new Node(Token(ID, name));
 }
 
 Parser::~Parser() {
 
 }
 
-void Parser::toPostfix(const std::list<Token*>& tokens) {
+void Parser::addTokens(const std::list<Token*>& tokens) {
+    std::list<Token*> tokensLine;
+
+    int openedBrackets = 0;
+    int openedBraces = 0;
+
+    bool semicolon = false;
+    bool op = false;
+
+    for (const auto& token: tokens) {
+        const auto type = token->getType();
+
+        if (type == SEMICOLON) {
+            if (openedBraces == 0) {
+                if (openedBrackets == 0) {
+                    semicolon = true;
+                }
+            } else {
+                tokensLine.push_back(token);
+            }
+        } else {
+            if ((type == ID || type == KEY_WORD) && !op) {
+                if (semicolon) {
+                    addTokensLine(tokensLine);
+                    tokensLine.clear();
+                }
+            } else if (type == OPERATOR) {
+                op = true;
+            } else if (type == L_BRACKET) {
+                openedBrackets++;
+            } else if (type == R_BRACKET) {
+                openedBrackets--;
+            } else if (type == L_BRACE) {
+                openedBraces++;
+            } else if (type == R_BRACE) {
+                openedBraces--;
+            } else {
+                op = false;
+            }
+
+            semicolon = false;
+            tokensLine.push_back(token);
+        }
+    }
+
+    addTokensLine(tokensLine);
+    tokensLine.clear();
+}
+
+void Parser::addTokensLine(const std::list<Token*>& tokens) {
+    std::cout << std::endl;
+    for (auto i: tokens) {
+        std::cout << i->getValue() << " ";
+    }
+
     std::list<Token*> postfix;
     std::stack<Token*> operators;
-
-    bool op = false;
-    bool semicolon = false;
 
     for (auto token: tokens) {
         switch (token->getType()) {
@@ -26,81 +78,36 @@ void Parser::toPostfix(const std::list<Token*>& tokens) {
             case DOUBLE_DIGIT:
             case INT_DIGIT:
             case STRING:
-            case KEY_WORD: {
-                if (semicolon) {
-                    semicolon = false;
-                    tree->addChildBack(addNodeExpr(postfix));
-                }
-
-                op = false;
+            case KEY_WORD:
                 postfix.push_back(token);
                 break;
-            }
-            case L_BRACKET: {
+            case L_BRACKET:
                 operators.push(token);
                 break;
-            }
-            case R_BRACKET: {
+            case R_BRACKET:
                 while (operators.top()->getType() != L_BRACKET) {
                     postfix.push_back(operators.top());
                     operators.pop();
                 }
                 operators.pop();
                 break;
-            }
-            case L_BRACE: {
-                operators.push(token);
-
-                op = false;
-                semicolon = false;
-
-                postfix.push_back(token);
+            case L_BRACE:
                 break;
-            }
-            case R_BRACE: {
-                while (operators.top()->getType() != L_BRACE) {
-                    postfix.push_back(operators.top());
-                    operators.pop();
-                }
-                operators.pop();
-
-                op = false;
-                semicolon = false;
-
-                postfix.push_back(token);
+            case R_BRACE:
                 break;
-            }
-            case OPERATOR: {
-                if (semicolon) {
-                    operators.push(postfix.back());
-                    postfix.pop_back();
-                    semicolon = false;
-                }
-
-                op = true;
-                while (!operators.empty() &&
-                operatorPriority(token->getValue()) <= operatorPriority(operators.top()->getValue())) {
+            case OPERATOR:
+                while (
+                        !operators.empty()
+                        &&
+                        operatorPriority(token->getValue()) <= operatorPriority(operators.top()->getValue())
+                ) {
                     postfix.push_back(operators.top());
                     operators.pop();
                 }
                 operators.push(token);
                 break;
-            }
-            case SEMICOLON: {
-                if (!op) {
-                    while (!operators.empty()) {
-                        EType type = operators.top()->getType();
-                        if (type != L_BRACE && type != L_BRACKET) {
-                            postfix.push_back(operators.top());
-                            operators.pop();
-                        } else {
-                            break;
-                        }
-                    }
-                    semicolon = true;
-                }
+            case SEMICOLON:
                 break;
-            }
         }
     }
 
@@ -128,6 +135,11 @@ short Parser::operatorPriority(const std::string& op) {
 }
 
 Node* Parser::addNodeExpr(std::list<Token*>& postfix) {
+    std::cout << std::endl;
+    for (auto i: postfix) {
+        std::cout << i->getValue() << " ";
+    }
+
     std::stack<Node*> st;
 
     for (auto tk: postfix) {
