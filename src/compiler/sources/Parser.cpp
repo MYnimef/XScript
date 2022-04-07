@@ -296,8 +296,11 @@ std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
                 operators.pop();
             }
 
-            auto& prev = operators.top();
+            auto prev = operators.top();
             operators.pop();
+            delete prev;
+
+            delete expression;
         } else if (expression->isOperator()) {
             while (!operators.empty() && operatorPriority(type) <= operatorPriority(operators.top()->getType())) {
                 postfix.push_back(operators.top());

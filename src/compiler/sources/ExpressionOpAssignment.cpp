@@ -16,5 +16,5 @@ ExpressionOpAssignment::action(
         ) const {
     variables.insert_or_assign(stackVariablesId.top(), stack.top());
     stackVariablesId.pop();
-    stack.top();
+    stack.pop();
 }
