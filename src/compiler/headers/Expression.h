@@ -5,6 +5,9 @@
 #pragma once
 
 #include <string>
+#include <map>
+#include <stack>
+#include "Variable.h"
 
 enum ExpressionType {
     EXP_VAR_INITIALIZATION,
@@ -32,7 +35,7 @@ enum ExpressionType {
     EXP_GET_FROM_LOCAL,
 };
 
-class Expression final {
+class Expression {
 private:
     ExpressionType type;
     std::string value;
@@ -42,6 +45,14 @@ public:
 
     [[nodiscard]] ExpressionType getType() const;
     [[nodiscard]] std::string getValue() const;
+
+    void action(
+            std::map<std::string, Variable>& constants,
+            std::map<std::string, Variable>& variables,
+            std::stack<std::string>& stackConstantsId,
+            std::stack<std::string>& stackVariablesId,
+            std::stack<Variable>& stack
+            );
 
     bool isOperator();
 };
