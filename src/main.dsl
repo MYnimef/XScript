@@ -1,3 +1,20 @@
+
+
+func gg () {
+
+    a = 5
+
+
+}
+
+func gg (ff) {
+
+
+    a = 5
+
+
+}
+
 var calc=2 *
  (5 - 8)
 

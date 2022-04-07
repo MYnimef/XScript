@@ -27,22 +27,25 @@ private:
     };
     const std::map<GrammarType, std::regex> grammatics;
     Node* tree;
+    std::map<std::string, Node*> functions;
 
     void addTokensLine(std::list<Token*>&);
     std::list<Expression*>* toPostfix(std::list<Expression*>&);
 
-    std::list<Expression*>* generateExpression(std::list<Token*>&);
+    void generateExpression(std::list<Token*>&);
     GrammarType checkGrammar(std::list<Token*>&);
 
     std::list<Expression*>* parseAssignment(ExpressionType, std::list<Token*>&);
     std::list<Expression*>* parseOperations(std::list<Token*>&);
     void subOperations(std::list<Expression*>* expressions, std::stack<Token*>& stack, bool bracketsOver);
+    void parseFuncDefinition(std::list<Token*>&);
 
     short operatorPriority(const std::string&);
     Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
     explicit Parser(const std::string& name);
+    Parser(const std::map<GrammarType, std::regex>&);
     ~Parser();
 
     void addTokens(const std::list<Token*>&);

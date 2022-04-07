@@ -26,6 +26,10 @@ enum ExpressionType {
 
     EXP_FUNC,
     EXP_FUNC_DEFINITION,
+
+    EXP_CODE_BLOCK,
+    EXP_ADD_TO_LOCAL,
+    EXP_GET_FROM_LOCAL,
 };
 
 class Expression final {

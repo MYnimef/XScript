@@ -16,10 +16,15 @@ grammatics({
     { GR_IF,                 std::regex(R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)") },
     { GR_LOOP_WHILE,         std::regex(R"(while\(.*\)\{.*\})") },
     { GR_LOOP_FOR,           std::regex(R"(for\(.*\)\{.*\})") },
-    { GR_FUNC_DEFINITION,    std::regex(R"(funcid\(.*\)\{.*\})") },
+    { GR_FUNC_DEFINITION,    std::regex(R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})") },
     { GR_CODE_BLOCK,         std::regex(R"(\{.*\})") }
 }) {
     tree = new Node(Expression(EXP_FUNC, "main"));
+}
+
+Parser::Parser(const std::map<GrammarType, std::regex>& grammatics):
+grammatics(grammatics) {
+    tree = new Node(Expression(EXP_CODE_BLOCK, "block"));
 }
 
 Parser::~Parser() {
@@ -81,36 +86,45 @@ void Parser::addTokensLine(std::list<Token*>& tokens) {
         std::cout << i->getValue() << " ";
     }
 
-    auto* exp = generateExpression(tokens);
-    auto* postfix = toPostfix(*exp);
-    delete exp;
-    tree->addChildBack(addNodeExpr(*postfix));
-    delete postfix;
+    generateExpression(tokens);
 }
 
-std::list<Expression*>* Parser::generateExpression(std::list<Token*>& tokens) {
+void Parser::generateExpression(std::list<Token*>& tokens) {
     GrammarType type = checkGrammar(tokens);
 
     switch (type) {
-        case GR_LET_INITIALIZATION:
+        case GR_LET_INITIALIZATION: {
             tokens.pop_front();
-            return parseAssignment(EXP_LET_INITIALIZATION, tokens);
+            auto *exp = parseAssignment(EXP_LET_INITIALIZATION, tokens);
+            auto *postfix = toPostfix(*exp);
+            delete exp;
+            tree->addChildBack(addNodeExpr(*postfix));
+            delete postfix;
+            break;
+        }
         case GR_VAR_INITIALIZATION:
             tokens.pop_front();
-        case GR_VAR_ASSIGNMENT:
-            return parseAssignment(EXP_VAR_INITIALIZATION, tokens);
+        case GR_VAR_ASSIGNMENT: {
+            auto* exp = parseAssignment(EXP_VAR_INITIALIZATION, tokens);
+            auto* postfix = toPostfix(*exp);
+            delete exp;
+            tree->addChildBack(addNodeExpr(*postfix));
+            delete postfix;
+            break;
+        }
         case GR_FUNC:
-            return nullptr;
+            break;
         case GR_IF:
-            return nullptr;
+            break;
         case GR_LOOP_WHILE:
-            return nullptr;
+            break;
         case GR_LOOP_FOR:
-            return nullptr;
+            break;
         case GR_FUNC_DEFINITION:
-            return nullptr;
+            parseFuncDefinition(tokens);
+            break;
         case GR_CODE_BLOCK:
-            return nullptr;
+            break;
     }
 }
 
@@ -119,6 +133,7 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token*>& tokens) {
     for (const auto &token: tokens) {
         comp += token->typeToString();
     }
+    std::cout << comp;
 
     GrammarType type;
     bool didFind = false;
@@ -227,8 +242,47 @@ void Parser::subOperations(std::list<Expression*>* expressions, std::stack<Token
 
         if (bracketsOver) {
             expressions->push_back(new Expression(EXP_ID, ")"));
-            bracketsOver = false;
         }
+    }
+}
+
+//funcid\((((id,)*(id))|((id)+))\)\{.*\}
+void Parser::parseFuncDefinition(std::list<Token*>& tokens) {
+    tokens.pop_front(); // remove func
+    std::string funcName = tokens.front()->getValue();
+    tokens.pop_front(); // remove func name
+
+    Node* node = new Node(Expression(EXP_FUNC_DEFINITION, funcName));
+
+    tokens.pop_front(); // remove (
+    int amountOfArgs = 0;
+    for (const auto& token: tokens) {
+        if (token->getType() == R_BRACKET) {
+            break;
+        } else {
+            node->addChildBack(new Node(Expression(EXP_GET_FROM_LOCAL, token->getValue())));
+            amountOfArgs++;
+        }
+    }
+    funcName += std::to_string(amountOfArgs);
+
+    for (int i = 0; i < amountOfArgs; i++) {
+        tokens.pop_front();
+    }
+
+    tokens.pop_front(); // delete )
+    tokens.pop_front(); // delete {
+    tokens.pop_front(); // delete first ; (cuz generation)
+    tokens.pop_back();  // delete }
+
+    Parser parser(grammatics);
+    parser.addTokens(tokens);
+    node->addChildBack(parser.getTree());
+
+    if (functions.count(funcName)) {
+        throw std::overflow_error("attempt to re-declare function " + funcName);
+    } else {
+        functions.insert_or_assign(funcName, node);
     }
 }
 
