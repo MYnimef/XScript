@@ -15,7 +15,10 @@
 class Parser final {
 private:
     enum GrammarType {
+        GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
+        GR_VAR_INCREMENT,
+        GR_VAR_DECREMENT,
         GR_FUNC,
         GR_IF,
         GR_LOOP_WHILE,
@@ -31,7 +34,10 @@ private:
     void generateExpression(std::list<Token>&);
     GrammarType checkGrammar(std::list<Token>&);
 
+    void parseAssignmentComplex(std::list<Token>&);
     void parseAssignment(std::list<Token>&);
+    void parseIncrement(std::list<Token>&);
+    void parseDecrement(std::list<Token>&);
     std::list<Expression*> parseOperations(std::list<Token>&);
     void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
     void parseFuncDefinition(std::list<Token>&);

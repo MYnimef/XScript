@@ -4,6 +4,11 @@
 
 #include "ExpressionValInteger.h"
 
+ExpressionValInteger::ExpressionValInteger(const int value):
+value(value) {
+    type = EXP_INTEGER;
+}
+
 ExpressionValInteger::ExpressionValInteger(const std::string& value):
 value(std::stoi(value)) {
     type = EXP_INTEGER;

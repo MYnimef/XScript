@@ -20,13 +20,16 @@
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT,     std::regex( R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" ) },
-    { GR_FUNC,               std::regex( R"(id\(.*\))" )                                                                                            },
-    { GR_IF,                 std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                              },
-    { GR_LOOP_WHILE,         std::regex( R"(while\(.*\)\{.*\})" )                                                                                   },
-    { GR_LOOP_FOR,           std::regex( R"(for\(.*\)\{.*\})" )                                                                                     },
-    { GR_FUNC_DEFINITION,    std::regex( R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})" )                                                              },
-    { GR_CODE_BLOCK,         std::regex( R"(\{.*\})" )                                                                                              }
+    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(id[\+\-\*\/]=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" ) },
+    { GR_VAR_ASSIGNMENT,         std::regex( R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" )           },
+    { GR_VAR_INCREMENT,          std::regex( R"(idI)" )                                                                                                           },
+    { GR_VAR_DECREMENT,          std::regex( R"(idD)" )                                                                                                           },
+    { GR_FUNC,                   std::regex( R"(id\(.*\))" )                                                                                                      },
+    { GR_IF,                     std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                                        },
+    { GR_LOOP_WHILE,             std::regex( R"(while\(.*\)\{.*\})" )                                                                                             },
+    { GR_LOOP_FOR,               std::regex( R"(for\(.*\)\{.*\})" )                                                                                               },
+    { GR_FUNC_DEFINITION,        std::regex( R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})" )                                                                        },
+    { GR_CODE_BLOCK,             std::regex( R"(\{.*\})" )                                                                                                        }
 }) {
     tree = new Node(new ExpressionFunctionCall("main"));
 }
@@ -106,8 +109,17 @@ void Parser::generateExpression(std::list<Token>& tokens) {
     GrammarType type = checkGrammar(tokens);
 
     switch (type) {
+        case GR_VAR_ASSIGNMENT_COMPLEX:
+            parseAssignmentComplex(tokens);
+            break;
         case GR_VAR_ASSIGNMENT:
             parseAssignment(tokens);
+            break;
+        case GR_VAR_INCREMENT:
+            parseIncrement(tokens);
+            break;
+        case GR_VAR_DECREMENT:
+            parseDecrement(tokens);
             break;
         case GR_FUNC:
             break;
@@ -149,6 +161,22 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
     }
 }
 
+void Parser::parseAssignmentComplex(std::list<Token>& tokens) {
+    auto var = tokens.front();
+    tokens.pop_front();
+    auto op = tokens.front();
+    tokens.pop_front();
+    auto assign = tokens.front();
+    tokens.pop_front();
+
+    tokens.push_front(op);
+    tokens.push_front(var);
+    tokens.push_front(assign);
+    tokens.push_front(var);
+
+    parseAssignment(tokens);
+}
+
 void Parser::parseAssignment(std::list<Token>& tokens) {
     std::list<Expression*> expressions;
 
@@ -164,6 +192,36 @@ void Parser::parseAssignment(std::list<Token>& tokens) {
     expressions.splice(expressions.end(), parseOperations(tokens));
 
     tree->addChildBack(addNodeExpr(toPostfix(expressions)));
+}
+
+void Parser::parseIncrement(std::list<Token>& tokens) {
+    std::list<Expression*> expressions;
+
+    std::string id = tokens.front().getValue();
+    tokens.clear();
+
+    expressions.emplace_back(new ExpressionVarInit(id));
+    expressions.emplace_back(new ExpressionVarCall(id));
+    expressions.emplace_back(new ExpressionValInteger(1));
+    expressions.emplace_back(new ExpressionOpSum());
+    expressions.emplace_back(new ExpressionOpAssignment());
+
+    tree->addChildBack(addNodeExpr(expressions));
+}
+
+void Parser::parseDecrement(std::list<Token>& tokens) {
+    std::list<Expression*> expressions;
+
+    std::string id = tokens.front().getValue();
+    tokens.clear();
+
+    expressions.emplace_back(new ExpressionVarInit(id));
+    expressions.emplace_back(new ExpressionVarCall(id));
+    expressions.emplace_back(new ExpressionValInteger(1));
+    expressions.emplace_back(new ExpressionOpSub());
+    expressions.emplace_back(new ExpressionOpAssignment());
+
+    tree->addChildBack(addNodeExpr(expressions));
 }
 
 std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {

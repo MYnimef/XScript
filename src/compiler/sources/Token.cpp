@@ -63,6 +63,10 @@ std::string Token::typeToString() const {
 
         case ASSIGN_OP:
             return "=";
+        case INCREMENT_OP:
+            return "I";
+        case DECREMENT_OP:
+            return "D";
         case SUM_OP:
             return "+";
         case SUB_OP:

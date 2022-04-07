@@ -20,6 +20,8 @@ Lexer::Lexer(): lexems({
     { L_BRACE,      std::regex( R"(\{)" )                         }, // can be only {
     { R_BRACE,      std::regex( R"(\})" )                         }, // can be only }
     { ASSIGN_OP,    std::regex( R"(=)" )                          },
+    { INCREMENT_OP, std::regex( R"(\+\+)" )                       },
+    { DECREMENT_OP, std::regex( R"(\-\-)" )                       },
     { SUM_OP,       std::regex( R"(\+)" )                         },
     { SUB_OP,       std::regex( R"(\-)" )                         },
     { MULT_OP,      std::regex( R"(\*)" )                         },

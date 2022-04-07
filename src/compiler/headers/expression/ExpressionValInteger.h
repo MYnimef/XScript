@@ -11,6 +11,7 @@ private:
     int value;
 
 public:
+    explicit ExpressionValInteger(int value);
     explicit ExpressionValInteger(const std::string& value);
 
     virtual void action(

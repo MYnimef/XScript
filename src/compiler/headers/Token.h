@@ -26,6 +26,8 @@ enum TokenType {
     R_BRACE,
 
     ASSIGN_OP,
+    INCREMENT_OP,
+    DECREMENT_OP,
     SUM_OP,
     SUB_OP,
     MULT_OP,
