@@ -18,8 +18,8 @@ Token::Token(const Token& token)
 
 }
 
-EType Token::getType() const {
-    return type.getType();
+TokenType Token::getType() const {
+    return type;
 }
 
 std::string Token::getValue() const {
@@ -27,5 +27,80 @@ std::string Token::getValue() const {
 }
 
 std::string Token::toString() {
-    return "Token: " + type.toString() + ", Value: " + value;
+    return "Token: " + typeToString() + ", Value: " + value;
+}
+
+std::string Token::typeToString() {
+    switch (type) {
+        case ID:
+            return "id";
+        case DOUBLE_DIGIT:
+            return "d";
+        case INT_DIGIT:
+            return "i";
+        case STRING:
+            return "s";
+
+        case VAR_KW:
+            return "var";
+        case LET_KW:
+            return "let";
+        case FUNC_KW:
+            return "func";
+        case IF_KW:
+            return "if";
+        case ELSE_KW:
+            return "else";
+        case WHILE_KW:
+            return "while";
+        case FOR_KW:
+            return "for";
+
+        case L_BRACKET:
+            return "(";
+        case R_BRACKET:
+            return ")";
+        case L_BRACE:
+            return "{";
+        case R_BRACE:
+            return "}";
+
+        case ASSIGN_OP:
+            return "=";
+        case SUM_OP:
+            return "+";
+        case SUB_OP:
+            return "-";
+        case MULT_OP:
+            return "*";
+        case DIV_OP:
+            return "/";
+
+        case COMMA:
+            return "comma";
+        case SEMICOLON:
+            return "semicolon";
+    }
+}
+
+bool Token::isOperator() {
+    return (
+            type == ASSIGN_OP ||
+            type == SUM_OP ||
+            type == SUB_OP ||
+            type == MULT_OP ||
+            type == DIV_OP
+            );
+}
+
+bool Token::isKeyWord() {
+    return (
+            type == VAR_KW ||
+            type == LET_KW ||
+            type == FUNC_KW ||
+            type == IF_KW ||
+            type == ELSE_KW ||
+            type == WHILE_KW ||
+            type == FOR_KW
+            );
 }

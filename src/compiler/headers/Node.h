@@ -5,20 +5,20 @@
 #pragma once
 
 #include <list>
-#include "Token.h"
+#include "Expression.h"
 
 class Node final {
 private:
-    Token token;
+    Expression token;
     std::list<Node*> nodes;
 
 public:
-    Node(const Token&);
+    Node(const Expression&);
     ~Node();
 
-    EType getType();
+    ExpressionType getType();
     std::string getValue();
-    Token getToken();
+    Expression getToken();
 
     void addChildFront(Node *child);
     void addChildBack(Node *child);

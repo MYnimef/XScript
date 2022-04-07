@@ -11,10 +11,15 @@
 
 class Compiler final {
 private:
+    std::map<std::string, Variable> constants;
     std::map<std::string, Variable> variables;
+
+    std::stack<std::string> stackConstantsId;
+    std::stack<std::string> stackVariablesId;
+
     std::stack<Variable> stack;
 
-    bool checkVariable(const Token&);
+    bool checkVariable(const Expression&);
 
 public:
     void execute(Node*);

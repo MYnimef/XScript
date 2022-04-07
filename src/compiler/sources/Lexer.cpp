@@ -5,22 +5,31 @@
 #include <fstream>
 #include "Lexer.h"
 
-using namespace std;
-
 Lexer::Lexer(): lexems({
-    { ID, regex( "[a-zA-Z][a-zA-Z0-9_]*" ) },
-    { DOUBLE_DIGIT, regex( "(0|([1-9][0-9]*))\\.*[0-9]*" ) }, // can be 0 but can't start with 0
-    { INT_DIGIT, regex( "0|([1-9][0-9]*)" ) }, // can be 0 but can't start with 0
-    { STRING, regex( R"("[^"]*")" ) },
-    { KEY_WORD, regex( "var|let|if|else|while|for|func" ) },
-    { L_BRACKET, regex( R"(\()" ) },       // can be only (
-    { R_BRACKET, regex( R"(\))" ) },       // can be only )
-    { L_BRACE, regex( R"(\{)" ) },         // can be only {
-    { R_BRACE, regex( R"(\})" ) },         // can be only }
-    { OPERATOR, regex( R"([=\-+\/\*]|(={2})|(\|{2})|(\&{2}))" ) },
-    { SEMICOLON, regex( ";" )},
+    { ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" ) },
+    { DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" ) }, // can be 0 but can't start with 0
+    { INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" ) }, // can be 0 but can't start with 0
+    { STRING,       std::regex( R"("[^"]*")" ) },
+    { VAR_KW,       std::regex( R"(var)" ) },
+    { LET_KW,       std::regex( R"(let)" ) },
+    { FUNC_KW,      std::regex( R"(func)" ) },
+    { IF_KW,        std::regex( R"(if)" ) },
+    { ELSE_KW,      std::regex( R"(else)" ) },
+    { WHILE_KW,     std::regex( R"(while)" ) },
+    { FOR_KW,       std::regex( R"(for)" ) },
+    { L_BRACKET,    std::regex( R"((\())" ) },       // can be only (
+    { R_BRACKET,    std::regex( R"(\))" ) },       // can be only )
+    { L_BRACE,      std::regex( R"(\{)" ) },         // can be only {
+    { R_BRACE,      std::regex( R"(\})" ) },         // can be only }
+    { ASSIGN_OP,    std::regex( R"(=)" ) },
+    { SUM_OP,       std::regex( R"(\+)" ) },
+    { SUB_OP,       std::regex( R"(\-)" ) },
+    { MULT_OP,      std::regex( R"(\*)" ) },
+    { DIV_OP,       std::regex( R"(\/)" ) },
+    {COMMA,         std::regex( R"(,)") },
+    { SEMICOLON,    std::regex( R"(;)" ) },
 }) {
-    tokens = list<Token*>();
+    tokens = std::list<Token*>();
 }
 
 Lexer::~Lexer() {
@@ -29,26 +38,26 @@ Lexer::~Lexer() {
     }
 }
 
-void Lexer::scanFile(const string& filename) {
-    ifstream file("../src/" + filename);
+void Lexer::scanFile(const std::string& filename) {
+    std::ifstream file("../src/" + filename);
 
     if (!file.is_open()) {
-        throw invalid_argument( "can't open file " + filename );
+        throw std::invalid_argument( "can't open file " + filename );
     }
 
-    string line;
+    std::string line;
     for (int i = 0; getline(file, line); i++) {
         if (!line.empty()) {
-            string oldStr;
+            std::string oldStr;
 
             for (int startIndex = 0, endIndex = 1; endIndex <= line.size(); endIndex++) {
                 if (startIndex < endIndex) {
-                    string newStr = line.substr(startIndex, endIndex - startIndex);
+                    std::string newStr = line.substr(startIndex, endIndex - startIndex);
 
                     if (newStr == " ") {
                         startIndex++;
                         continue;
-                    } else if (regex_match(newStr, regex(R"(("[^"]*)|(\|)|(&))"))) {
+                    } else if (std::regex_match(newStr, std::regex(R"(("[^"]*)|(\|)|(&))"))) {
                         continue;
                     } else if (!checkToken(newStr)) {
                         addToken(oldStr.empty() ? newStr : oldStr, i);
@@ -68,7 +77,7 @@ void Lexer::scanFile(const string& filename) {
     file.close();
 }
 
-bool Lexer::checkToken(const string& input) {
+bool Lexer::checkToken(const std::string& input) {
     for (const auto& lexem: lexems) {
         if (regex_match(input, lexem.second)) {
             return true;
@@ -77,23 +86,24 @@ bool Lexer::checkToken(const string& input) {
     return false;
 }
 
-void Lexer::addToken(const string& input, const int& lineNum) {
-    Token* token = nullptr;
+void Lexer::addToken(const std::string& input, const int& lineNum) {
+    bool didFind = false;
+    TokenType type;
+
     for (const auto& lexem: lexems) {
         if (regex_match(input, lexem.second)) {
-            if (token) {
-                delete token;
-            }
-            token = new Token(lexem.first, input);
+            type = lexem.first;
+            didFind = true;
         }
     }
-    if (token) {
-        tokens.push_back(token);
+
+    if (didFind) {
+        tokens.push_back(new Token(type, input));
     } else {
-        throw invalid_argument("wrong syntax at line " + to_string(lineNum + 1) + ": " + input);
+        throw std::invalid_argument("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
     }
 }
 
-list<Token*> Lexer::getTokens() {
+std::list<Token*> Lexer::getTokens() {
     return tokens;
 }

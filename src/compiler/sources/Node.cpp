@@ -2,17 +2,16 @@
 // Created by Ivan Markov on 07.03.2022.
 //
 
-#include <iostream>
 #include "Node.h"
 
-Node::Node(const Token& token)
+Node::Node(const Expression& token)
 : token(token) {
 }
 
 Node::~Node() {
 }
 
-EType Node::getType() {
+ExpressionType Node::getType() {
     return token.getType();
 }
 
@@ -46,6 +45,6 @@ std::list<Node *> Node::getChild() {
     return nodes;
 }
 
-Token Node::getToken() {
+Expression Node::getToken() {
     return token;
 }

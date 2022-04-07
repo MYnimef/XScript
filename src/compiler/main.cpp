@@ -16,7 +16,7 @@ int main() {
     Parser parser("main");
     parser.addTokens(lexer.getTokens());
 
-    std::cout << std::endl << parser.getTree()->printChild();
+    std::cout << std::endl << parser.getTree()->printChild() << std::endl;
 
     Compiler compiler;
     compiler.execute(parser.getTree());

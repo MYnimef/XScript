@@ -7,61 +7,117 @@
 void Compiler::execute(Node* tree) {
     auto child = tree->getChild();
 
-    if (child.empty()) {
-        EType type = tree->getType();
-        if (type == ID) {
-            auto token = tree->getToken();
-            if (checkVariable(token)) {
-                return;
+    for (auto node: tree->getChild()) {
+        execute(node);
+    }
+
+    switch (tree->getType()) {
+        case EXP_VAR_INITIALIZATION: {
+            auto value = tree->getValue();
+            if (constants.count(value)) {
+                throw std::overflow_error("attempt to re-declare let");
+            } else {
+                stackVariablesId.push(tree->getValue());
             }
-        } else if (type == INT_DIGIT) {
+            break;
+        }
+        case EXP_LET_INITIALIZATION: {
+            auto value = tree->getValue();
+            if (constants.count(value)) {
+                throw std::overflow_error("attempt to re-declare let");
+            } else {
+                stackConstantsId.push(tree->getValue());
+            }
+            break;
+        }
+        case EXP_ID: {
+            auto val = tree->getValue();
+            auto let = constants.find(val);
+            if (let != constants.end()) {
+                stack.push(let->second);
+            } else {
+                auto it = variables.find(tree->getToken().getValue());
+                if (it != variables.end()) {
+                    stack.push(it->second);
+                } else {
+                    throw std::overflow_error("usage of undeclared var");
+                }
+            }
+            break;
+        }
+        case EXP_INTEGER: {
             stack.push(Variable(std::stoi(tree->getValue())));
-        } else if (type == DOUBLE_DIGIT) {
+            break;
+        }
+        case EXP_DOUBLE: {
             stack.push(Variable(std::stod(tree->getValue())));
-        } else if (type == STRING) {
+            break;
+        }
+        case EXP_STRING: {
             std::string value = tree->getValue();
             value = value.substr(1, value.size() - 2);
             stack.push(Variable(value));
+            break;
         }
-    } else if (child.size() == 2) {
-        auto left = child.front();
-        auto right = child.back();
-        std::string op = tree->getValue();
-
-        if (left->getType() == ID && op == "=") {
-            execute(right);
-
-            if (!stack.empty()) {
-                variables.insert_or_assign(left->getValue(), stack.top());
+        case EXP_OP_ASSIGNMENT: {
+            if (!stackConstantsId.empty()) {
+                constants.insert_or_assign(stackConstantsId.top(), stack.top());
+                stackConstantsId.pop();
+            } else {
+                variables.insert_or_assign(stackVariablesId.top(), stack.top());
+                stackVariablesId.pop();
             }
-        } else {
-            execute(left);
-            execute(right);
-
+            break;
+        }
+        case EXP_OP_SUM: {
             auto arg2 = stack.top();
             stack.pop();
             auto arg1 = stack.top();
             stack.pop();
-
-            if (op == "+") {
-                stack.push(arg1 + arg2);
-            } else if (op == "-") {
-                stack.push(arg1 - arg2);
-            } else if (op == "*") {
-                stack.push(arg1 * arg2);
-            } else if (op == "/") {
-                stack.push(arg1 / arg2);
-            }
+            stack.push(arg1 + arg2);
+            break;
         }
-    } else {
-        for (auto node: tree->getChild()) {
-            execute(node);
+        case EXP_OP_SUBTRACTION: {
+            auto arg2 = stack.top();
+            stack.pop();
+            auto arg1 = stack.top();
+            stack.pop();
+            stack.push(arg1 - arg2);
+            break;
+        }
+        case EXP_OP_MULTIPLICATION: {
+            auto arg2 = stack.top();
+            stack.pop();
+            auto arg1 = stack.top();
+            stack.pop();
+            stack.push(arg1 * arg2);
+            break;
+        }
+        case EXP_OP_DIVISION: {
+            auto arg2 = stack.top();
+            stack.pop();
+            auto arg1 = stack.top();
+            stack.pop();
+            stack.push(arg1 / arg2);
+            break;
+        }
+        case EXP_LOOP_WHILE: {
+            break;
+        }
+        case EXP_LOOP_FOR: {
+            break;
+        }
+        case EXP_FUNC: {
+            break;
+        }
+        case EXP_FUNC_DEFINITION: {
+            break;
         }
     }
 }
 
-bool Compiler::checkVariable(const Token& token) {
-    auto it = variables.find(token.getValue());
+bool Compiler::checkVariable(const Expression& exp) {
+    auto it = variables.find(exp.getValue());
     if (it != variables.end()) {
         stack.push(it->second);
         return true;

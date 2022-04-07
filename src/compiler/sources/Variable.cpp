@@ -87,11 +87,11 @@ Variable Variable::operator * (const Variable& second) {
 
 Variable Variable::operator / (const Variable& second) {
     if (type == INTEGER_VAR && second.type == INTEGER_VAR) {
-        return Variable(intVal / second.intVal);
+        return Variable(double(intVal) / double(second.intVal));
     } else if (type == INTEGER_VAR && second.type == DOUBLE_VAR) {
-        return Variable(intVal / second.doubleVal);
+        return Variable(double(intVal) / second.doubleVal);
     } else if (type == DOUBLE_VAR && second.type == INTEGER_VAR) {
-        return Variable(doubleVal / second.intVal);
+        return Variable(doubleVal / double(second.intVal));
     } else if (type == DOUBLE_VAR && second.type == DOUBLE_VAR) {
         return Variable(doubleVal / second.doubleVal);
     } else {

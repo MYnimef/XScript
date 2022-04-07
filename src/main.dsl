@@ -1,13 +1,19 @@
-calc = 2 *
+var calc=2 *
  (5 - 8)
 
-a
+var a
 =
 calc + 7 *2
 
-c =
+var c =
 1 * (6 +
 7 * (4 + 5) - 7)
 + 9 * 0
 
-c = c + "res"
+c = c + "res" + 6
+
+var dima = "дима" * 7
+
+let pi = 3.14
+
+var gg = 2 / 3

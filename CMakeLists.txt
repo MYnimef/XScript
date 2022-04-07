@@ -10,14 +10,11 @@ add_executable(
 
         src/compiler/main.cpp
 
-        src/compiler/sources/Token.cpp
         src/compiler/headers/Token.h
+        src/compiler/sources/Token.cpp
 
-        src/compiler/headers/TokenType.h
-        src/compiler/sources/TokenType.cpp
-
-        src/compiler/sources/Lexer.cpp
         src/compiler/headers/Lexer.h
+        src/compiler/sources/Lexer.cpp
 
         src/compiler/headers/Parser.h
         src/compiler/sources/Parser.cpp
@@ -25,11 +22,12 @@ add_executable(
         src/compiler/headers/Node.h
         src/compiler/sources/Node.cpp
 
-        src/compiler/sources/Compiler.cpp
         src/compiler/headers/Compiler.h
+        src/compiler/sources/Compiler.cpp
 
         src/compiler/headers/Variable.h
         src/compiler/sources/Variable.cpp
 
         src/compiler/headers/Expression.h
+        src/compiler/sources/Expression.cpp
 )

@@ -5,7 +5,37 @@
 #pragma once
 
 #include <string>
-#include "TokenType.h"
+#include <list>
+
+enum TokenType {
+    ID,
+
+    DOUBLE_DIGIT,
+    INT_DIGIT,
+    STRING,
+
+    VAR_KW,
+    LET_KW,
+    FUNC_KW,
+    IF_KW,
+    ELSE_KW,
+    WHILE_KW,
+    FOR_KW,
+
+    L_BRACKET,
+    R_BRACKET,
+    L_BRACE,
+    R_BRACE,
+
+    ASSIGN_OP,
+    SUM_OP,
+    SUB_OP,
+    MULT_OP,
+    DIV_OP,
+
+    COMMA,
+    SEMICOLON,
+};
 
 class Token final {
 private:
@@ -17,8 +47,12 @@ public:
     ~Token();
     Token(const Token&);
 
-    [[nodiscard]] EType getType() const;
+    [[nodiscard]] TokenType getType() const;
     [[nodiscard]] std::string getValue() const;
 
     std::string toString();
+    std::string typeToString();
+
+    bool isOperator();
+    bool isKeyWord();
 };

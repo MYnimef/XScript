@@ -7,7 +7,6 @@
 #include <map>
 #include <list>
 #include <regex>
-#include "TokenType.h"
 #include "Token.h"
 
 class Lexer final {
