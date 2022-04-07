@@ -246,7 +246,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     std::string funcName = tokens.front().getValue();
     tokens.pop_front(); // remove func name
 
-    Node* node = new Node(Expression(EXP_FUNC_DEFINITION, funcName));
+    Node* node = new Node(expression(EXP_FUNC_DEFINITION, funcName));
 
     tokens.pop_front(); // remove (
     int amountOfArgs = 0;
@@ -254,7 +254,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         if (token.getType() == R_BRACKET) {
             break;
         } else {
-            node->addChildBack(new Node(Expression(EXP_GET_FROM_LOCAL, token.getValue())));
+            node->addChildBack(new Node(expression(EXP_GET_FROM_LOCAL, token.getValue())));
             amountOfArgs++;
         }
     }

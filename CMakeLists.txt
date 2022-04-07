@@ -4,6 +4,7 @@ project(dsl)
 set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src/compiler/headers)
+include_directories(src/compiler/headers/expression)
 
 add_executable(
         dsl
@@ -28,39 +29,39 @@ add_executable(
         src/compiler/headers/Variable.h
         src/compiler/sources/Variable.cpp
 
-        src/compiler/headers/Expression.h
-        src/compiler/sources/Expression.cpp
+        src/compiler/headers/expression/Expression.h
+        src/compiler/sources/expression/Expression.cpp
 
-        src/compiler/headers/ExpressionValInteger.h
-        src/compiler/sources/ExpressionValInteger.cpp
+        src/compiler/headers/expression/ExpressionValInteger.h
+        src/compiler/sources/expression/ExpressionValInteger.cpp
 
-        src/compiler/sources/ExpressionValString.cpp
-        src/compiler/headers/ExpressionValString.h
+        src/compiler/headers/expression/ExpressionValString.h
+        src/compiler/sources/expression/ExpressionValString.cpp
 
-        src/compiler/sources/ExpressionValDouble.cpp
-        src/compiler/headers/ExpressionValDouble.h
+        src/compiler/headers/expression/ExpressionValDouble.h
+        src/compiler/sources/expression/ExpressionValDouble.cpp
 
-        src/compiler/sources/ExpressionOpSum.cpp
-        src/compiler/headers/ExpressionOpSum.h
+        src/compiler/headers/expression/ExpressionOpSum.h
+        src/compiler/sources/expression/ExpressionOpSum.cpp
 
-        src/compiler/sources/ExpressionOpSub.cpp
-        src/compiler/headers/ExpressionOpSub.h
+        src/compiler/headers/expression/ExpressionOpSub.h
+        src/compiler/sources/expression/ExpressionOpSub.cpp
 
-        src/compiler/sources/ExpressionOpMult.cpp
-        src/compiler/headers/ExpressionOpMult.h
+        src/compiler/headers/expression/ExpressionOpMult.h
+        src/compiler/sources/expression/ExpressionOpMult.cpp
 
-        src/compiler/sources/ExpressionOpDiv.cpp
-        src/compiler/headers/ExpressionOpDiv.h
+        src/compiler/headers/expression/ExpressionOpDiv.h
+        src/compiler/sources/expression/ExpressionOpDiv.cpp
 
-        src/compiler/sources/ExpressionVarInit.cpp
-        src/compiler/headers/ExpressionVarInit.h
+        src/compiler/headers/expression/ExpressionVarInit.h
+        src/compiler/sources/expression/ExpressionVarInit.cpp
 
-        src/compiler/sources/ExpressionVarCall.cpp
-        src/compiler/headers/ExpressionVarCall.h
+        src/compiler/headers/expression/ExpressionVarCall.h
+        src/compiler/sources/expression/ExpressionVarCall.cpp
 
-        src/compiler/sources/ExpressionOpAssignment.cpp
-        src/compiler/headers/ExpressionOpAssignment.h
+        src/compiler/headers/expression/ExpressionOpAssignment.h
+        src/compiler/sources/expression/ExpressionOpAssignment.cpp
 
-        src/compiler/sources/ExpressionFunctionCall.cpp
-        src/compiler/headers/ExpressionFunctionCall.h
+        src/compiler/headers/expression/ExpressionFunctionCall.h
+        src/compiler/sources/expression/ExpressionFunctionCall.cpp
 )
