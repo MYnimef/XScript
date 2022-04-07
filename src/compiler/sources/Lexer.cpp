@@ -6,28 +6,28 @@
 #include "Lexer.h"
 
 Lexer::Lexer(): lexems({
-    { ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" ) },
+    { ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" )      },
     { DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" ) }, // can be 0 but can't start with 0
-    { INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" ) }, // can be 0 but can't start with 0
-    { STRING,       std::regex( R"("[^"]*")" ) },
-    { VAR_KW,       std::regex( R"(var)" ) },
-    { LET_KW,       std::regex( R"(let)" ) },
-    { FUNC_KW,      std::regex( R"(func)" ) },
-    { IF_KW,        std::regex( R"(if)" ) },
-    { ELSE_KW,      std::regex( R"(else)" ) },
-    { WHILE_KW,     std::regex( R"(while)" ) },
-    { FOR_KW,       std::regex( R"(for)" ) },
-    { L_BRACKET,    std::regex( R"((\())" ) },       // can be only (
-    { R_BRACKET,    std::regex( R"(\))" ) },       // can be only )
-    { L_BRACE,      std::regex( R"(\{)" ) },         // can be only {
-    { R_BRACE,      std::regex( R"(\})" ) },         // can be only }
-    { ASSIGN_OP,    std::regex( R"(=)" ) },
-    { SUM_OP,       std::regex( R"(\+)" ) },
-    { SUB_OP,       std::regex( R"(\-)" ) },
-    { MULT_OP,      std::regex( R"(\*)" ) },
-    { DIV_OP,       std::regex( R"(\/)" ) },
-    {COMMA,         std::regex( R"(,)") },
-    { SEMICOLON,    std::regex( R"(;)" ) },
+    { INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )            }, // can be 0 but can't start with 0
+    { STRING,       std::regex( R"("[^"]*")" )                    },
+    { VAR_KW,       std::regex( R"(var)" )                        },
+    { LET_KW,       std::regex( R"(let)" )                        },
+    { FUNC_KW,      std::regex( R"(func)" )                       },
+    { IF_KW,        std::regex( R"(if)" )                         },
+    { ELSE_KW,      std::regex( R"(else)" )                       },
+    { WHILE_KW,     std::regex( R"(while)" )                      },
+    { FOR_KW,       std::regex( R"(for)" )                        },
+    { L_BRACKET,    std::regex( R"((\())" )                       }, // can be only (
+    { R_BRACKET,    std::regex( R"(\))" )                         }, // can be only )
+    { L_BRACE,      std::regex( R"(\{)" )                         }, // can be only {
+    { R_BRACE,      std::regex( R"(\})" )                         }, // can be only }
+    { ASSIGN_OP,    std::regex( R"(=)" )                          },
+    { SUM_OP,       std::regex( R"(\+)" )                         },
+    { SUB_OP,       std::regex( R"(\-)" )                         },
+    { MULT_OP,      std::regex( R"(\*)" )                         },
+    { DIV_OP,       std::regex( R"(\/)" )                         },
+    { COMMA,        std::regex( R"(,)")                           },
+    { SEMICOLON,    std::regex( R"(;)" )                          },
 }) {
 
 }

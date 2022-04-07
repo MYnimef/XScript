@@ -32,13 +32,13 @@ private:
     GrammarType checkGrammar(std::list<Token>&);
 
     void parseAssignment(std::list<Token>&);
-    std::list<Expression> parseOperations(std::list<Token>&);
-    void subOperations(std::list<Expression>& expressions, std::stack<Token>& stack, bool bracketsOver);
+    std::list<Expression*> parseOperations(std::list<Token>&);
+    void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
     void parseFuncDefinition(std::list<Token>&);
 
-    std::list<Expression> toPostfix(std::list<Expression>&);
-    short operatorPriority(const std::string&);
-    Node* addNodeExpr(const std::list<Expression>&);
+    std::list<Expression*> toPostfix(std::list<Expression*>&);
+    short operatorPriority(const ExpressionType& type);
+    Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
     explicit Parser(const std::string& name);

@@ -7,7 +7,7 @@ int main() {
     Lexer lexer;
     lexer.scanFile("main.dsl");
 
-    for (auto token: lexer.getTokens()) {
+    for (const auto& token: lexer.getTokens()) {
         if (token.getType() != SEMICOLON) {
             std::cout << token.toString() << std::endl;
         }
@@ -15,8 +15,6 @@ int main() {
 
     Parser parser("main");
     parser.addTokens(lexer.getTokens());
-
-    std::cout << std::endl << parser.getTree()->printChild() << std::endl;
 
     Compiler compiler;
     compiler.execute(parser.getTree());

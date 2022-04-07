@@ -32,26 +32,49 @@ enum ExpressionType {
     EXP_CODE_BLOCK,
     EXP_ADD_TO_LOCAL,
     EXP_GET_FROM_LOCAL,
+
+    EXP_BRACKET_L,
+    EXP_BRACKET_R,
 };
 
-class Expression final {
-private:
+class Expression {
+protected:
     ExpressionType type;
-    std::string value;
 
 public:
-    Expression(ExpressionType type, const std::string& value);
+    Expression();
 
     [[nodiscard]] ExpressionType getType() const;
-    [[nodiscard]] std::string getValue() const;
 
-    void action(
-            std::map<std::string, Variable>& constants,
+    virtual void action(
             std::map<std::string, Variable>& variables,
-            std::stack<std::string>& stackConstantsId,
             std::stack<std::string>& stackVariablesId,
             std::stack<Variable>& stack
-            );
+            ) const = 0;
 
     [[nodiscard]] bool isOperator() const;
+};
+
+class ExpressionBracketL: public Expression {
+public:
+    ExpressionBracketL() {
+        type = EXP_BRACKET_L;
+    }
+
+    virtual void action(
+            std::map<std::string, Variable> &variables,
+            std::stack<std::string> &stackVariablesId,
+            std::stack<Variable> &stack) const override {}
+};
+
+class ExpressionBracketR: public Expression {
+public:
+    ExpressionBracketR() {
+        type = EXP_BRACKET_R;
+    }
+
+    virtual void action(
+            std::map<std::string, Variable> &variables,
+            std::stack<std::string> &stackVariablesId,
+            std::stack<Variable> &stack) const override {}
 };

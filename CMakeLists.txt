@@ -30,4 +30,37 @@ add_executable(
 
         src/compiler/headers/Expression.h
         src/compiler/sources/Expression.cpp
+
+        src/compiler/headers/ExpressionValInteger.h
+        src/compiler/sources/ExpressionValInteger.cpp
+
+        src/compiler/sources/ExpressionValString.cpp
+        src/compiler/headers/ExpressionValString.h
+
+        src/compiler/sources/ExpressionValDouble.cpp
+        src/compiler/headers/ExpressionValDouble.h
+
+        src/compiler/sources/ExpressionOpSum.cpp
+        src/compiler/headers/ExpressionOpSum.h
+
+        src/compiler/sources/ExpressionOpSub.cpp
+        src/compiler/headers/ExpressionOpSub.h
+
+        src/compiler/sources/ExpressionOpMult.cpp
+        src/compiler/headers/ExpressionOpMult.h
+
+        src/compiler/sources/ExpressionOpDiv.cpp
+        src/compiler/headers/ExpressionOpDiv.h
+
+        src/compiler/sources/ExpressionVarInit.cpp
+        src/compiler/headers/ExpressionVarInit.h
+
+        src/compiler/sources/ExpressionVarCall.cpp
+        src/compiler/headers/ExpressionVarCall.h
+
+        src/compiler/sources/ExpressionOpAssignment.cpp
+        src/compiler/headers/ExpressionOpAssignment.h
+
+        src/compiler/sources/ExpressionFunctionCall.cpp
+        src/compiler/headers/ExpressionFunctionCall.h
 )

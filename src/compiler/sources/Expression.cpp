@@ -4,18 +4,8 @@
 
 #include "Expression.h"
 
-Expression::Expression(ExpressionType type, const std::string& value):
-type(type),
-value(value) {
-
-}
-
 ExpressionType Expression::getType() const {
     return type;
-}
-
-std::string Expression::getValue() const {
-    return value;
 }
 
 bool Expression::isOperator() const {
@@ -26,4 +16,8 @@ bool Expression::isOperator() const {
             type == EXP_OP_MULTIPLICATION ||
             type == EXP_OP_DIVISION
     );
+}
+
+Expression::Expression() {
+    type = EXP_FUNC;
 }

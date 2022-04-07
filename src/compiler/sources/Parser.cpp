@@ -6,27 +6,38 @@
 #include <iostream>
 #include <regex>
 #include "Parser.h"
+#include "ExpressionValInteger.h"
+#include "ExpressionValDouble.h"
+#include "ExpressionValString.h"
+#include "ExpressionOpAssignment.h"
+#include "ExpressionOpSum.h"
+#include "ExpressionOpSub.h"
+#include "ExpressionOpMult.h"
+#include "ExpressionOpDiv.h"
+#include "ExpressionVarInit.h"
+#include "ExpressionVarCall.h"
+#include "ExpressionFunctionCall.h"
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT,     std::regex(R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)") },
-    { GR_FUNC,               std::regex(R"(id\(.*\))") },
-    { GR_IF,                 std::regex(R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)") },
-    { GR_LOOP_WHILE,         std::regex(R"(while\(.*\)\{.*\})") },
-    { GR_LOOP_FOR,           std::regex(R"(for\(.*\)\{.*\})") },
-    { GR_FUNC_DEFINITION,    std::regex(R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})") },
-    { GR_CODE_BLOCK,         std::regex(R"(\{.*\})") }
+    { GR_VAR_ASSIGNMENT,     std::regex( R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" ) },
+    { GR_FUNC,               std::regex( R"(id\(.*\))" )                                                                                            },
+    { GR_IF,                 std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                              },
+    { GR_LOOP_WHILE,         std::regex( R"(while\(.*\)\{.*\})" )                                                                                   },
+    { GR_LOOP_FOR,           std::regex( R"(for\(.*\)\{.*\})" )                                                                                     },
+    { GR_FUNC_DEFINITION,    std::regex( R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})" )                                                              },
+    { GR_CODE_BLOCK,         std::regex( R"(\{.*\})" )                                                                                              }
 }) {
-    tree = new Node(Expression(EXP_FUNC, "main"));
+    tree = new Node(new ExpressionFunctionCall("main"));
 }
 
 Parser::Parser(const std::map<GrammarType, std::regex>& grammatics):
 grammatics(grammatics) {
-    tree = new Node(Expression(EXP_CODE_BLOCK, "block"));
+    tree = new Node(new ExpressionFunctionCall("main"));
 }
 
 Parser::~Parser() {
-
+    delete tree;
 }
 
 void Parser::addTokens(const std::list<Token>& tokens) {
@@ -91,10 +102,9 @@ void Parser::generateExpression(std::list<Token>& tokens) {
     GrammarType type = checkGrammar(tokens);
 
     switch (type) {
-        case GR_VAR_ASSIGNMENT: {
+        case GR_VAR_ASSIGNMENT:
             parseAssignment(tokens);
             break;
-        }
         case GR_FUNC:
             break;
         case GR_IF:
@@ -136,11 +146,11 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
 }
 
 void Parser::parseAssignment(std::list<Token>& tokens) {
-    std::list<Expression> expressions;
+    std::list<Expression*> expressions;
 
-    expressions.emplace_back(EXP_VAR_INITIALIZATION, tokens.front().getValue());
+    expressions.emplace_back(new ExpressionVarInit(tokens.front().getValue()));
     tokens.pop_front();
-    expressions.emplace_back(EXP_OP_ASSIGNMENT, tokens.front().getValue());
+    expressions.emplace_back(new ExpressionOpAssignment());
     tokens.pop_front();
 
     if (tokens.front().getType() == SUB_OP) {
@@ -152,8 +162,8 @@ void Parser::parseAssignment(std::list<Token>& tokens) {
     tree->addChildBack(addNodeExpr(toPostfix(expressions)));
 }
 
-std::list<Expression> Parser::parseOperations(std::list<Token>& tokens) {
-    std::list<Expression> expressions;
+std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
+    std::list<Expression*> expressions;
 
     std::stack<Token> stack;
     int brackets = 0;
@@ -166,19 +176,19 @@ std::list<Expression> Parser::parseOperations(std::list<Token>& tokens) {
             subOperations(expressions, stack, bracketsOver);
 
             if (type == SUM_OP) {
-                expressions.emplace_back(EXP_OP_SUM, token.getValue());
+                expressions.emplace_back(new ExpressionOpSum());
             } else if (type == SUB_OP) {
-                expressions.emplace_back(EXP_OP_SUBTRACTION, token.getValue());
+                expressions.emplace_back(new ExpressionOpSub());
             } else if (type == MULT_OP) {
-                expressions.emplace_back(EXP_OP_MULTIPLICATION, token.getValue());
+                expressions.emplace_back(new ExpressionOpMult());
             } else {
-                expressions.emplace_back(EXP_OP_DIVISION, token.getValue());
+                expressions.emplace_back(new ExpressionOpDiv());
             }
         } else if (type == L_BRACKET) {
             if (brackets != 0) {
                 stack.push(token);
             } else {
-                expressions.emplace_back(EXP_ID, "(");
+                expressions.emplace_back(new ExpressionBracketL());
             }
             brackets++;
         } else if (type == R_BRACKET) {
@@ -198,7 +208,7 @@ std::list<Expression> Parser::parseOperations(std::list<Token>& tokens) {
     return expressions;
 }
 
-void Parser::subOperations(std::list<Expression>& expressions, std::stack<Token>& stack, bool bracketsOver) {
+void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver) {
     std::list<Token> localTokens;
     while (!stack.empty()) {
         localTokens.push_front(stack.top());
@@ -211,26 +221,27 @@ void Parser::subOperations(std::list<Expression>& expressions, std::stack<Token>
     }
 
     if (localString == "id") {
-        expressions.emplace_back(EXP_ID, localTokens.front().getValue());
+        expressions.emplace_back(new ExpressionVarCall(localTokens.front().getValue()));
     } else if (localString == "i") {
-        expressions.emplace_back(EXP_INTEGER, localTokens.front().getValue());
+        expressions.emplace_back(new ExpressionValInteger(localTokens.front().getValue()));
     } else if (localString == "d") {
-        expressions.emplace_back(EXP_DOUBLE, localTokens.front().getValue());
+        expressions.emplace_back(new ExpressionValDouble(localTokens.front().getValue()));
     } else if (localString == "s") {
-        expressions.emplace_back(EXP_STRING, localTokens.front().getValue());
+        expressions.emplace_back(new ExpressionValString(localTokens.front().getValue()));
     } else if (std::regex_match(localString, std::regex(R"(id\(.*\))"))) {
 
     } else if (!localTokens.empty()) {
         expressions.splice(expressions.end(), parseOperations(localTokens));
 
         if (bracketsOver) {
-            expressions.emplace_back(EXP_ID, ")");
+            expressions.emplace_back(new ExpressionBracketR());
         }
     }
 }
 
 //funcid\((((id,)*(id))|((id)+))\)\{.*\}
 void Parser::parseFuncDefinition(std::list<Token>& tokens) {
+    /*
     tokens.pop_front(); // remove func
     std::string funcName = tokens.front().getValue();
     tokens.pop_front(); // remove func name
@@ -267,27 +278,28 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     } else {
         functions.insert_or_assign(funcName, node);
     }
+     */
 }
 
-std::list<Expression> Parser::toPostfix(std::list<Expression>& expressions) {
-    std::list<Expression> postfix;
-    std::stack<Expression> operators;
+std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
+    std::list<Expression*> postfix;
+    std::stack<Expression*> operators;
 
-    for (const auto& expression: expressions) {
-        const auto& val = expression.getValue();
+    for (auto* expression: expressions) {
+        const auto& type = expression->getType();
 
-        if (val == "(") {
+        if (type == EXP_BRACKET_L) {
             operators.push(expression);
-        } else if (val == ")") {
-            while (operators.top().getValue() != "(") {
+        } else if (type == EXP_BRACKET_R) {
+            while (operators.top()->getType() != EXP_BRACKET_L) {
                 postfix.push_back(operators.top());
                 operators.pop();
             }
 
             auto& prev = operators.top();
             operators.pop();
-        } else if (expression.isOperator()) {
-            while (!operators.empty() && operatorPriority(val) <= operatorPriority(operators.top().getValue())) {
+        } else if (expression->isOperator()) {
+            while (!operators.empty() && operatorPriority(type) <= operatorPriority(operators.top()->getType())) {
                 postfix.push_back(operators.top());
                 operators.pop();
             }
@@ -305,33 +317,24 @@ std::list<Expression> Parser::toPostfix(std::list<Expression>& expressions) {
     return postfix;
 }
 
-short Parser::operatorPriority(const std::string& op) {
-    if (op == "*" || op == "/") {
+short Parser::operatorPriority(const ExpressionType& type) {
+    if (type == EXP_OP_MULTIPLICATION || type == EXP_OP_DIVISION) {
         return 4;
-    } else if (op == "+" || op == "-") {
+    } else if (type == EXP_OP_SUM || type == EXP_OP_SUBTRACTION) {
         return 3;
-    } else if (op == "=" || op == "==") {
+    } else if (type == EXP_OP_ASSIGNMENT) {
         return 2;
-    } else if (op == "&&") {
-        return 1;
-    } else if (op == "||") {
-        return 0;
     } else {
         return -1;
     }
 }
 
-Node* Parser::addNodeExpr(const std::list<Expression>& postfix) {
-    std::cout << std::endl;
-    for (const auto& i: postfix) {
-        std::cout << i.getValue() << " ";
-    }
-
+Node* Parser::addNodeExpr(const std::list<Expression*>& postfix) {
     std::stack<Node*> st;
 
     for (const auto& exp: postfix) {
         Node* node = new Node(exp);
-        if (node->getToken().isOperator()) {
+        if (node->getToken()->isOperator()) {
             node->addChildFront(st.top());
             st.pop();
             node->addChildFront(st.top());
