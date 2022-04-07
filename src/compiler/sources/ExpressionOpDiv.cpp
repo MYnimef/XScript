@@ -17,5 +17,5 @@ void ExpressionOpDiv::action(
     stack.pop();
     auto arg1 = stack.top();
     stack.pop();
-    stack.push(arg1 - arg2);
+    stack.push(arg1 / arg2);
 }

@@ -4,6 +4,8 @@
 #include "Compiler.h"
 
 int main() {
+    clock_t start = clock();
+
     Lexer lexer;
     lexer.scanFile("main.dsl");
 
@@ -24,6 +26,10 @@ int main() {
         std::cout << std::endl << var.first + " = " + var.second.toString();
     }
     std::cout << std::endl;
+
+    clock_t stop = clock();
+    double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
+    std::cout << std::endl << "Program compiled in " << elapsed << std::endl;
 
     return 0;
 }
