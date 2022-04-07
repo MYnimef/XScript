@@ -11,7 +11,6 @@
 
 enum ExpressionType {
     EXP_VAR_INITIALIZATION,
-    EXP_LET_INITIALIZATION,
 
     EXP_ID,
     EXP_INTEGER,

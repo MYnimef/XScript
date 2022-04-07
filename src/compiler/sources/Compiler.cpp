@@ -14,34 +14,16 @@ void Compiler::execute(Node* tree) {
     switch (tree->getType()) {
         case EXP_VAR_INITIALIZATION: {
             auto value = tree->getValue();
-            if (constants.count(value)) {
-                throw std::overflow_error("attempt to re-declare let");
-            } else {
-                stackVariablesId.push(tree->getValue());
-            }
-            break;
-        }
-        case EXP_LET_INITIALIZATION: {
-            auto value = tree->getValue();
-            if (constants.count(value)) {
-                throw std::overflow_error("attempt to re-declare let");
-            } else {
-                stackConstantsId.push(tree->getValue());
-            }
+            stackVariablesId.push(tree->getValue());
             break;
         }
         case EXP_ID: {
             auto val = tree->getValue();
-            auto let = constants.find(val);
-            if (let != constants.end()) {
-                stack.push(let->second);
+            auto it = variables.find(tree->getToken().getValue());
+            if (it != variables.end()) {
+                stack.push(it->second);
             } else {
-                auto it = variables.find(tree->getToken().getValue());
-                if (it != variables.end()) {
-                    stack.push(it->second);
-                } else {
-                    throw std::overflow_error("usage of undeclared var");
-                }
+                throw std::overflow_error("usage of undeclared var");
             }
             break;
         }
@@ -60,13 +42,8 @@ void Compiler::execute(Node* tree) {
             break;
         }
         case EXP_OP_ASSIGNMENT: {
-            if (!stackConstantsId.empty()) {
-                constants.insert_or_assign(stackConstantsId.top(), stack.top());
-                stackConstantsId.pop();
-            } else {
-                variables.insert_or_assign(stackVariablesId.top(), stack.top());
-                stackVariablesId.pop();
-            }
+            variables.insert_or_assign(stackVariablesId.top(), stack.top());
+            stackVariablesId.pop();
             break;
         }
         case EXP_OP_SUM: {
