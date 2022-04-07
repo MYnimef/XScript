@@ -18,7 +18,7 @@ std::string Expression::getValue() const {
     return value;
 }
 
-bool Expression::isOperator() {
+bool Expression::isOperator() const {
     return (
             type == EXP_OP_ASSIGNMENT ||
             type == EXP_OP_SUM ||

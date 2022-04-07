@@ -34,7 +34,7 @@ enum ExpressionType {
     EXP_GET_FROM_LOCAL,
 };
 
-class Expression {
+class Expression final {
 private:
     ExpressionType type;
     std::string value;
@@ -53,5 +53,5 @@ public:
             std::stack<Variable>& stack
             );
 
-    bool isOperator();
+    [[nodiscard]] bool isOperator() const;
 };
