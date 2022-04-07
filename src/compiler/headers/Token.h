@@ -50,9 +50,9 @@ public:
     [[nodiscard]] TokenType getType() const;
     [[nodiscard]] std::string getValue() const;
 
-    std::string toString();
-    std::string typeToString();
+    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string typeToString() const;
 
-    bool isOperator();
-    bool isKeyWord();
+    [[nodiscard]] bool isOperator() const;
+    [[nodiscard]] bool isKeyWord() const;
 };

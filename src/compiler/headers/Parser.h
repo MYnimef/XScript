@@ -27,17 +27,16 @@ private:
     Node* tree;
     std::map<std::string, Node*> functions;
 
-    void addTokensLine(std::list<Token*>&);
+    void addTokensLine(std::list<Token>&);
+    void generateExpression(std::list<Token>&);
+    GrammarType checkGrammar(std::list<Token>&);
+
+    void parseAssignment(std::list<Token>&);
+    std::list<Expression*>* parseOperations(std::list<Token>&);
+    void subOperations(std::list<Expression*>* expressions, std::stack<Token>& stack, bool bracketsOver);
+    void parseFuncDefinition(std::list<Token>&);
+
     std::list<Expression*>* toPostfix(std::list<Expression*>&);
-
-    void generateExpression(std::list<Token*>&);
-    GrammarType checkGrammar(std::list<Token*>&);
-
-    void parseAssignment(std::list<Token*>&);
-    std::list<Expression*>* parseOperations(std::list<Token*>&);
-    void subOperations(std::list<Expression*>* expressions, std::stack<Token*>& stack, bool bracketsOver);
-    void parseFuncDefinition(std::list<Token*>&);
-
     short operatorPriority(const std::string&);
     Node* addNodeExpr(const std::list<Expression*>&);
 
@@ -46,6 +45,6 @@ public:
     Parser(const std::map<GrammarType, std::regex>&);
     ~Parser();
 
-    void addTokens(const std::list<Token*>&);
+    void addTokens(const std::list<Token>&);
     Node* getTree();
 };

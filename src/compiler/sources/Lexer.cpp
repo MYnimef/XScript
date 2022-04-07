@@ -29,13 +29,11 @@ Lexer::Lexer(): lexems({
     {COMMA,         std::regex( R"(,)") },
     { SEMICOLON,    std::regex( R"(;)" ) },
 }) {
-    tokens = std::list<Token*>();
+
 }
 
 Lexer::~Lexer() {
-    for (auto token: tokens) {
-        delete token;
-    }
+
 }
 
 void Lexer::scanFile(const std::string& filename) {
@@ -98,12 +96,12 @@ void Lexer::addToken(const std::string& input, const int& lineNum) {
     }
 
     if (didFind) {
-        tokens.push_back(new Token(type, input));
+        tokens.emplace_back(type, input);
     } else {
         throw std::invalid_argument("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
     }
 }
 
-std::list<Token*> Lexer::getTokens() {
+std::list<Token> Lexer::getTokens() {
     return tokens;
 }

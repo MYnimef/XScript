@@ -8,8 +8,8 @@ int main() {
     lexer.scanFile("main.dsl");
 
     for (auto token: lexer.getTokens()) {
-        if (token->getType() != SEMICOLON) {
-            std::cout << token->toString() << std::endl;
+        if (token.getType() != SEMICOLON) {
+            std::cout << token.toString() << std::endl;
         }
     }
 
