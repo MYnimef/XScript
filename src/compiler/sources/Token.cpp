@@ -41,10 +41,6 @@ std::string Token::typeToString() const {
         case STRING:
             return "s";
 
-        case VAR_KW:
-            return "var";
-        case LET_KW:
-            return "let";
         case FUNC_KW:
             return "func";
         case IF_KW:
@@ -95,8 +91,6 @@ bool Token::isOperator() const {
 
 bool Token::isKeyWord() const {
     return (
-            type == VAR_KW ||
-            type == LET_KW ||
             type == FUNC_KW ||
             type == IF_KW ||
             type == ELSE_KW ||

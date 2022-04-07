@@ -14,8 +14,6 @@ enum TokenType {
     INT_DIGIT,
     STRING,
 
-    VAR_KW,
-    LET_KW,
     FUNC_KW,
     IF_KW,
     ELSE_KW,
