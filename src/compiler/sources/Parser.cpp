@@ -49,8 +49,8 @@ void Parser::addTokens(const std::list<Token>& tokens) {
     bool semicolon = false;
     bool op = false;
 
-    for (const auto& token: tokens) {
-        const auto& type = token.getType();
+    for (const auto &token: tokens) {
+        const auto &type = token.getType();
 
         if (type == SEMICOLON) {
             if (openedBraces == 0) {
@@ -63,8 +63,10 @@ void Parser::addTokens(const std::list<Token>& tokens) {
         } else {
             if ((type == ID || token.isKeyWord()) && !op) {
                 if (semicolon) {
-                    addTokensLine(tokensLine);
-                    tokensLine.clear();
+                    if (!tokensLine.empty()) {
+                        addTokensLine(tokensLine);
+                        tokensLine.clear();
+                    }
                 }
             } else if (token.isOperator()) {
                 op = true;
@@ -85,8 +87,10 @@ void Parser::addTokens(const std::list<Token>& tokens) {
         }
     }
 
-    addTokensLine(tokensLine);
-    tokensLine.clear();
+    if (!tokensLine.empty()) {
+        addTokensLine(tokensLine);
+        tokensLine.clear();
+    }
 }
 
 void Parser::addTokensLine(std::list<Token>& tokens) {
