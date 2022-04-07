@@ -32,8 +32,8 @@ private:
     GrammarType checkGrammar(std::list<Token>&);
 
     void parseAssignment(std::list<Token>&);
-    std::list<Expression*>* parseOperations(std::list<Token>&);
-    void subOperations(std::list<Expression*>* expressions, std::stack<Token>& stack, bool bracketsOver);
+    std::list<Expression*> parseOperations(std::list<Token>&);
+    void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
     void parseFuncDefinition(std::list<Token>&);
 
     std::list<Expression*>* toPostfix(std::list<Expression*>&);
@@ -42,7 +42,7 @@ private:
 
 public:
     explicit Parser(const std::string& name);
-    Parser(const std::map<GrammarType, std::regex>&);
+    explicit Parser(const std::map<GrammarType, std::regex>&);
     ~Parser();
 
     void addTokens(const std::list<Token>&);

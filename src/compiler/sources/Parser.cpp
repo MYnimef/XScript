@@ -147,17 +147,15 @@ void Parser::parseAssignment(std::list<Token>& tokens) {
         tokens.push_front(Token(INT_DIGIT, "0"));
     }
 
-    auto* exp = parseOperations(tokens);
-    expressions.splice(expressions.end(), *exp);
-    delete exp;
+    expressions.splice(expressions.end(), parseOperations(tokens));
 
     auto* postfix = toPostfix(expressions);
     tree->addChildBack(addNodeExpr(*postfix));
     delete postfix;
 }
 
-std::list<Expression*>* Parser::parseOperations(std::list<Token>& tokens) {
-    auto* expressions = new std::list<Expression*>;
+std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
+    std::list<Expression*> expressions;
 
     std::stack<Token> stack;
     int brackets = 0;
@@ -170,19 +168,19 @@ std::list<Expression*>* Parser::parseOperations(std::list<Token>& tokens) {
             subOperations(expressions, stack, bracketsOver);
 
             if (type == SUM_OP) {
-                expressions->push_back(new Expression(EXP_OP_SUM, token.getValue()));
+                expressions.push_back(new Expression(EXP_OP_SUM, token.getValue()));
             } else if (type == SUB_OP) {
-                expressions->push_back(new Expression(EXP_OP_SUBTRACTION, token.getValue()));
+                expressions.push_back(new Expression(EXP_OP_SUBTRACTION, token.getValue()));
             } else if (type == MULT_OP) {
-                expressions->push_back(new Expression(EXP_OP_MULTIPLICATION, token.getValue()));
+                expressions.push_back(new Expression(EXP_OP_MULTIPLICATION, token.getValue()));
             } else {
-                expressions->push_back(new Expression(EXP_OP_DIVISION, token.getValue()));
+                expressions.push_back(new Expression(EXP_OP_DIVISION, token.getValue()));
             }
         } else if (type == L_BRACKET) {
             if (brackets != 0) {
                 stack.push(token);
             } else {
-                expressions->push_back(new Expression(EXP_ID, "("));
+                expressions.push_back(new Expression(EXP_ID, "("));
             }
             brackets++;
         } else if (type == R_BRACKET) {
@@ -202,7 +200,7 @@ std::list<Expression*>* Parser::parseOperations(std::list<Token>& tokens) {
     return expressions;
 }
 
-void Parser::subOperations(std::list<Expression*>* expressions, std::stack<Token>& stack, bool bracketsOver) {
+void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver) {
     std::list<Token> localTokens;
     while (!stack.empty()) {
         localTokens.push_front(stack.top());
@@ -215,22 +213,20 @@ void Parser::subOperations(std::list<Expression*>* expressions, std::stack<Token
     }
 
     if (localString == "id") {
-        expressions->push_back(new Expression(EXP_ID, localTokens.front().getValue()));
+        expressions.push_back(new Expression(EXP_ID, localTokens.front().getValue()));
     } else if (localString == "i") {
-        expressions->push_back(new Expression(EXP_INTEGER, localTokens.front().getValue()));
+        expressions.push_back(new Expression(EXP_INTEGER, localTokens.front().getValue()));
     } else if (localString == "d") {
-        expressions->push_back(new Expression(EXP_DOUBLE, localTokens.front().getValue()));
+        expressions.push_back(new Expression(EXP_DOUBLE, localTokens.front().getValue()));
     } else if (localString == "s") {
-        expressions->push_back(new Expression(EXP_STRING, localTokens.front().getValue()));
+        expressions.push_back(new Expression(EXP_STRING, localTokens.front().getValue()));
     } else if (std::regex_match(localString, std::regex(R"(id\(.*\))"))) {
 
     } else if (!localTokens.empty()) {
-        auto* exp = parseOperations(localTokens);
-        expressions->splice(expressions->end(), *exp);
-        delete exp;
+        expressions.splice(expressions.end(), parseOperations(localTokens));
 
         if (bracketsOver) {
-            expressions->push_back(new Expression(EXP_ID, ")"));
+            expressions.push_back(new Expression(EXP_ID, ")"));
         }
     }
 }
