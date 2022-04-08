@@ -17,11 +17,12 @@
 #include "ExpressionVarInit.h"
 #include "ExpressionVarCall.h"
 #include "ExpressionFunctionCall.h"
+#include "ExpressionValBool.h"
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(@[\+\-\*\/]=(\-)?([\(]*((@\(.*\))|[@ids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@ids])[\)]*)" ) },
-    { GR_VAR_ASSIGNMENT,         std::regex( R"(@=(\-)?([\(]*((@\(.*\))|[@ids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@ids])[\)]*)" )           },
+    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(@[\+\-\*\/]=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@bids])[\)]*)" ) },
+    { GR_VAR_ASSIGNMENT,         std::regex( R"(@=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@bids])[\)]*)" )           },
     { GR_VAR_INCREMENT,          std::regex( R"(@I)" )                                                                                     },
     { GR_VAR_DECREMENT,          std::regex( R"(@D)" )                                                                                     },
     { GR_FUNC,                   std::regex( R"(@\(.*\))" )                                                                                },
@@ -284,6 +285,8 @@ void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token
 
     if (localString == "@") {
         expressions.emplace_back(new ExpressionVarCall(localTokens.front().getValue()));
+    } else if (localString == "b") {
+        expressions.emplace_back(new ExpressionValBool(localTokens.front().getValue()));
     } else if (localString == "i") {
         expressions.emplace_back(new ExpressionValInteger(localTokens.front().getValue()));
     } else if (localString == "d") {

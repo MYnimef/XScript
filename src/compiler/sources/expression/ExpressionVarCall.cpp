@@ -6,6 +6,7 @@
 #include "VariableInteger.h"
 #include "VariableDouble.h"
 #include "VariableString.h"
+#include "VariableBool.h"
 
 ExpressionVarCall::ExpressionVarCall(const std::string &value):
 id(value) {
@@ -21,6 +22,9 @@ void ExpressionVarCall::action(
     if (it != variables.end()) {
         auto var = it->second;
         switch (var->getType()) {
+            case Variable::BOOL_VAR:
+                stack.push(new VariableBool(var->getBool()));
+                break;
             case Variable::INTEGER_VAR:
                 stack.push(new VariableInteger(var->getInteger()));
                 break;

@@ -18,6 +18,7 @@ public:
     Variable* operator * (const Variable&) override;
     Variable* operator / (const Variable&) override;
 
+    [[nodiscard]] bool getBool() const override;
     [[nodiscard]] int getInteger() const override;
     [[nodiscard]] double getDouble() const override;
     [[nodiscard]] std::string getString() const override;

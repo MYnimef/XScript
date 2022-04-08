@@ -74,4 +74,12 @@ add_executable(
 
         src/compiler/headers/variable/VariableString.h
         src/compiler/sources/variable/VariableString.cpp
+
+        src/compiler/headers/variable/VariableBool.h
+        src/compiler/sources/variable/VariableBool.cpp
+
+        src/compiler/headers/expression/ExpressionValBool.h
+        src/compiler/sources/expression/ExpressionValBool.cpp
+
+        src/compiler/headers/variable/VariableList.h
 )

@@ -12,3 +12,9 @@ b++
 
 c = 9
 c -= c
+
+c = true
+
+dima = " dima"
+
+c += dima

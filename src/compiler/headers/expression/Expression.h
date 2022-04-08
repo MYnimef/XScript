@@ -13,6 +13,7 @@ enum ExpressionType {
     EXP_VAR_INITIALIZATION,
 
     EXP_ID,
+    EXP_BOOL,
     EXP_INTEGER,
     EXP_DOUBLE,
     EXP_STRING,

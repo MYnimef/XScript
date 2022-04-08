@@ -13,6 +13,7 @@ enum TokenType {
     DOUBLE_DIGIT,
     INT_DIGIT,
     STRING,
+    BOOL,
 
     FUNC_KW,
     IF_KW,

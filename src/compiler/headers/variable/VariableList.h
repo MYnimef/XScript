@@ -6,12 +6,12 @@
 
 #include "Variable.h"
 
-class VariableDouble final: public Variable {
+class VariableList final: public Variable {
 private:
-    double value;
+    std::list<Variable*> value;
 
 public:
-    explicit VariableDouble(double value);
+    explicit VariableList(std::list<Variable*> value);
 
     Variable* operator + (const Variable&) override;
     Variable* operator - (const Variable&) override;
@@ -22,4 +22,5 @@ public:
     [[nodiscard]] int getInteger() const override;
     [[nodiscard]] double getDouble() const override;
     [[nodiscard]] std::string getString() const override;
+    [[nodiscard]] virtual std::list<Variable*> getList() const override;
 };

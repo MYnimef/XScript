@@ -40,6 +40,8 @@ std::string Token::typeToString() const {
             return "i";
         case STRING:
             return "s";
+        case BOOL:
+            return "b";
 
         case FUNC_KW:
             return "func";

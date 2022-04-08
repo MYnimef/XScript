@@ -6,12 +6,12 @@
 
 #include "Variable.h"
 
-class VariableDouble final: public Variable {
+class VariableBool final: public Variable {
 private:
-    double value;
+    bool value;
 
 public:
-    explicit VariableDouble(double value);
+    explicit VariableBool(bool value);
 
     Variable* operator + (const Variable&) override;
     Variable* operator - (const Variable&) override;

@@ -34,6 +34,10 @@ Variable* VariableString::operator / (const Variable& second) {
     throw std::overflow_error("wrong operand for type string");
 }
 
+bool VariableString::getBool() const {
+    return !value.empty();
+}
+
 int VariableString::getInteger() const {
     return std::stoi(value);
 }

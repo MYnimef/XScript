@@ -10,12 +10,13 @@ Lexer::Lexer(): lexems({
     { DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" ) }, // can be 0 but can't start with 0
     { INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )            }, // can be 0 but can't start with 0
     { STRING,       std::regex( R"("[^"]*")" )                    },
+    { BOOL,         std::regex( R"((true)|(false))" )             },
     { FUNC_KW,      std::regex( R"(func)" )                       },
     { IF_KW,        std::regex( R"(if)" )                         },
     { ELSE_KW,      std::regex( R"(else)" )                       },
     { WHILE_KW,     std::regex( R"(while)" )                      },
     { FOR_KW,       std::regex( R"(for)" )                        },
-    { L_BRACKET,    std::regex( R"((\())" )                       }, // can be only (
+    { L_BRACKET,    std::regex( R"(\()" )                         }, // can be only (
     { R_BRACKET,    std::regex( R"(\))" )                         }, // can be only )
     { L_BRACE,      std::regex( R"(\{)" )                         }, // can be only {
     { R_BRACE,      std::regex( R"(\})" )                         }, // can be only }

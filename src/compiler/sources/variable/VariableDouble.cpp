@@ -42,6 +42,10 @@ Variable* VariableDouble::operator / (const Variable& second) {
     }
 }
 
+bool VariableDouble::getBool() const {
+    return (bool) value;
+}
+
 int VariableDouble::getInteger() const {
     return (int) value;
 }

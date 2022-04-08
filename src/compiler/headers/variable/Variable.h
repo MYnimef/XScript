@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+//#include <list>
 
 class Variable {
 public:
@@ -16,14 +17,18 @@ public:
     virtual Variable* operator * (const Variable&) = 0;
     virtual Variable* operator / (const Variable&) = 0;
 
+    [[nodiscard]] virtual bool getBool() const = 0;
     [[nodiscard]] virtual int getInteger() const = 0;
     [[nodiscard]] virtual double getDouble() const = 0;
     [[nodiscard]] virtual std::string getString() const = 0;
+    //[[nodiscard]] virtual std::list<Variable*> getList() const = 0;
 
     enum VarType {
+        BOOL_VAR,
         INTEGER_VAR,
         DOUBLE_VAR,
-        STRING_VAR
+        STRING_VAR,
+        //LIST_VAR,
     };
 
     [[nodiscard]] VarType getType() const;
