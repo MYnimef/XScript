@@ -15,8 +15,8 @@ public:
     explicit ExpressionValInteger(const std::string& value);
 
     virtual void action(
-            std::map<std::string, Variable>& variables,
+            std::map<std::string, Variable *> &variables,
             std::stack<std::string>& stackVariablesId,
-            std::stack<Variable>& stack
+            std::stack<Variable *> &stack
     ) const;
 };

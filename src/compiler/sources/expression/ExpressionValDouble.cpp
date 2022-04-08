@@ -3,6 +3,7 @@
 //
 
 #include "ExpressionValDouble.h"
+#include "VariableDouble.h"
 
 ExpressionValDouble::ExpressionValDouble(const std::string& value):
 value(std::stod(value)) {
@@ -10,8 +11,8 @@ value(std::stod(value)) {
 }
 
 void ExpressionValDouble::action(
-        std::map<std::string, Variable> &variables,
+        std::map<std::string, Variable *> &variables,
         std::stack<std::string> &stackVariablesId,
-        std::stack<Variable> &stack) const {
-    stack.push(Variable(value));
+        std::stack<Variable *> &stack) const {
+    stack.push(new VariableDouble(value));
 }

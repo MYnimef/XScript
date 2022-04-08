@@ -10,9 +10,9 @@ id(value) {
 }
 
 void ExpressionVarInit::action(
-        std::map<std::string, Variable> &variables,
+        std::map<std::string, Variable *> &variables,
         std::stack<std::string> &stackVariablesId,
-        std::stack<Variable> &stack
+        std::stack<Variable *> &stack
         ) const {
     stackVariablesId.push(id);
 }

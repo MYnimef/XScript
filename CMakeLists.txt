@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src/compiler/headers)
 include_directories(src/compiler/headers/expression)
+include_directories(src/compiler/headers/variable)
 
 add_executable(
         dsl
@@ -26,8 +27,8 @@ add_executable(
         src/compiler/headers/Compiler.h
         src/compiler/sources/Compiler.cpp
 
-        src/compiler/headers/Variable.h
-        src/compiler/sources/Variable.cpp
+        src/compiler/headers/variable/Variable.h
+        src/compiler/sources/variable/Variable.cpp
 
         src/compiler/headers/expression/Expression.h
         src/compiler/sources/expression/Expression.cpp
@@ -64,4 +65,13 @@ add_executable(
 
         src/compiler/headers/expression/ExpressionFunctionCall.h
         src/compiler/sources/expression/ExpressionFunctionCall.cpp
+
+        src/compiler/headers/variable/VariableInteger.h
+        src/compiler/sources/variable/VariableInteger.cpp
+
+        src/compiler/headers/variable/VariableDouble.h
+        src/compiler/sources/variable/VariableDouble.cpp
+
+        src/compiler/headers/variable/VariableString.h
+        src/compiler/sources/variable/VariableString.cpp
 )

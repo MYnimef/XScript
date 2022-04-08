@@ -47,9 +47,9 @@ public:
     [[nodiscard]] ExpressionType getType() const;
 
     virtual void action(
-            std::map<std::string, Variable>& variables,
+            std::map<std::string, Variable *> &variables,
             std::stack<std::string>& stackVariablesId,
-            std::stack<Variable>& stack
+            std::stack<Variable *> &stack
             ) const = 0;
 
     [[nodiscard]] bool isOperator() const;
@@ -62,9 +62,9 @@ public:
     }
 
     virtual void action(
-            std::map<std::string, Variable> &variables,
+            std::map<std::string, Variable *> &variables,
             std::stack<std::string> &stackVariablesId,
-            std::stack<Variable> &stack) const override {}
+            std::stack<Variable *> &stack) const override {}
 };
 
 class ExpressionBracketR: public Expression {
@@ -74,7 +74,7 @@ public:
     }
 
     virtual void action(
-            std::map<std::string, Variable> &variables,
+            std::map<std::string, Variable *> &variables,
             std::stack<std::string> &stackVariablesId,
-            std::stack<Variable> &stack) const override {}
+            std::stack<Variable *> &stack) const override {}
 };

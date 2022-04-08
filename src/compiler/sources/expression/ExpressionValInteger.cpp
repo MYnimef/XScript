@@ -3,6 +3,7 @@
 //
 
 #include "ExpressionValInteger.h"
+#include "VariableInteger.h"
 
 ExpressionValInteger::ExpressionValInteger(const int value):
 value(value) {
@@ -15,9 +16,9 @@ value(std::stoi(value)) {
 }
 
 void ExpressionValInteger::action(
-        std::map<std::string, Variable> &variables,
+        std::map<std::string, Variable *> &variables,
         std::stack<std::string> &stackVariablesId,
-        std::stack<Variable> &stack
+        std::stack<Variable *> &stack
         ) const {
-    stack.push(Variable(value));
+    stack.push(new VariableInteger(value));
 }

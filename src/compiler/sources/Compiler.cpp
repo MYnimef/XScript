@@ -4,6 +4,22 @@
 
 #include "Compiler.h"
 
+Compiler::Compiler() {
+
+}
+
+Compiler::~Compiler() {
+    for (auto var: variables) {
+        delete var.second;
+    }
+
+    while (!stack.empty()) {
+        auto var = stack.top();
+        stack.pop();
+        delete var;
+    }
+}
+
 void Compiler::execute(Node* tree) {
     auto child = tree->getChild();
 
@@ -14,6 +30,6 @@ void Compiler::execute(Node* tree) {
     tree->getToken()->action(variables, stackVariablesId, stack);
 }
 
-const std::map<std::string, Variable> &Compiler::getVariables() const {
+const std::map<std::string, Variable*> &Compiler::getVariables() const {
     return variables;
 }

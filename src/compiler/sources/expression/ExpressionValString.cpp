@@ -3,6 +3,7 @@
 //
 
 #include "ExpressionValString.h"
+#include "VariableString.h"
 
 ExpressionValString::ExpressionValString(const std::string& value) {
     this->value = value.substr(1, value.size() - 2);
@@ -10,9 +11,9 @@ ExpressionValString::ExpressionValString(const std::string& value) {
 }
 
 void ExpressionValString::action(
-        std::map<std::string,Variable> &variables,
+        std::map<std::string, Variable *> &variables,
         std::stack<std::string> &stackVariablesId,
-        std::stack<Variable> &stack
+        std::stack<Variable *> &stack
         ) const {
-    stack.push(Variable(value));
+    stack.push(new VariableString(value));
 }
