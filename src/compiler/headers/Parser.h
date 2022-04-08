@@ -17,8 +17,7 @@ private:
     enum GrammarType {
         GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
-        GR_VAR_INCREMENT,
-        GR_VAR_DECREMENT,
+        GR_VAR_INCREMENT_DECREMENT,
         GR_FUNC,
         GR_IF,
         GR_LOOP_WHILE,
@@ -36,11 +35,11 @@ private:
 
     void parseAssignmentComplex(std::list<Token>&);
     void parseAssignment(std::list<Token>&);
-    void parseIncrement(std::list<Token>&);
-    void parseDecrement(std::list<Token>&);
+    void parseIncrementDecrement(std::list<Token>&);
     std::list<Expression*> parseOperations(std::list<Token>&);
     void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
     void parseFuncDefinition(std::list<Token>&);
+    void parseIf(std::list<Token>&);
 
     std::list<Expression*> toPostfix(std::list<Expression*>&);
     short operatorPriority(const ExpressionType& type);

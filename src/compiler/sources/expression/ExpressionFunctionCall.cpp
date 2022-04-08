@@ -11,9 +11,10 @@ name(value) {
 
 void
 ExpressionFunctionCall::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack
+        std::list<std::map<std::string, Variable*>*> variablesGlobal,
+        std::map<std::string, Variable*>* variables,
+        std::stack<std::string>& stackVariablesId,
+        std::stack<Variable*>& stack
         ) const {
 
 }

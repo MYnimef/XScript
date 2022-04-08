@@ -11,9 +11,10 @@ public:
     explicit ExpressionOpSum();
 
     void action(
-            std::map<std::string, Variable *> &variables,
+            std::list<std::map<std::string, Variable*>*> variablesGlobal,
+            std::map<std::string, Variable*>* variables,
             std::stack<std::string>& stackVariablesId,
-            std::stack<Variable *> &stack
+            std::stack<Variable*>& stack
     ) const override;
 
     [[nodiscard]] std::string toString() const override;

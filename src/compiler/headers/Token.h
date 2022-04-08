@@ -15,6 +15,7 @@ enum TokenType {
     STRING,
     BOOL,
 
+    KEY_WORD,
     FUNC_KW,
     IF_KW,
     ELSE_KW,
@@ -26,9 +27,10 @@ enum TokenType {
     L_BRACE,
     R_BRACE,
 
-    ASSIGN_OP,
     INCREMENT_OP,
     DECREMENT_OP,
+    OPERATOR,
+    ASSIGN_OP,
     SUM_OP,
     SUB_OP,
     MULT_OP,

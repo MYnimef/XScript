@@ -1,14 +1,18 @@
 //
-// Created by Ivan Markov on 07.04.2022.
+// Created by Ivan Markov on 08.04.2022.
 //
 
 #pragma once
 
 #include "Expression.h"
+#include "Node.h"
 
-class ExpressionOpSub final: public Expression {
+class ExpressionIf final: public Expression {
+private:
+    const Node* block;
+
 public:
-    explicit ExpressionOpSub();
+    explicit ExpressionIf(const Node* value);
 
     void action(
             std::list<std::map<std::string, Variable*>*> variablesGlobal,

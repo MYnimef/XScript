@@ -9,10 +9,12 @@ ExpressionOpDiv::ExpressionOpDiv() {
 }
 
 void ExpressionOpDiv::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack
+        std::list<std::map<std::string, Variable*>*> variablesGlobal,
+        std::map<std::string, Variable*>* variables,
+        std::stack<std::string>& stackVariablesId,
+        std::stack<Variable*>& stack
         ) const {
+
     auto arg2 = stack.top();
     stack.pop();
     auto arg1 = stack.top();

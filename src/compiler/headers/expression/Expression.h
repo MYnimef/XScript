@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <list>
 #include <string>
 #include <map>
 #include <stack>
@@ -23,6 +24,8 @@ enum ExpressionType {
     EXP_OP_SUBTRACTION,
     EXP_OP_MULTIPLICATION,
     EXP_OP_DIVISION,
+
+    EXP_IF,
 
     EXP_LOOP_WHILE,
     EXP_LOOP_FOR,
@@ -49,9 +52,10 @@ public:
     [[nodiscard]] ExpressionType getType() const;
 
     virtual void action(
-            std::map<std::string, Variable *> &variables,
+            std::list<std::map<std::string, Variable*>*> variablesGlobal,
+            std::map<std::string, Variable*>* variables,
             std::stack<std::string>& stackVariablesId,
-            std::stack<Variable *> &stack
+            std::stack<Variable*>& stack
             ) const = 0;
 
     [[nodiscard]] bool isOperator() const;
@@ -65,10 +69,12 @@ public:
         type = EXP_BRACKET_L;
     }
 
-    virtual void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {
+    void action(
+            std::list<std::map<std::string, Variable*>*> variablesGlobal,
+            std::map<std::string, Variable*>* variables,
+            std::stack<std::string>& stackVariablesId,
+            std::stack<Variable*>& stack
+            ) const override {
 
     }
 
@@ -83,10 +89,12 @@ public:
         type = EXP_BRACKET_R;
     }
 
-    virtual void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {
+    void action(
+            std::list<std::map<std::string, Variable*>*> variablesGlobal,
+            std::map<std::string, Variable*>* variables,
+            std::stack<std::string>& stackVariablesId,
+            std::stack<Variable*>& stack
+           ) const override {
 
     }
 

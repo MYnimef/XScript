@@ -17,6 +17,9 @@ private:
     void addToken(const std::string& input, const int& lineNum);
     bool checkToken(const std::string&);
 
+    TokenType checkKeyWord(const std::string& input);
+    TokenType checkOperator(const std::string& input);
+
 public:
     Lexer();
     ~Lexer();

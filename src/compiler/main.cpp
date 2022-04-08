@@ -24,7 +24,7 @@ int main() {
     compiler.execute(parser.getTree());
 
     std::cout << std::endl;
-    for (const auto& var: compiler.getVariables()) {
+    for (const auto& var: *compiler.getVariables()) {
         std::cout << std::endl << var.first + " = " + var.second->getString();
     }
     std::cout << std::endl;

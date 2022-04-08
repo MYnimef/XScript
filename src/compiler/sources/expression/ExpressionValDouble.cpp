@@ -11,9 +11,12 @@ value(std::stod(value)) {
 }
 
 void ExpressionValDouble::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack) const {
+        std::list<std::map<std::string, Variable*>*> variablesGlobal,
+        std::map<std::string, Variable*>* variables,
+        std::stack<std::string>& stackVariablesId,
+        std::stack<Variable*>& stack
+        ) const {
+
     stack.push(new VariableDouble(value));
 }
 

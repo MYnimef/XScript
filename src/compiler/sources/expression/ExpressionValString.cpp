@@ -11,10 +11,12 @@ ExpressionValString::ExpressionValString(const std::string& value) {
 }
 
 void ExpressionValString::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack
+        std::list<std::map<std::string, Variable*>*> variablesGlobal,
+        std::map<std::string, Variable*>* variables,
+        std::stack<std::string>& stackVariablesId,
+        std::stack<Variable*>& stack
         ) const {
+
     stack.push(new VariableString(value));
 }
 

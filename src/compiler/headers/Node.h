@@ -21,7 +21,7 @@ public:
 
     void addChildFront(Node *child);
     void addChildBack(Node *child);
-    std::list<Node*> getChildren();
+    [[nodiscard]] std::list<Node*> getChildren() const;
 
-    std::string toString(int gen = 0);
+    [[nodiscard]] std::string toString(int gen = 0) const;
 };

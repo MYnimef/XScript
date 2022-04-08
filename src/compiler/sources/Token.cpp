@@ -63,12 +63,12 @@ std::string Token::typeToString() const {
         case R_BRACE:
             return "}";
 
-        case ASSIGN_OP:
-            return "=";
         case INCREMENT_OP:
             return "I";
         case DECREMENT_OP:
             return "D";
+        case ASSIGN_OP:
+            return "=";
         case SUM_OP:
             return "+";
         case SUB_OP:
@@ -82,6 +82,8 @@ std::string Token::typeToString() const {
             return ",";
         case SEMICOLON:
             return ";";
+        default:
+            return "you shouldnt see this";
     }
 }
 
