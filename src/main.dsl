@@ -1,20 +1,14 @@
-a= 5
 
-d =4
 
-var1 = 75
+pi = 3.14;
 
-c = var1 - d
+a = 2 / 7
 
-if (a = 3) {
-    else
-}
+b = 5
 
-double = 3.14
+b--
+b++
+b++
 
-p=4
-
-x = int(123)
-if (x) {
-    print("positive 23423")
-}
+c = 9
+c -= c

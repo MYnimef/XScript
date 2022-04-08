@@ -4,24 +4,22 @@
 
 #pragma once
 
-#include "Token.h"
+#include <list>
+#include "Expression.h"
 
 class Node final {
 private:
-    Token token;
-    Node* left;
-    Node* right;
+    const Expression* expression;
+    std::list<Node*> nodes;
 
 public:
-    Node(const Token&);
+    Node(const Expression*);
     ~Node();
 
-    Type getType();
-    std::string getValue();
+    ExpressionType getType();
+    [[nodiscard]] const Expression* getToken() const;
 
-    void setLeft(Node*);
-    const Node& getLeft();
-
-    void setRight(Node*);
-    const Node& getRight();
+    void addChildFront(Node *child);
+    void addChildBack(Node *child);
+    std::list<Node*> getChild();
 };

@@ -4,37 +4,33 @@
 
 #include "Node.h"
 
-Node::Node(const Token& token)
-: token(token) {
-    left = nullptr;
-    right = nullptr;
+Node::Node(const Expression* expression):
+expression(expression) {
 }
 
 Node::~Node() {
-    delete right;
-    delete left;
+    delete expression;
+    for (auto child: nodes) {
+        delete child;
+    }
 }
 
-Type Node::getType() {
-    return token.getType();
+ExpressionType Node::getType() {
+    return expression->getType();
 }
 
-std::string Node::getValue() {
-    return token.getValue();
+void Node::addChildFront(Node* child) {
+    nodes.push_front(child);
 }
 
-void Node::setLeft(Node* node) {
-    left = node;
+void Node::addChildBack(Node* child) {
+    nodes.push_back(child);
 }
 
-const Node& Node::getLeft() {
-    return *left;
+std::list<Node *> Node::getChild() {
+    return nodes;
 }
 
-void Node::setRight(Node* node) {
-    right = node;
-}
-
-const Node& Node::getRight() {
-    return *right;
+const Expression* Node::getToken() const {
+    return expression;
 }
