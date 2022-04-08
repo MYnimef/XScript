@@ -9,7 +9,7 @@ Compiler::Compiler() {
 }
 
 Compiler::~Compiler() {
-    for (auto var: variables) {
+    for (const auto& var: variables) {
         delete var.second;
     }
 

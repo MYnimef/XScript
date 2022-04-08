@@ -9,6 +9,7 @@
 class Variable {
 public:
     explicit Variable();
+    virtual ~Variable();
 
     virtual Variable* operator + (const Variable&) = 0;
     virtual Variable* operator - (const Variable&) = 0;

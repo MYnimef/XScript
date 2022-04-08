@@ -11,42 +11,34 @@ value(value) {
 }
 
 Variable* VariableDouble::operator + (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() + second.getDouble());
-        case STRING_VAR:
-            return new VariableString(getString() + second.getString());
+    if (second.getType() == STRING_VAR) {
+        return new VariableString(getString() + second.getString());
+    } else {
+        return new VariableDouble(getDouble() + second.getDouble());
     }
 }
 
 Variable* VariableDouble::operator - (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() - second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() - second.getDouble());
     }
 }
 
 Variable* VariableDouble::operator * (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() * second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() * second.getDouble());
     }
 }
 
 Variable* VariableDouble::operator / (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() * second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() / second.getDouble());
     }
 }
 

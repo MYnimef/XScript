@@ -8,6 +8,10 @@ Variable::Variable() {
 
 }
 
+Variable::~Variable() {
+
+}
+
 Variable::VarType Variable::getType() const {
     return type;
 }
