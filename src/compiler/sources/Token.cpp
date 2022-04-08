@@ -33,7 +33,7 @@ std::string Token::toString() const {
 std::string Token::typeToString() const {
     switch (type) {
         case ID:
-            return "id";
+            return "@";
         case DOUBLE_DIGIT:
             return "d";
         case INT_DIGIT:
@@ -77,9 +77,9 @@ std::string Token::typeToString() const {
             return "/";
 
         case COMMA:
-            return "comma";
+            return ",";
         case SEMICOLON:
-            return "semicolon";
+            return ";";
     }
 }
 

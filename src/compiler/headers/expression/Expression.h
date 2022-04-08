@@ -43,6 +43,7 @@ protected:
 
 public:
     Expression();
+    virtual ~Expression();
 
     [[nodiscard]] ExpressionType getType() const;
 

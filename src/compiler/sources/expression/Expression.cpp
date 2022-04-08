@@ -4,6 +4,14 @@
 
 #include "Expression.h"
 
+Expression::Expression() {
+
+}
+
+Expression::~Expression() {
+
+}
+
 ExpressionType Expression::getType() const {
     return type;
 }
@@ -16,8 +24,4 @@ bool Expression::isOperator() const {
             type == EXP_OP_MULTIPLICATION ||
             type == EXP_OP_DIVISION
     );
-}
-
-Expression::Expression() {
-    type = EXP_FUNC;
 }

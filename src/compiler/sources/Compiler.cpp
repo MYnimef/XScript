@@ -21,13 +21,13 @@ Compiler::~Compiler() {
 }
 
 void Compiler::execute(Node* tree) {
-    auto child = tree->getChild();
+    auto child = tree->getChildren();
 
-    for (auto node: tree->getChild()) {
+    for (auto node: tree->getChildren()) {
         execute(node);
     }
 
-    tree->getToken()->action(variables, stackVariablesId, stack);
+    tree->getExpression()->action(variables, stackVariablesId, stack);
 }
 
 const std::map<std::string, Variable*> &Compiler::getVariables() const {

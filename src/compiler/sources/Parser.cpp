@@ -20,16 +20,16 @@
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(id[\+\-\*\/]=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" ) },
-    { GR_VAR_ASSIGNMENT,         std::regex( R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" )           },
-    { GR_VAR_INCREMENT,          std::regex( R"(idI)" )                                                                                                           },
-    { GR_VAR_DECREMENT,          std::regex( R"(idD)" )                                                                                                           },
-    { GR_FUNC,                   std::regex( R"(id\(.*\))" )                                                                                                      },
-    { GR_IF,                     std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                                        },
-    { GR_LOOP_WHILE,             std::regex( R"(while\(.*\)\{.*\})" )                                                                                             },
-    { GR_LOOP_FOR,               std::regex( R"(for\(.*\)\{.*\})" )                                                                                               },
-    { GR_FUNC_DEFINITION,        std::regex( R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})" )                                                                        },
-    { GR_CODE_BLOCK,             std::regex( R"(\{.*\})" )                                                                                                        }
+    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(@[\+\-\*\/]=(\-)?([\(]*((@\(.*\))|[@ids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@ids])[\)]*)" ) },
+    { GR_VAR_ASSIGNMENT,         std::regex( R"(@=(\-)?([\(]*((@\(.*\))|[@ids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@ids])[\)]*)" )           },
+    { GR_VAR_INCREMENT,          std::regex( R"(@I)" )                                                                                     },
+    { GR_VAR_DECREMENT,          std::regex( R"(@D)" )                                                                                     },
+    { GR_FUNC,                   std::regex( R"(@\(.*\))" )                                                                                },
+    { GR_IF,                     std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                 },
+    { GR_LOOP_WHILE,             std::regex( R"(while\(.*\)\{.*\})" )                                                                      },
+    { GR_LOOP_FOR,               std::regex( R"(for\(.*\)\{.*\})" )                                                                        },
+    { GR_FUNC_DEFINITION,        std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                     },
+    { GR_CODE_BLOCK,             std::regex( R"(\{.*\})" )                                                                                 }
 }) {
     tree = new Node(new ExpressionFunctionCall("main"));
 }
@@ -282,7 +282,7 @@ void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token
         localString += localToken.typeToString();
     }
 
-    if (localString == "id") {
+    if (localString == "@") {
         expressions.emplace_back(new ExpressionVarCall(localTokens.front().getValue()));
     } else if (localString == "i") {
         expressions.emplace_back(new ExpressionValInteger(localTokens.front().getValue()));
@@ -290,7 +290,7 @@ void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token
         expressions.emplace_back(new ExpressionValDouble(localTokens.front().getValue()));
     } else if (localString == "s") {
         expressions.emplace_back(new ExpressionValString(localTokens.front().getValue()));
-    } else if (std::regex_match(localString, std::regex(R"(id\(.*\))"))) {
+    } else if (std::regex_match(localString, std::regex(R"(@\(.*\))"))) {
 
     } else if (!localTokens.empty()) {
         expressions.splice(expressions.end(), parseOperations(localTokens));
@@ -399,7 +399,7 @@ Node* Parser::addNodeExpr(const std::list<Expression*>& postfix) {
 
     for (const auto& exp: postfix) {
         Node* node = new Node(exp);
-        if (node->getToken()->isOperator()) {
+        if (node->getExpression()->isOperator()) {
             node->addChildFront(st.top());
             st.pop();
             node->addChildFront(st.top());
