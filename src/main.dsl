@@ -1,36 +1,14 @@
 
 
-func gg () {
+pi = 3.14;
 
-    a = 5
+a = 2 / 7
 
+b = 5
 
-}
+b--
+b++
+b++
 
-func gg (ff) {
-
-
-    a = 5
-
-
-}
-
-var calc=2 *
- (5 - 8)
-
-var a
-=
-calc + 7 *2
-
-var c =
-1 * (6 +
-7 * (4 + 5) - 7)
-+ 9 * 0
-
-c = c + "res" + 6
-
-var dima = "дима" * 7
-
-let pi = 3.14
-
-var gg = 2 / 3
+c = 9
+c -= c

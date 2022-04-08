@@ -12,7 +12,7 @@
 class Lexer final {
 private:
     const std::map<TokenType, std::regex> lexems;
-    std::list<Token*> tokens;
+    std::list<Token> tokens;
 
     void addToken(const std::string& input, const int& lineNum);
     bool checkToken(const std::string&);
@@ -21,5 +21,5 @@ public:
     Lexer();
     ~Lexer();
     void scanFile(const std::string&);
-    std::list<Token*> getTokens();
+    std::list<Token> getTokens();
 };

@@ -14,8 +14,6 @@ enum TokenType {
     INT_DIGIT,
     STRING,
 
-    VAR_KW,
-    LET_KW,
     FUNC_KW,
     IF_KW,
     ELSE_KW,
@@ -28,6 +26,8 @@ enum TokenType {
     R_BRACE,
 
     ASSIGN_OP,
+    INCREMENT_OP,
+    DECREMENT_OP,
     SUM_OP,
     SUB_OP,
     MULT_OP,
@@ -50,9 +50,9 @@ public:
     [[nodiscard]] TokenType getType() const;
     [[nodiscard]] std::string getValue() const;
 
-    std::string toString();
-    std::string typeToString();
+    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string typeToString() const;
 
-    bool isOperator();
-    bool isKeyWord();
+    [[nodiscard]] bool isOperator() const;
+    [[nodiscard]] bool isKeyWord() const;
 };

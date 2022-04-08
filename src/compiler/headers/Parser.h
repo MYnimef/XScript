@@ -15,9 +15,10 @@
 class Parser final {
 private:
     enum GrammarType {
-        GR_LET_INITIALIZATION,
-        GR_VAR_INITIALIZATION,
+        GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
+        GR_VAR_INCREMENT,
+        GR_VAR_DECREMENT,
         GR_FUNC,
         GR_IF,
         GR_LOOP_WHILE,
@@ -29,25 +30,27 @@ private:
     Node* tree;
     std::map<std::string, Node*> functions;
 
-    void addTokensLine(std::list<Token*>&);
-    std::list<Expression*>* toPostfix(std::list<Expression*>&);
+    void addTokensLine(std::list<Token>&);
+    void generateExpression(std::list<Token>&);
+    GrammarType checkGrammar(std::list<Token>&);
 
-    void generateExpression(std::list<Token*>&);
-    GrammarType checkGrammar(std::list<Token*>&);
+    void parseAssignmentComplex(std::list<Token>&);
+    void parseAssignment(std::list<Token>&);
+    void parseIncrement(std::list<Token>&);
+    void parseDecrement(std::list<Token>&);
+    std::list<Expression*> parseOperations(std::list<Token>&);
+    void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
+    void parseFuncDefinition(std::list<Token>&);
 
-    std::list<Expression*>* parseAssignment(ExpressionType, std::list<Token*>&);
-    std::list<Expression*>* parseOperations(std::list<Token*>&);
-    void subOperations(std::list<Expression*>* expressions, std::stack<Token*>& stack, bool bracketsOver);
-    void parseFuncDefinition(std::list<Token*>&);
-
-    short operatorPriority(const std::string&);
+    std::list<Expression*> toPostfix(std::list<Expression*>&);
+    short operatorPriority(const ExpressionType& type);
     Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
     explicit Parser(const std::string& name);
-    Parser(const std::map<GrammarType, std::regex>&);
+    explicit Parser(const std::map<GrammarType, std::regex>&);
     ~Parser();
 
-    void addTokens(const std::list<Token*>&);
+    void addTokens(const std::list<Token>&);
     Node* getTree();
 };

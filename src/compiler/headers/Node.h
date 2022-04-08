@@ -9,20 +9,17 @@
 
 class Node final {
 private:
-    Expression token;
+    const Expression* expression;
     std::list<Node*> nodes;
 
 public:
-    Node(const Expression&);
+    Node(const Expression*);
     ~Node();
 
     ExpressionType getType();
-    std::string getValue();
-    Expression getToken();
+    [[nodiscard]] const Expression* getToken() const;
 
     void addChildFront(Node *child);
     void addChildBack(Node *child);
     std::list<Node*> getChild();
-
-    std::string printChild(int = 1);
 };

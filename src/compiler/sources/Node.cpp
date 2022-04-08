@@ -4,19 +4,19 @@
 
 #include "Node.h"
 
-Node::Node(const Expression& token)
-: token(token) {
+Node::Node(const Expression* expression):
+expression(expression) {
 }
 
 Node::~Node() {
+    delete expression;
+    for (auto child: nodes) {
+        delete child;
+    }
 }
 
 ExpressionType Node::getType() {
-    return token.getType();
-}
-
-std::string Node::getValue() {
-    return token.getValue();
+    return expression->getType();
 }
 
 void Node::addChildFront(Node* child) {
@@ -27,24 +27,10 @@ void Node::addChildBack(Node* child) {
     nodes.push_back(child);
 }
 
-std::string Node::printChild(int gen) {
-    std::string tab;
-    for (int i = 0; i < gen; i++) {
-        tab += "    ";
-    }
-
-    std::string res = getValue();
-    for (auto node: nodes) {
-        res += "\n" + tab + node->printChild(gen + 1);
-    }
-
-    return res;
-}
-
 std::list<Node *> Node::getChild() {
     return nodes;
 }
 
-Expression Node::getToken() {
-    return token;
+const Expression* Node::getToken() const {
+    return expression;
 }

@@ -26,11 +26,11 @@ std::string Token::getValue() const {
     return value;
 }
 
-std::string Token::toString() {
+std::string Token::toString() const {
     return "Token: " + typeToString() + ", Value: " + value;
 }
 
-std::string Token::typeToString() {
+std::string Token::typeToString() const {
     switch (type) {
         case ID:
             return "id";
@@ -41,10 +41,6 @@ std::string Token::typeToString() {
         case STRING:
             return "s";
 
-        case VAR_KW:
-            return "var";
-        case LET_KW:
-            return "let";
         case FUNC_KW:
             return "func";
         case IF_KW:
@@ -67,6 +63,10 @@ std::string Token::typeToString() {
 
         case ASSIGN_OP:
             return "=";
+        case INCREMENT_OP:
+            return "I";
+        case DECREMENT_OP:
+            return "D";
         case SUM_OP:
             return "+";
         case SUB_OP:
@@ -83,7 +83,7 @@ std::string Token::typeToString() {
     }
 }
 
-bool Token::isOperator() {
+bool Token::isOperator() const {
     return (
             type == ASSIGN_OP ||
             type == SUM_OP ||
@@ -93,10 +93,8 @@ bool Token::isOperator() {
             );
 }
 
-bool Token::isKeyWord() {
+bool Token::isKeyWord() const {
     return (
-            type == VAR_KW ||
-            type == LET_KW ||
             type == FUNC_KW ||
             type == IF_KW ||
             type == ELSE_KW ||
