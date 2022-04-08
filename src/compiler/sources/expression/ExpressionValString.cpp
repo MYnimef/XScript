@@ -17,3 +17,7 @@ void ExpressionValString::action(
         ) const {
     stack.push(new VariableString(value));
 }
+
+std::string ExpressionValString::toString() const {
+    return value;
+}

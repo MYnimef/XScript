@@ -17,3 +17,7 @@ ExpressionFunctionCall::action(
         ) const {
 
 }
+
+std::string ExpressionFunctionCall::toString() const {
+    return "function " + name;
+}

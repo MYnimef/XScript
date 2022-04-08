@@ -22,3 +22,7 @@ void ExpressionValInteger::action(
         ) const {
     stack.push(new VariableInteger(value));
 }
+
+std::string ExpressionValInteger::toString() const {
+    return std::to_string(value);
+}

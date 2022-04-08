@@ -18,6 +18,8 @@ int main() {
     Parser parser("main");
     parser.addTokens(lexer.getTokens());
 
+    std::cout << std::endl << parser.getTree()->toString() << std::endl;
+
     Compiler compiler;
     compiler.execute(parser.getTree());
 

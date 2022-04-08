@@ -35,3 +35,7 @@ void ExpressionVarCall::action(
         throw std::overflow_error("usage of undeclared var");
     }
 }
+
+std::string ExpressionVarCall::toString() const {
+    return id;
+}

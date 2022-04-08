@@ -22,4 +22,6 @@ public:
     void addChildFront(Node *child);
     void addChildBack(Node *child);
     std::list<Node*> getChildren();
+
+    std::string toString(int gen = 0);
 };

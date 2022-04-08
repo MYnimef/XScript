@@ -22,3 +22,7 @@ void ExpressionOpSub::action(
     delete arg1;
     delete arg2;
 }
+
+std::string ExpressionOpSub::toString() const {
+    return "-";
+}

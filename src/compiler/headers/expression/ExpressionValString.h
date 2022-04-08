@@ -20,4 +20,6 @@ public:
             std::stack<std::string>& stackVariablesId,
             std::stack<Variable *> &stack
     ) const;
+
+    [[nodiscard]] std::string toString() const override;
 };

@@ -22,3 +22,7 @@ void ExpressionOpMult::action(
     delete arg1;
     delete arg2;
 }
+
+std::string ExpressionOpMult::toString() const {
+    return "*";
+}

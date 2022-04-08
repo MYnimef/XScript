@@ -20,3 +20,7 @@ void ExpressionOpAssignment::action(
 
     stack.pop();
 }
+
+std::string ExpressionOpAssignment::toString() const {
+    return "=";
+}

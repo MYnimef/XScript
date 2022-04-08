@@ -16,3 +16,7 @@ void ExpressionVarInit::action(
         ) const {
     stackVariablesId.push(id);
 }
+
+std::string ExpressionVarInit::toString() const {
+    return id;
+}

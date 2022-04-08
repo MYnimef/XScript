@@ -16,3 +16,7 @@ void ExpressionValDouble::action(
         std::stack<Variable *> &stack) const {
     stack.push(new VariableDouble(value));
 }
+
+std::string ExpressionValDouble::toString() const {
+    return std::to_string(value);
+}

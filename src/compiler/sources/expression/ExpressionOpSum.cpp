@@ -22,3 +22,7 @@ void ExpressionOpSum::action(
     delete arg1;
     delete arg2;
 }
+
+std::string ExpressionOpSum::toString() const {
+    return "+";
+}

@@ -34,3 +34,17 @@ std::list<Node *> Node::getChildren() {
 const Expression* Node::getExpression() const {
     return expression;
 }
+
+std::string Node::toString(int gen) {
+    std::string tab;
+    for (int i = 0; i <= gen; i++) {
+        tab += "    ";
+    }
+
+    std::string res = expression->toString();
+    for (auto node: children) {
+        res += "\n" + tab + node->toString(gen + 1);
+    }
+
+    return res;
+}

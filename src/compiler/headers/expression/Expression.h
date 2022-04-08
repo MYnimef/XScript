@@ -54,6 +54,8 @@ public:
             ) const = 0;
 
     [[nodiscard]] bool isOperator() const;
+
+    [[nodiscard]] virtual std::string toString() const = 0;
 };
 
 class ExpressionBracketL: public Expression {
@@ -65,7 +67,13 @@ public:
     virtual void action(
             std::map<std::string, Variable *> &variables,
             std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {}
+            std::stack<Variable *> &stack) const override {
+
+    }
+
+    [[nodiscard]] std::string toString() const override {
+        return "(";
+    }
 };
 
 class ExpressionBracketR: public Expression {
@@ -77,5 +85,11 @@ public:
     virtual void action(
             std::map<std::string, Variable *> &variables,
             std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {}
+            std::stack<Variable *> &stack) const override {
+
+    }
+
+    [[nodiscard]] std::string toString() const override {
+        return ")";
+    }
 };
