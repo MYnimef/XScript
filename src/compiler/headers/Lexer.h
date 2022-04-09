@@ -11,14 +11,25 @@
 
 class Lexer final {
 private:
-    const std::map<TokenType, std::regex> lexems;
+    enum Lexem {
+        LEX_ONE_CHAR,
+        LEX_TWO_CHAR,
+        LEX_KEY_WORD,
+        LEX_STRING,
+        LEX_INT_DIGIT,
+        LEX_DOUBLE_DIGIT,
+        LEX_ID,
+    };
+
+    const std::map<Lexem, std::regex> lexems;
     std::list<Token> tokens;
 
     void addToken(const std::string& input, const int& lineNum);
     bool checkToken(const std::string&);
 
     TokenType checkKeyWord(const std::string& input);
-    TokenType checkOperator(const std::string& input);
+    TokenType checkOneChar(const std::string& input);
+    TokenType checkTwoChar(const std::string& input);
 
 public:
     Lexer();

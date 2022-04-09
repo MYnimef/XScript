@@ -42,7 +42,6 @@ std::string Token::typeToString() const {
             return "s";
         case BOOL:
             return "b";
-
         case FUNC_KW:
             return "func";
         case IF_KW:
@@ -53,7 +52,6 @@ std::string Token::typeToString() const {
             return "while";
         case FOR_KW:
             return "for";
-
         case L_BRACKET:
             return "(";
         case R_BRACKET:
@@ -62,7 +60,6 @@ std::string Token::typeToString() const {
             return "{";
         case R_BRACE:
             return "}";
-
         case INCREMENT_OP:
             return "I";
         case DECREMENT_OP:
@@ -77,13 +74,24 @@ std::string Token::typeToString() const {
             return "*";
         case DIV_OP:
             return "/";
-
         case COMMA:
             return ",";
         case SEMICOLON:
             return ";";
-        default:
-            return "you shouldnt see this";
+        case OR_OP:
+            return "|";
+        case AND_OP:
+            return "&";
+        case GREATER_OP:
+            return ">";
+        case SMALLER_OP:
+            return "<";
+        case GREATER_OR_EQUAL_OP:
+            return "G";
+        case SMALLER_OR_EQUAL_OP:
+            return "S";
+        case EQUAL_OP:
+            return "E";
     }
 }
 

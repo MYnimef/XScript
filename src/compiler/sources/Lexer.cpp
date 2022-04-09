@@ -6,21 +6,13 @@
 #include "Lexer.h"
 
 Lexer::Lexer(): lexems({
-    { ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" )            },
-    { DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" )       }, // can be 0 but can't start with 0
-    { INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )                  }, // can be 0 but can't start with 0
-    { STRING,       std::regex( R"("[^"]*")" )                          },
-    { BOOL,         std::regex( R"((true)|(false))" )                   },
-    { KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(for))" ) },
-    { L_BRACKET,    std::regex( R"(\()" )                               }, // can be only (
-    { R_BRACKET,    std::regex( R"(\))" )                               }, // can be only )
-    { L_BRACE,      std::regex( R"(\{)" )                               }, // can be only {
-    { R_BRACE,      std::regex( R"(\})" )                               }, // can be only }
-    { INCREMENT_OP, std::regex( R"(\+\+)" )                             },
-    { DECREMENT_OP, std::regex( R"(\-\-)" )                             },
-    { OPERATOR,     std::regex( R"([\+\-\*\/=])" )                      },
-    { COMMA,        std::regex( R"(,)")                                 },
-    { SEMICOLON,    std::regex( R"(;)" )                                },
+    {LEX_ONE_CHAR,     std::regex(R"([;,\+\-\*\/=\}\{\)\(<>])" )                          },
+    {LEX_TWO_CHAR,     std::regex(R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(<=)|(>=))" )         },
+    {LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(for)|(true)|(false))" ) },
+    {LEX_STRING,       std::regex( R"("[^"]*")" )                                         },
+    {LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )                                 },
+    {LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" )                      },
+    {LEX_ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" )                           },
 }) {
 
 }
@@ -56,7 +48,7 @@ void Lexer::scanFile(const std::string& filename) {
                         startIndex = endIndex;
                     } else if (endIndex == line.size()) {
                         addToken(newStr, i);
-                        addToken(";", i);
+                        tokens.emplace_back(SEMICOLON, ";");
                     }
 
                     oldStr = newStr;
@@ -78,27 +70,36 @@ bool Lexer::checkToken(const std::string& input) {
 }
 
 void Lexer::addToken(const std::string& input, const int& lineNum) {
-    bool didFind = false;
-    TokenType type;
-
     for (const auto& lexem: lexems) {
         if (regex_match(input, lexem.second)) {
-            type = lexem.first;
-            didFind = true;
+            switch (lexem.first) {
+                case LEX_ONE_CHAR:
+                    tokens.emplace_back(checkOneChar(input), input);
+                    break;
+                case LEX_TWO_CHAR:
+                    tokens.emplace_back(checkTwoChar(input), input);
+                    break;
+                case LEX_KEY_WORD:
+                    tokens.emplace_back(checkKeyWord(input), input);
+                    break;
+                case LEX_STRING:
+                    tokens.emplace_back(STRING, input);
+                    break;
+                case LEX_INT_DIGIT:
+                    tokens.emplace_back(INT_DIGIT, input);
+                    break;
+                case LEX_DOUBLE_DIGIT:
+                    tokens.emplace_back(DOUBLE_DIGIT, input);
+                    break;
+                case LEX_ID:
+                    tokens.emplace_back(ID, input);
+                    break;
+            }
+            return;
         }
     }
 
-    if (didFind) {
-        if (type == KEY_WORD) {
-            type = checkKeyWord(input);
-        } else if (type == OPERATOR) {
-            type = checkOperator(input);
-        }
-
-        tokens.emplace_back(type, input);
-    } else {
-        throw std::invalid_argument("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
-    }
+    throw std::invalid_argument("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
 }
 
 std::list<Token> Lexer::getTokens() {
@@ -114,14 +115,33 @@ TokenType Lexer::checkKeyWord(const std::string& input) {
         return ELSE_KW;
     } else if (input == "while") {
         return WHILE_KW;
-    } else {
+    } else if (input == "for") {
         return FOR_KW;
+    } else {
+        return BOOL;
     }
 }
 
-TokenType Lexer::checkOperator(const std::string& input) {
-    if (input == "=") {
+//[;,\+\-\*\/=\}\{\)\(<>]
+TokenType Lexer::checkOneChar(const std::string& input) {
+    if (input == ";") {
+        return SEMICOLON;
+    } else if (input == ",") {
+        return COMMA;
+    } else if (input == "{") {
+        return L_BRACE;
+    } else if (input == "}") {
+        return R_BRACE;
+    } else if (input == "(") {
+        return L_BRACKET;
+    } else if (input == ")") {
+        return R_BRACKET;
+    } else if (input == "=") {
         return ASSIGN_OP;
+    } else if (input == "<") {
+        return SMALLER_OP;
+    } else if (input == ">") {
+        return GREATER_OP;
     } else if (input == "+") {
         return SUM_OP;
     } else if (input == "-") {
@@ -130,5 +150,26 @@ TokenType Lexer::checkOperator(const std::string& input) {
         return MULT_OP;
     } else {
         return DIV_OP;
+    }
+}
+
+//(\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(<=)|(>=)
+TokenType Lexer::checkTwoChar(const std::string &input) {
+    if (input == "--") {
+        return DECREMENT_OP;
+    } else if (input == "++") {
+        return INCREMENT_OP;
+    } else if (input == "++") {
+        return INCREMENT_OP;
+    } else if (input == "&&") {
+        return AND_OP;
+    } else if (input == "||") {
+        return OR_OP;
+    } else if (input == "==") {
+        return EQUAL_OP;
+    } else if (input == "<=") {
+        return SMALLER_OR_EQUAL_OP;
+    } else {
+        return GREATER_OR_EQUAL_OP;
     }
 }

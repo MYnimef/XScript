@@ -8,34 +8,34 @@
 #include <list>
 
 enum TokenType {
-    ID,
-
-    DOUBLE_DIGIT,
-    INT_DIGIT,
+    DECREMENT_OP,
+    INCREMENT_OP,
     STRING,
+    INT_DIGIT,
+    DOUBLE_DIGIT,
+    ID,
     BOOL,
-
-    KEY_WORD,
     FUNC_KW,
     IF_KW,
     ELSE_KW,
     WHILE_KW,
     FOR_KW,
-
     L_BRACKET,
     R_BRACKET,
     L_BRACE,
     R_BRACE,
-
-    INCREMENT_OP,
-    DECREMENT_OP,
-    OPERATOR,
     ASSIGN_OP,
     SUM_OP,
     SUB_OP,
     MULT_OP,
     DIV_OP,
-
+    OR_OP,
+    AND_OP,
+    GREATER_OP,
+    SMALLER_OP,
+    GREATER_OR_EQUAL_OP,
+    SMALLER_OR_EQUAL_OP,
+    EQUAL_OP,
     COMMA,
     SEMICOLON,
 };

@@ -1,9 +1,10 @@
-a = 3
+var1 = 4
 
-if (true) {
-    a += 7
-}
+var5 = var1 * 2 * (9 + var1) - 99
 
-if (false) {
-    a += 9
+flag = false
+flag2 = true
+
+if (flag2) {
+    var5 += " completed"
 }

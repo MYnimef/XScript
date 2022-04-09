@@ -15,16 +15,17 @@
 class Parser final {
 private:
     enum GrammarType {
+        GR_CODE_BLOCK,
+        GR_FUNC,
         GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
         GR_VAR_INCREMENT_DECREMENT,
-        GR_FUNC,
         GR_IF,
         GR_LOOP_WHILE,
         GR_LOOP_FOR,
         GR_FUNC_DEFINITION,
-        GR_CODE_BLOCK,
-    };
+        };
+
     const std::map<GrammarType, std::regex> grammatics;
     Node* tree;
     std::map<std::string, Node*> functions;

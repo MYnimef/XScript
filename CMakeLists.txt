@@ -27,8 +27,25 @@ add_executable(
         src/compiler/headers/Compiler.h
         src/compiler/sources/Compiler.cpp
 
+        src/compiler/headers/CompilerArgs.h
+        src/compiler/sources/CompilerArgs.cpp
+
         src/compiler/headers/variable/Variable.h
         src/compiler/sources/variable/Variable.cpp
+
+        src/compiler/headers/variable/VariableInteger.h
+        src/compiler/sources/variable/VariableInteger.cpp
+
+        src/compiler/headers/variable/VariableDouble.h
+        src/compiler/sources/variable/VariableDouble.cpp
+
+        src/compiler/headers/variable/VariableString.h
+        src/compiler/sources/variable/VariableString.cpp
+
+        src/compiler/headers/variable/VariableBool.h
+        src/compiler/sources/variable/VariableBool.cpp
+
+        src/compiler/headers/variable/VariableList.h
 
         src/compiler/headers/expression/Expression.h
         src/compiler/sources/expression/Expression.cpp
@@ -66,20 +83,6 @@ add_executable(
         src/compiler/headers/expression/ExpressionFunctionCall.h
         src/compiler/sources/expression/ExpressionFunctionCall.cpp
 
-        src/compiler/headers/variable/VariableInteger.h
-        src/compiler/sources/variable/VariableInteger.cpp
-
-        src/compiler/headers/variable/VariableDouble.h
-        src/compiler/sources/variable/VariableDouble.cpp
-
-        src/compiler/headers/variable/VariableString.h
-        src/compiler/sources/variable/VariableString.cpp
-
-        src/compiler/headers/variable/VariableBool.h
-        src/compiler/sources/variable/VariableBool.cpp
-
-        src/compiler/headers/variable/VariableList.h
-
         src/compiler/headers/expression/ExpressionValBool.h
         src/compiler/sources/expression/ExpressionValBool.cpp
 
@@ -96,7 +99,7 @@ add_executable(
         src/compiler/sources/expression/ExpressionOpGreater.cpp
 
         src/compiler/headers/expression/ExpressionOpGreaterOrEqual.h
-         src/compiler/sources/expression/ExpressionOpGreaterOrEqual.cpp
+        src/compiler/sources/expression/ExpressionOpGreaterOrEqual.cpp
 
         src/compiler/headers/expression/ExpressionOpEqual.h
         src/compiler/sources/expression/ExpressionOpEqual.cpp
@@ -104,6 +107,9 @@ add_executable(
         src/compiler/headers/expression/ExpressionOpNotEqual.h
         src/compiler/sources/expression/ExpressionOpNotEqual.cpp
 
-        src/compiler/headers/CompilerArgs.h
-        src/compiler/sources/CompilerArgs.cpp
+        src/compiler/headers/expression/ExpressionOpLogicalOr.h
+        src/compiler/sources/expression/ExpressionOpLogicalOr.cpp
+
+        src/compiler/headers/expression/ExpressionOpLogicalAnd.h
+        src/compiler/sources/expression/ExpressionOpLogicalAnd.cpp
 )

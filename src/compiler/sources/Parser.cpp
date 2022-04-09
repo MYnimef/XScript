@@ -22,16 +22,16 @@
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@bids])[\)]*)" )  },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/])*[\(]*((@\(.*\))|[@bids])[\)]*)" )            },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                     },
-    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                   },
+    { GR_CODE_BLOCK,              std::regex( R"(\{.*\})" )                                                                                            },
+    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                           },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSE\|&])*[\(]*((@\(.*\))|[@bids])[\)]*)" )  },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=(\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSE\|&])*[\(]*((@\(.*\))|[@bids])[\)]*)" )            },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                             },
     //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
-    { GR_IF,                      std::regex( R"(if\(b\)\{.*\})" )                                    },
-    { GR_LOOP_WHILE,              std::regex( R"(while\(.*\)\{.*\})" )                                                                         },
-    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                           },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                        },
-    { GR_CODE_BLOCK,              std::regex( R"(\{.*\})" )                                                                                    }
+    { GR_IF,                      std::regex( R"(if\((\-)?([\(]*((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSE\|&])*[\(]*((@\(.*\))|[@bids])[\)]*\)\{.*\})" )  },
+    { GR_LOOP_WHILE,              std::regex( R"(while\(.*\)\{.*\})" )                                                                                 },
+    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                   },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                }
 }) {
     tree = new Node(new ExpressionFunctionCall("main"));
 }
@@ -144,20 +144,10 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
     }
     std::cout << comp;
 
-    GrammarType type;
-    bool didFind = false;
-
     for (const auto &grammar: grammatics) {
         if (std::regex_match(comp, grammar.second)) {
-            type = grammar.first;
-            didFind = true;
+            return grammar.first;
         }
-    }
-
-    if (didFind) {
-        return type;
-    } else {
-        throw std::overflow_error("wrong grammar");
     }
 }
 
