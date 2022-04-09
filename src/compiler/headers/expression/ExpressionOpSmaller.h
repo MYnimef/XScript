@@ -10,12 +10,7 @@ class ExpressionOpSmaller final: public Expression {
 public:
     explicit ExpressionOpSmaller();
 
-    void action(
-            std::list<std::map<std::string, Variable*>*> variablesGlobal,
-            std::map<std::string, Variable*>* variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable*>& stack
-    ) const override;
+    void action(const CompilerArgs& args) const override;
 
     [[nodiscard]] std::string toString() const override;
 };

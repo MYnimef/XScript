@@ -10,14 +10,9 @@ value(std::stod(value)) {
     type = EXP_DOUBLE;
 }
 
-void ExpressionValDouble::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionValDouble::action(const CompilerArgs& args) const {
 
-    stack.push(new VariableDouble(value));
+    args.stack.push(new VariableDouble(value));
 }
 
 std::string ExpressionValDouble::toString() const {

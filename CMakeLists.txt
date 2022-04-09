@@ -87,7 +87,23 @@ add_executable(
         src/compiler/sources/expression/ExpressionIf.cpp
 
         src/compiler/headers/expression/ExpressionOpSmaller.h
-        src/compiler/headers/expression/ExpressionOpSmallerOrEqual.h
         src/compiler/sources/expression/ExpressionOpSmaller.cpp
+
+        src/compiler/headers/expression/ExpressionOpSmallerOrEqual.h
         src/compiler/sources/expression/ExpressionOpSmallerOrEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpGreater.h
+        src/compiler/sources/expression/ExpressionOpGreater.cpp
+
+        src/compiler/headers/expression/ExpressionOpGreaterOrEqual.h
+         src/compiler/sources/expression/ExpressionOpGreaterOrEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpEqual.h
+        src/compiler/sources/expression/ExpressionOpEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpNotEqual.h
+        src/compiler/sources/expression/ExpressionOpNotEqual.cpp
+
+        src/compiler/headers/CompilerArgs.h
+        src/compiler/sources/CompilerArgs.cpp
 )

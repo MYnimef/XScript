@@ -15,14 +15,9 @@ value(std::stoi(value)) {
     type = EXP_INTEGER;
 }
 
-void ExpressionValInteger::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionValInteger::action(const CompilerArgs& args) const {
 
-    stack.push(new VariableInteger(value));
+    args.stack.push(new VariableInteger(value));
 }
 
 std::string ExpressionValInteger::toString() const {

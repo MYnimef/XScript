@@ -10,14 +10,9 @@ ExpressionValString::ExpressionValString(const std::string& value) {
     type = EXP_STRING;
 }
 
-void ExpressionValString::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionValString::action(const CompilerArgs& args) const {
 
-    stack.push(new VariableString(value));
+    args.stack.push(new VariableString(value));
 }
 
 std::string ExpressionValString::toString() const {

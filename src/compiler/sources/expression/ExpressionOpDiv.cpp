@@ -8,18 +8,13 @@ ExpressionOpDiv::ExpressionOpDiv() {
     type = EXP_OP_DIVISION;
 }
 
-void ExpressionOpDiv::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionOpDiv::action(const CompilerArgs& args) const {
 
-    auto arg2 = stack.top();
-    stack.pop();
-    auto arg1 = stack.top();
-    stack.pop();
-    stack.push(*arg1 / *arg2);
+    auto arg2 = args.stack.top();
+    args.stack.pop();
+    auto arg1 = args.stack.top();
+    args.stack.pop();
+    args.stack.push(*arg1 / *arg2);
 
     delete arg1;
     delete arg2;

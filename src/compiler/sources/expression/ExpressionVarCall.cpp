@@ -13,20 +13,15 @@ id(value) {
     type = EXP_ID;
 }
 
-void ExpressionVarCall::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionVarCall::action(const CompilerArgs& args) const {
 
-    for (auto scope: variablesGlobal) {
-        if (callVariableFrom(scope, stack)) {
+    for (auto scope: args.variablesGlobal) {
+        if (callVariableFrom(scope, args.stack)) {
             return;
         }
     }
 
-    if (!callVariableFrom(variables, stack)) {
+    if (!callVariableFrom(args.variables, args.stack)) {
         throw std::overflow_error("usage of undeclared var");
     }
 }

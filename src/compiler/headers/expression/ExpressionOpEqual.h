@@ -1,14 +1,14 @@
 //
-// Created by Ivan Markov on 07.04.2022.
+// Created by Ivan Markov on 09.04.2022.
 //
 
 #pragma once
 
 #include "Expression.h"
 
-class ExpressionOpSub final: public Expression {
+class ExpressionOpEqual final: public Expression {
 public:
-    explicit ExpressionOpSub();
+    explicit ExpressionOpEqual();
 
     void action(const CompilerArgs& args) const override;
 

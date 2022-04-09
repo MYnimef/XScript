@@ -10,14 +10,9 @@ value(value == "true") {
     type = EXP_BOOL;
 }
 
-void ExpressionValBool::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionValBool::action(const CompilerArgs& args) const {
 
-    stack.push(new VariableBool(value));
+    args.stack.push(new VariableBool(value));
 }
 
 std::string ExpressionValBool::toString() const {

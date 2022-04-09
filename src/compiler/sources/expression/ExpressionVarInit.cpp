@@ -9,14 +9,9 @@ id(value) {
     type = EXP_VAR_INITIALIZATION;
 }
 
-void ExpressionVarInit::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
+void ExpressionVarInit::action(const CompilerArgs& args) const {
 
-    stackVariablesId.push(id);
+    args.stackVariablesId.push(id);
 }
 
 std::string ExpressionVarInit::toString() const {

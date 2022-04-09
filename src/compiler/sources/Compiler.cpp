@@ -33,7 +33,7 @@ void Compiler::execute(const Node* tree) {
         execute(node);
     }
 
-    tree->getExpression()->action(variablesGlobal, variables, stackVariablesId, stack);
+    tree->getExpression()->action(CompilerArgs(variablesGlobal, variables, stackVariablesId, stack));
 }
 
 const std::map<std::string, Variable*>* Compiler::getVariables() const {

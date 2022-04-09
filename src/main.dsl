@@ -1,9 +1,9 @@
-dima = "dima"
+a = 3
 
 if (true) {
-    dima += " mudak"
+    a += 7
 }
 
 if (false) {
-    dima += " cool"
+    a += 9
 }

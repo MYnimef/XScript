@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include <list>
-#include <string>
-#include <map>
-#include <stack>
+#include "CompilerArgs.h"
 #include "Variable.h"
 
 enum ExpressionType {
@@ -59,12 +56,7 @@ public:
 
     [[nodiscard]] ExpressionType getType() const;
 
-    virtual void action(
-            std::list<std::map<std::string, Variable*>*> variablesGlobal,
-            std::map<std::string, Variable*>* variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable*>& stack
-            ) const = 0;
+    virtual void action(const CompilerArgs& args) const = 0;
 
     [[nodiscard]] bool isOperator() const;
 
@@ -77,12 +69,7 @@ public:
         type = EXP_BRACKET_L;
     }
 
-    void action(
-            std::list<std::map<std::string, Variable*>*> variablesGlobal,
-            std::map<std::string, Variable*>* variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable*>& stack
-            ) const override {
+    void action(const CompilerArgs& args) const override {
 
     }
 
@@ -97,12 +84,7 @@ public:
         type = EXP_BRACKET_R;
     }
 
-    void action(
-            std::list<std::map<std::string, Variable*>*> variablesGlobal,
-            std::map<std::string, Variable*>* variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable*>& stack
-           ) const override {
+    void action(const CompilerArgs& args) const override {
 
     }
 

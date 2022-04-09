@@ -10,18 +10,13 @@ block(block) {
     type = EXP_IF;
 }
 
-void ExpressionIf::action(
-        std::list<std::map<std::string, Variable*>*> variablesGlobal,
-        std::map<std::string, Variable*>* variables,
-        std::stack<std::string>& stackVariablesId,
-        std::stack<Variable*>& stack
-        ) const {
-    auto var = stack.top();
-    stack.pop();
+void ExpressionIf::action(const CompilerArgs& args) const {
+    auto var = args.stack.top();
+    args.stack.pop();
 
     if (var->getBool()) {
-        variablesGlobal.push_front(variables);
-        Compiler compiler(variablesGlobal);
+        args.variablesGlobal.push_front(args.variables);
+        Compiler compiler(args.variablesGlobal);
         compiler.execute(block);
     }
 
