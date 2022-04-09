@@ -27,9 +27,9 @@ private:
     void addToken(const std::string& input, const int& lineNum);
     bool checkToken(const std::string&);
 
-    TokenType checkKeyWord(const std::string& input);
-    TokenType checkOneChar(const std::string& input);
-    TokenType checkTwoChar(const std::string& input);
+    static TokenType checkKeyWord(const std::string& input);
+    static TokenType checkOneChar(const std::string& input);
+    static TokenType checkTwoChar(const std::string& input);
 
 public:
     Lexer();

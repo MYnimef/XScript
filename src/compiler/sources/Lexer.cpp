@@ -159,8 +159,6 @@ TokenType Lexer::checkTwoChar(const std::string &input) {
         return DECREMENT_OP;
     } else if (input == "++") {
         return INCREMENT_OP;
-    } else if (input == "++") {
-        return INCREMENT_OP;
     } else if (input == "&&") {
         return AND_OP;
     } else if (input == "||") {
