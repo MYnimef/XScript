@@ -3,21 +3,22 @@
 //
 
 #include "VariableString.h"
+#include "VariableBool.h"
 
 VariableString::VariableString(const std::string& value):
 value(value) {
     type = STRING_VAR;
 }
 
-Variable* VariableString::operator + (const Variable& second) {
+Variable* VariableString::operator + (const Variable& second) const {
     return new VariableString(getString() + second.getString());
 }
 
-Variable* VariableString::operator - (const Variable& second) {
+Variable* VariableString::operator - (const Variable& second) const {
     throw std::overflow_error("wrong operand for type string");
 }
 
-Variable* VariableString::operator * (const Variable& second) {
+Variable* VariableString::operator * (const Variable& second) const {
     if (second.getType() == INTEGER_VAR) {
         auto str = getString();
         std::string result;
@@ -30,7 +31,7 @@ Variable* VariableString::operator * (const Variable& second) {
     }
 }
 
-Variable* VariableString::operator / (const Variable& second) {
+Variable* VariableString::operator / (const Variable& second) const {
     throw std::overflow_error("wrong operand for type string");
 }
 

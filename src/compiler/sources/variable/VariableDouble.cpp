@@ -10,7 +10,7 @@ value(value) {
     type = DOUBLE_VAR;
 }
 
-Variable* VariableDouble::operator + (const Variable& second) {
+Variable* VariableDouble::operator + (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         return new VariableString(getString() + second.getString());
     } else {
@@ -18,7 +18,7 @@ Variable* VariableDouble::operator + (const Variable& second) {
     }
 }
 
-Variable* VariableDouble::operator - (const Variable& second) {
+Variable* VariableDouble::operator - (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         throw std::overflow_error("wrong operand for type string");
     } else {
@@ -26,7 +26,7 @@ Variable* VariableDouble::operator - (const Variable& second) {
     }
 }
 
-Variable* VariableDouble::operator * (const Variable& second) {
+Variable* VariableDouble::operator * (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         throw std::overflow_error("wrong operand for type string");
     } else {
@@ -34,7 +34,7 @@ Variable* VariableDouble::operator * (const Variable& second) {
     }
 }
 
-Variable* VariableDouble::operator / (const Variable& second) {
+Variable* VariableDouble::operator / (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         throw std::overflow_error("wrong operand for type string");
     } else {

@@ -29,5 +29,5 @@ void ExpressionIf::action(
 }
 
 std::string ExpressionIf::toString() const {
-    return "if\n" + block->toString(1);
+    return "if\n    " + block->toString(1);
 }

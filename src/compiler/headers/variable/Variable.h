@@ -12,10 +12,19 @@ public:
     explicit Variable();
     virtual ~Variable();
 
-    virtual Variable* operator + (const Variable&) = 0;
-    virtual Variable* operator - (const Variable&) = 0;
-    virtual Variable* operator * (const Variable&) = 0;
-    virtual Variable* operator / (const Variable&) = 0;
+    virtual Variable* operator + (const Variable&) const = 0;
+    virtual Variable* operator - (const Variable&) const = 0;
+    virtual Variable* operator * (const Variable&) const = 0;
+    virtual Variable* operator / (const Variable&) const = 0;
+
+    Variable* operator < (const Variable&) const;
+    Variable* operator <= (const Variable&) const;
+    Variable* operator > (const Variable&) const;
+    Variable* operator >= (const Variable&) const;
+    Variable* operator == (const Variable&) const;
+    Variable* operator != (const Variable&) const;
+    Variable* operator && (const Variable&) const;
+    Variable* operator || (const Variable&) const;
 
     [[nodiscard]] virtual bool getBool() const = 0;
     [[nodiscard]] virtual int getInteger() const = 0;

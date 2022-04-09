@@ -12,7 +12,7 @@ value(value) {
     type = BOOL_VAR;
 }
 
-Variable *VariableBool::operator + (const Variable& second) {
+Variable* VariableBool::operator + (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
             return new VariableBool(getBool() || second.getBool());
@@ -25,7 +25,7 @@ Variable *VariableBool::operator + (const Variable& second) {
     }
 }
 
-Variable *VariableBool::operator - (const Variable& second) {
+Variable* VariableBool::operator - (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
             return new VariableInteger(getInteger() - second.getInteger());
@@ -38,7 +38,7 @@ Variable *VariableBool::operator - (const Variable& second) {
     }
 }
 
-Variable *VariableBool::operator * (const Variable& second) {
+Variable* VariableBool::operator * (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
             return new VariableInteger(getInteger() * second.getInteger());
@@ -51,7 +51,7 @@ Variable *VariableBool::operator * (const Variable& second) {
     }
 }
 
-Variable *VariableBool::operator / (const Variable& second) {
+Variable* VariableBool::operator / (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         throw std::overflow_error("wrong operand for type string");
     } else {

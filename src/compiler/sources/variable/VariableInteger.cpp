@@ -5,13 +5,14 @@
 #include "VariableInteger.h"
 #include "VariableDouble.h"
 #include "VariableString.h"
+#include "VariableBool.h"
 
 VariableInteger::VariableInteger(int value):
 value(value) {
     type = INTEGER_VAR;
 }
 
-Variable* VariableInteger::operator + (const Variable& second) {
+Variable* VariableInteger::operator + (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
@@ -23,7 +24,7 @@ Variable* VariableInteger::operator + (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator - (const Variable& second) {
+Variable* VariableInteger::operator - (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
@@ -35,7 +36,7 @@ Variable* VariableInteger::operator - (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator * (const Variable& second) {
+Variable* VariableInteger::operator * (const Variable& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
@@ -53,7 +54,7 @@ Variable* VariableInteger::operator * (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator / (const Variable& second) {
+Variable* VariableInteger::operator / (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         throw std::overflow_error("wrong operand for type string");
     } else {

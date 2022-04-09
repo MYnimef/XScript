@@ -85,4 +85,9 @@ add_executable(
 
         src/compiler/headers/expression/ExpressionIf.h
         src/compiler/sources/expression/ExpressionIf.cpp
+
+        src/compiler/headers/expression/ExpressionOpSmaller.h
+        src/compiler/headers/expression/ExpressionOpSmallerOrEqual.h
+        src/compiler/sources/expression/ExpressionOpSmaller.cpp
+        src/compiler/sources/expression/ExpressionOpSmallerOrEqual.cpp
 )

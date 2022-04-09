@@ -13,10 +13,10 @@ private:
 public:
     explicit VariableList(std::list<Variable*> value);
 
-    Variable* operator + (const Variable&) override;
-    Variable* operator - (const Variable&) override;
-    Variable* operator * (const Variable&) override;
-    Variable* operator / (const Variable&) override;
+    Variable* operator + (const Variable&) const override;
+    Variable* operator - (const Variable&) const override;
+    Variable* operator * (const Variable&) const override;
+    Variable* operator / (const Variable&) const override;
 
     [[nodiscard]] bool getBool() const override;
     [[nodiscard]] int getInteger() const override;

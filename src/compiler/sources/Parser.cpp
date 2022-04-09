@@ -393,7 +393,7 @@ std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
 
             delete expression;
         } else if (expression->isOperator()) {
-            while (!operators.empty() && operatorPriority(type) <= operatorPriority(operators.top()->getType())) {
+            while (!operators.empty() && operatorPriority(type) >= operatorPriority(operators.top()->getType())) {
                 postfix.push_back(operators.top());
                 operators.pop();
             }
@@ -413,13 +413,19 @@ std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
 
 short Parser::operatorPriority(const ExpressionType& type) {
     if (type == EXP_OP_MULTIPLICATION || type == EXP_OP_DIVISION) {
-        return 4;
+        return 0;
     } else if (type == EXP_OP_SUM || type == EXP_OP_SUBTRACTION) {
-        return 3;
-    } else if (type == EXP_OP_ASSIGNMENT) {
+        return 1;
+    } else if (type == EXP_OP_SMALLER || type == EXP_OP_SMALLER_OR_EQUAL || type == EXP_OP_GREATER || type == EXP_OP_GREATER_OR_EQUAL) {
         return 2;
-    } else {
-        return -1;
+    } else if (type == EXP_OP_EQUAL || type == EXP_OP_NOT_EQUAL) {
+        return 3;
+    } else if (type == EXP_LOGICAL_AND) {
+        return 4;
+    } else if (type == EXP_LOGICAL_OR) {
+        return 5;
+    } else { //type == EXP_OP_ASSIGNMENT
+        return 6;
     }
 }
 
