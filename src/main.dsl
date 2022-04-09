@@ -1,10 +1,6 @@
-var1 = 4
+a = "not great"
 
-var5 = var1 * 2 * (9 + var1) - 99
-
-flag = false
-flag2 = true
-
-if (flag2) {
-    var5 += " completed"
+if (2 + 3 == 5)
+{
+    a = "great"
 }

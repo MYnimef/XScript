@@ -19,6 +19,14 @@
 #include "ExpressionVarCall.h"
 #include "ExpressionFunctionCall.h"
 #include "ExpressionIf.h"
+#include "ExpressionOpLogicalAnd.h"
+#include "ExpressionOpLogicalOr.h"
+#include "ExpressionOpEqual.h"
+#include "ExpressionOpGreaterOrEqual.h"
+#include "ExpressionOpSmallerOrEqual.h"
+#include "ExpressionOpGreater.h"
+#include "ExpressionOpSmaller.h"
+#include "ExpressionOpNotEqual.h"
 
 Parser::Parser(const std::string& name):
 grammatics({
@@ -224,8 +232,24 @@ std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
                 expressions.emplace_back(new ExpressionOpSub());
             } else if (type == MULT_OP) {
                 expressions.emplace_back(new ExpressionOpMult());
-            } else {
+            } else if (type == DIV_OP) {
                 expressions.emplace_back(new ExpressionOpDiv());
+            } else if (type == AND_OP) {
+                expressions.emplace_back(new ExpressionOpLogicalAnd());
+            } else if (type == OR_OP) {
+                expressions.emplace_back(new ExpressionOpLogicalOr());
+            } else if (type == EQUAL_OP) {
+                expressions.emplace_back(new ExpressionOpEqual());
+            } else if (type == GREATER_OR_EQUAL_OP) {
+                expressions.emplace_back(new ExpressionOpGreaterOrEqual());
+            } else if (type == SMALLER_OR_EQUAL_OP) {
+                expressions.emplace_back(new ExpressionOpSmallerOrEqual());
+            } else if (type == GREATER_OP) {
+                expressions.emplace_back(new ExpressionOpGreater());
+            } else if (type == SMALLER_OP) {
+                expressions.emplace_back(new ExpressionOpSmaller());
+            } else {
+                expressions.emplace_back(new ExpressionOpNotEqual());
             }
         } else if (type == L_BRACKET) {
             if (brackets != 0) {

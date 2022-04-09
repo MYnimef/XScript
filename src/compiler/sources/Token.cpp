@@ -101,7 +101,14 @@ bool Token::isOperator() const {
             type == SUM_OP ||
             type == SUB_OP ||
             type == MULT_OP ||
-            type == DIV_OP
+            type == DIV_OP ||
+            type == EQUAL_OP ||
+            type == SMALLER_OP ||
+            type == GREATER_OP ||
+            type == SMALLER_OR_EQUAL_OP ||
+            type == GREATER_OR_EQUAL_OP ||
+            type == AND_OP ||
+            type == OR_OP
             );
 }
 

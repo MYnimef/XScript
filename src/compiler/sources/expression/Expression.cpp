@@ -22,6 +22,14 @@ bool Expression::isOperator() const {
             type == EXP_OP_SUM ||
             type == EXP_OP_SUBTRACTION ||
             type == EXP_OP_MULTIPLICATION ||
-            type == EXP_OP_DIVISION
+            type == EXP_OP_DIVISION ||
+            type == EXP_OP_EQUAL ||
+            type == EXP_OP_NOT_EQUAL ||
+            type == EXP_OP_GREATER_OR_EQUAL ||
+            type == EXP_OP_SMALLER_OR_EQUAL ||
+            type == EXP_OP_SMALLER ||
+            type == EXP_OP_GREATER ||
+            type == EXP_LOGICAL_AND ||
+            type == EXP_LOGICAL_OR
     );
 }
