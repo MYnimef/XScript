@@ -157,6 +157,8 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
             return grammar.first;
         }
     }
+
+    throw std::overflow_error("wrong grammar");
 }
 
 void Parser::parseAssignmentComplex(std::list<Token>& tokens) {

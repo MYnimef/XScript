@@ -43,7 +43,7 @@ private:
     void parseIf(std::list<Token>&);
 
     std::list<Expression*> toPostfix(std::list<Expression*>&);
-    short operatorPriority(const ExpressionType& type);
+    static short operatorPriority(const ExpressionType& type);
     Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
