@@ -278,6 +278,8 @@ std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
         } else {
             if (type == ID) {
                 foundId = true;
+            } else {
+                foundId = false;
             }
             localTokens.push_back(token);
         }
