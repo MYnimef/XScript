@@ -15,7 +15,6 @@
 class Parser final {
 private:
     enum GrammarType {
-        GR_CODE_BLOCK,
         GR_FUNC,
         GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,

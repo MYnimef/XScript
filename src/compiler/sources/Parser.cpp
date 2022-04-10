@@ -33,16 +33,14 @@
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_CODE_BLOCK,              std::regex( R"(\{.*\})" )                                                                                                         },
-    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                        },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )  },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )            },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                          },
-    //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
-    { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
-    { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )         },
-    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                             }
+    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                         },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )    },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )          },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                           },
+    { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )    },
+    { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" ) },
+    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                 },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                              }
 }) {
     tree = new Node(new ExpressionFunctionCall("main"));
 }
@@ -143,8 +141,6 @@ void Parser::generateExpression(std::list<Token>& tokens) {
             break;
         case GR_FUNC_DEFINITION:
             parseFuncDefinition(tokens);
-            break;
-        case GR_CODE_BLOCK:
             break;
     }
 }
