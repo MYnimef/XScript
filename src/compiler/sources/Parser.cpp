@@ -391,10 +391,7 @@ void Parser::parseIf(std::list<Token>& tokens) {
     Parser parser(grammatics);
     parser.addTokens(tokens);
 
-    auto node = new Node(new ExpressionIf(parser.getTree()));
-    node->addChildBack(conditionNode);
-
-    tree->addChildBack(node);
+    tree->addChildBack(new Node(new ExpressionIf(conditionNode, parser.getTree())));
 }
 
 std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {

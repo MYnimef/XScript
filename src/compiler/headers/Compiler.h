@@ -27,4 +27,5 @@ public:
     void execute(const Node*);
 
     [[nodiscard]] const std::map<std::string, Variable*>* getVariables() const;
+    std::stack<Variable*>& getStack();
 };

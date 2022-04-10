@@ -122,4 +122,7 @@ add_executable(
 
         src/compiler/headers/exception/ExceptionLexer.h
         src/compiler/sources/exception/ExceptionLexer.cpp
+
+        src/compiler/headers/expression/ExpressionWhile.h
+        src/compiler/sources/expression/ExpressionWhile.cpp
 )

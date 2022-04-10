@@ -39,3 +39,7 @@ void Compiler::execute(const Node* tree) {
 const std::map<std::string, Variable*>* Compiler::getVariables() const {
     return variables;
 }
+
+std::stack<Variable*>& Compiler::getStack() {
+    return stack;
+}

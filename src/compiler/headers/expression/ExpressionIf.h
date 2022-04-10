@@ -9,10 +9,11 @@
 
 class ExpressionIf final: public Expression {
 private:
-    const Node* block;
+    const Node* blockCondition;
+    const Node* blockExecute;
 
 public:
-    explicit ExpressionIf(const Node* value);
+    explicit ExpressionIf(const Node* blockCondition, const Node* blockExecute);
 
     void action(const CompilerArgs& args) const override;
 

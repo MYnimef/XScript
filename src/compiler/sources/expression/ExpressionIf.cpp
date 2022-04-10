@@ -5,24 +5,27 @@
 #include "ExpressionIf.h"
 #include "Compiler.h"
 
-ExpressionIf::ExpressionIf(const Node* block):
-block(block) {
+ExpressionIf::ExpressionIf(const Node* blockCondition, const Node* blockExecute):
+blockCondition(blockCondition),
+blockExecute(blockExecute) {
     type = EXP_IF;
 }
 
 void ExpressionIf::action(const CompilerArgs& args) const {
-    auto var = args.stack.top();
-    args.stack.pop();
+    args.variablesGlobal.push_front(args.variables);
+    Compiler compiler(args.variablesGlobal);
+    compiler.execute(blockCondition);
 
-    if (var->getBool()) {
-        args.variablesGlobal.push_front(args.variables);
-        Compiler compiler(args.variablesGlobal);
-        compiler.execute(block);
+    auto condition = compiler.getStack().top();
+    compiler.getStack().pop();
+
+    if (condition->getBool()) {
+        compiler.execute(blockExecute);
     }
 
-    delete var;
+    delete condition;
 }
 
 std::string ExpressionIf::toString() const {
-    return "if\n    " + block->toString(1);
+    return "\n    " + blockCondition->toString(1) + "\n    " + blockExecute->toString(1) + "\n    endif";
 }
