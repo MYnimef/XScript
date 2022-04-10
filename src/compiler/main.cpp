@@ -5,7 +5,18 @@
 #include "ExceptionParser.h"
 
 int main() {
-    std::cout << std::endl << "\033[1;32m" << "DSL Compiler running..."  << "\033[0m" << std::endl << std::endl;
+    std::cout <<
+    std::endl <<
+    "\033[1;32m" <<
+    " ____  ____  _       _             __  ____   __     _                 __ \n"
+    "|  _ \\/ ___|| |     | |__  _   _  |  \\/  \\ \\ / / __ (_)_ __ ___   ___ / _|\n"
+    "| | | \\___ \\| |     | '_ \\| | | | | |\\/| |\\ V / '_ \\| | '_ ` _ \\ / _ \\ |_ \n"
+    "| |_| |___) | |___  | |_) | |_| | | |  | | | || | | | | | | | | |  __/  _|\n"
+    "|____/|____/|_____| |_.__/ \\__, | |_|  |_| |_||_| |_|_|_| |_| |_|\\___|_|  \n"
+    "                           |___/                                          \n"
+    "\033[0m" <<
+    std::endl;
+
     clock_t start = clock();
 
     try {
@@ -31,8 +42,6 @@ int main() {
             std::cout << std::endl << var.first + " = " + var.second->getString();
         }
         std::cout << std::endl;
-    } catch (const ExceptionParser& ex) {
-        std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     } catch (const std::exception& ex) {
         std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     }
