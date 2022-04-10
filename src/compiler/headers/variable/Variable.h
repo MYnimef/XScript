@@ -28,8 +28,8 @@ public:
     Variable* operator || (const Variable&) const;
 
     [[nodiscard]] virtual bool getBool() const = 0;
-    [[nodiscard]] virtual int getInteger() const = 0;
-    [[nodiscard]] virtual double getDouble() const = 0;
+    [[nodiscard]] virtual long long getInteger() const = 0;
+    [[nodiscard]] virtual long double getDouble() const = 0;
     [[nodiscard]] virtual std::string getString() const = 0;
     //[[nodiscard]] virtual std::list<Variable*> getList() const = 0;
 

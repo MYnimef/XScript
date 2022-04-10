@@ -7,7 +7,7 @@
 #include "VariableString.h"
 #include "VariableBool.h"
 
-VariableInteger::VariableInteger(int value):
+VariableInteger::VariableInteger(long long value):
 value(value) {
     type = INTEGER_VAR;
 }
@@ -66,12 +66,12 @@ bool VariableInteger::getBool() const {
     return (bool) value;
 }
 
-int VariableInteger::getInteger() const {
+long long VariableInteger::getInteger() const {
     return value;
 }
 
-double VariableInteger::getDouble() const {
-    return (double) value;
+long double VariableInteger::getDouble() const {
+    return (long double) value;
 }
 
 std::string VariableInteger::getString() const {

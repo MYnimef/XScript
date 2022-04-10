@@ -5,7 +5,7 @@
 #include "VariableDouble.h"
 #include "VariableString.h"
 
-VariableDouble::VariableDouble(double value):
+VariableDouble::VariableDouble(long double value):
 value(value) {
     type = DOUBLE_VAR;
 }
@@ -46,11 +46,11 @@ bool VariableDouble::getBool() const {
     return (bool) value;
 }
 
-int VariableDouble::getInteger() const {
-    return (int) value;
+long long VariableDouble::getInteger() const {
+    return (long long) value;
 }
 
-double VariableDouble::getDouble() const {
+long double VariableDouble::getDouble() const {
     return value;
 }
 

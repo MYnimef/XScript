@@ -8,10 +8,10 @@
 
 class ExpressionValInteger final: public Expression {
 private:
-    int value;
+    long long value;
 
 public:
-    explicit ExpressionValInteger(int value);
+    explicit ExpressionValInteger(long long value);
     explicit ExpressionValInteger(const std::string& value);
 
     void action(const CompilerArgs& args) const override;

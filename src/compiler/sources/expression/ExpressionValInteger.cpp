@@ -5,13 +5,13 @@
 #include "ExpressionValInteger.h"
 #include "VariableInteger.h"
 
-ExpressionValInteger::ExpressionValInteger(const int value):
+ExpressionValInteger::ExpressionValInteger(const long long value):
 value(value) {
     type = EXP_INTEGER;
 }
 
 ExpressionValInteger::ExpressionValInteger(const std::string& value):
-value(std::stoi(value)) {
+value(std::stoll(value)) {
     type = EXP_INTEGER;
 }
 

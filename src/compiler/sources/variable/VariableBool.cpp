@@ -63,12 +63,12 @@ bool VariableBool::getBool() const {
     return value;
 }
 
-int VariableBool::getInteger() const {
-    return (int) value;
+long long VariableBool::getInteger() const {
+    return (long long) value;
 }
 
-double VariableBool::getDouble() const {
-    return (double) value;
+long double VariableBool::getDouble() const {
+    return (long double) value;
 }
 
 std::string VariableBool::getString() const {

@@ -39,12 +39,12 @@ bool VariableString::getBool() const {
     return !value.empty();
 }
 
-int VariableString::getInteger() const {
-    return std::stoi(value);
+long long VariableString::getInteger() const {
+    return std::stoll(value);
 }
 
-double VariableString::getDouble() const {
-    return std::stod(value);
+long double VariableString::getDouble() const {
+    return std::stold(value);
 }
 
 std::string VariableString::getString() const {

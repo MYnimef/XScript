@@ -6,7 +6,7 @@
 #include "VariableDouble.h"
 
 ExpressionValDouble::ExpressionValDouble(const std::string& value):
-value(std::stod(value)) {
+value(std::stold(value)) {
     type = EXP_DOUBLE;
 }
 

@@ -8,7 +8,7 @@
 
 class ExpressionValDouble final: public Expression {
 private:
-    double value;
+    long double value;
 
 public:
     explicit ExpressionValDouble(const std::string& value);
