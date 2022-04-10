@@ -29,6 +29,7 @@
 #include "ExpressionOpNotEqual.h"
 #include "ExceptionParser.h"
 #include "ExpressionOpNot.h"
+#include "ExpressionWhile.h"
 
 Parser::Parser(const std::string& name):
 grammatics({
@@ -39,7 +40,7 @@ grammatics({
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                          },
     //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
     { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
-    { GR_LOOP_WHILE,              std::regex( R"(while\(.*\)\{.*\})" )                                                                                              },
+    { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )         },
     { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                },
     { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                             }
 }) {
@@ -136,6 +137,7 @@ void Parser::generateExpression(std::list<Token>& tokens) {
             parseIf(tokens);
             break;
         case GR_LOOP_WHILE:
+            parseWhile(tokens);
             break;
         case GR_LOOP_FOR:
             break;
@@ -363,7 +365,6 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
      */
 }
 
-//if\(b\)\{.*\}
 void Parser::parseIf(std::list<Token>& tokens) {
     tokens.pop_front(); // remove if
 
@@ -392,6 +393,36 @@ void Parser::parseIf(std::list<Token>& tokens) {
     parser.addTokens(tokens);
 
     tree->addChildBack(new Node(new ExpressionIf(conditionNode, parser.getTree())));
+}
+
+void Parser::parseWhile(std::list<Token>& tokens) {
+    tokens.pop_front(); // remove while
+
+    std::list<Token> localTokens;
+    int amount = 0;
+    for (const auto& token: tokens) {
+        if (token.getType() != L_BRACE) {
+            localTokens.push_back(token);
+            amount++;
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < amount; i++) {
+        tokens.pop_front();
+    }
+
+    auto condition = parseOperations(localTokens);
+    auto conditionNode = addNodeExpr(toPostfix(condition));
+
+    tokens.pop_front(); // remove {
+    tokens.pop_back();  // remove }
+
+    Parser parser(grammatics);
+    parser.addTokens(tokens);
+
+    tree->addChildBack(new Node(new ExpressionWhile(conditionNode, parser.getTree())));
 }
 
 std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {

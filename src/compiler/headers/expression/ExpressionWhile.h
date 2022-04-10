@@ -9,10 +9,12 @@
 
 class ExpressionWhile final: public Expression {
 private:
-    const Node* block;
+    const Node* blockCondition;
+    const Node* blockExecute;
 
 public:
-    explicit ExpressionWhile(const Node* value);
+    explicit ExpressionWhile(const Node* blockCondition, const Node* blockExecute);
+    ~ExpressionWhile();
 
     void action(const CompilerArgs& args) const override;
 

@@ -1,11 +1,14 @@
-a = -5
+flag = true
+a = 0
+b = 0
 
-b = !(a != 5)
+while flag {
+    a++
 
-if a == -5 {
-    a = "success"
+    while b < 9 {
+        b++
+        a += "wow"
+    }
+
+    flag = false
 }
-
-a++
-a++
-a+=a

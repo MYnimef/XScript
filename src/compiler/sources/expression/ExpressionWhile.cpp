@@ -5,24 +5,39 @@
 #include "ExpressionWhile.h"
 #include "Compiler.h"
 
-ExpressionWhile::ExpressionWhile(const Node *block):
-block(block) {
+ExpressionWhile::ExpressionWhile(const Node* blockCondition, const Node* blockExecute):
+        blockCondition(blockCondition),
+        blockExecute(blockExecute) {
     type = EXP_LOOP_WHILE;
 }
 
-void ExpressionWhile::action(const CompilerArgs &args) const {
-    auto var = args.stack.top();
-    args.stack.pop();
+ExpressionWhile::~ExpressionWhile() {
+   delete blockCondition;
+   delete blockExecute;
+}
 
-    while (var->getBool()) {
-        args.variablesGlobal.push_front(args.variables);
-        Compiler compiler(args.variablesGlobal);
-        compiler.execute(block);
+void ExpressionWhile::action(const CompilerArgs& args) const {
+    args.variablesGlobal.push_front(args.variables);
+    Compiler compilerCondition(args.variablesGlobal);
+    compilerCondition.execute(blockCondition);
+
+    auto condition = compilerCondition.getStack().top();
+    compilerCondition.getStack().pop();
+
+    while (condition->getBool()) {
+        Compiler compilerExecute(args.variablesGlobal);
+        compilerExecute.execute(blockExecute);
+
+        compilerCondition.execute(blockCondition);
+        delete condition;
+        condition = compilerCondition.getStack().top();
+        compilerCondition.getStack().pop();
     }
 
-    delete var;
+    args.variablesGlobal.pop_front();
+    delete condition;
 }
 
 std::string ExpressionWhile::toString() const {
-    return "while";
+    return "\n    " + blockCondition->toString(1) + "\n    " + blockExecute->toString(1) + "\n    endif";
 }

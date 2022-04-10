@@ -11,6 +11,11 @@ blockExecute(blockExecute) {
     type = EXP_IF;
 }
 
+ExpressionIf::~ExpressionIf() {
+    delete blockCondition;
+    delete blockExecute;
+}
+
 void ExpressionIf::action(const CompilerArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
     Compiler compiler(args.variablesGlobal);
@@ -23,6 +28,7 @@ void ExpressionIf::action(const CompilerArgs& args) const {
         compiler.execute(blockExecute);
     }
 
+    args.variablesGlobal.pop_front();
     delete condition;
 }
 
