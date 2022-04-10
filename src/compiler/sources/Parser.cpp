@@ -38,7 +38,7 @@ grammatics({
     { GR_VAR_ASSIGNMENT,          std::regex( R"(@=(\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*)" )            },
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                          },
     //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
-    { GR_IF,                      std::regex( R"(if\((\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*\)\{.*\})" )  },
+    { GR_IF,                      std::regex( R"(if(\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
     { GR_LOOP_WHILE,              std::regex( R"(while\(.*\)\{.*\})" )                                                                                              },
     { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                },
     { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                             }
@@ -276,7 +276,7 @@ std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
                 expressions.emplace_back(new ExpressionBracketR());
             }
         } else {
-            if (type == ID) {
+            if (type == ID && brackets == 0) {
                 foundId = true;
             } else {
                 foundId = false;
@@ -366,7 +366,6 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
 //if\(b\)\{.*\}
 void Parser::parseIf(std::list<Token>& tokens) {
     tokens.pop_front(); // remove if
-    tokens.pop_front(); // remove (
 
     std::list<Token> localTokens;
     int amount = 0;
@@ -379,12 +378,9 @@ void Parser::parseIf(std::list<Token>& tokens) {
         }
     }
 
-    localTokens.pop_back(); // remove )
-
     for (int i = 0; i < amount; i++) {
         tokens.pop_front();
     }
-    tokens.pop_front(); // remove )
 
     auto condition = parseOperations(localTokens);
     auto conditionNode = addNodeExpr(toPostfix(condition));
