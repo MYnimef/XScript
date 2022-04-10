@@ -3,6 +3,11 @@
 //
 
 #include "Node.h"
+#include "ExpressionFunctionCall.h"
+
+Node::Node(const std::string& value) {
+    expression = new ExpressionFunctionCall(value);
+}
 
 Node::Node(const Expression* expression):
 expression(expression) {

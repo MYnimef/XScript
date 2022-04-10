@@ -17,7 +17,6 @@
 #include "ExpressionOpDiv.h"
 #include "ExpressionVarInit.h"
 #include "ExpressionVarCall.h"
-#include "ExpressionFunctionCall.h"
 #include "ExpressionIf.h"
 #include "ExpressionOpLogicalAnd.h"
 #include "ExpressionOpLogicalOr.h"
@@ -31,7 +30,7 @@
 #include "ExpressionOpNot.h"
 #include "ExpressionWhile.h"
 
-Parser::Parser(const std::string& name):
+Parser::Parser(Node* node):
 grammatics({
     { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                         },
     { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )    },
@@ -39,19 +38,19 @@ grammatics({
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                           },
     { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )    },
     { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" ) },
-    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                 },
+    { GR_LOOP_FOR,                std::regex( R"(for\(((.*,)*(.*,))?\)\{.*\})" )                                                                                                 },
     { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                              }
 }) {
-    tree = new Node(new ExpressionFunctionCall("main"));
+    tree = node;
 }
 
-Parser::Parser(const std::map<GrammarType, std::regex>& grammatics):
+Parser::Parser(Node* node, const std::map<GrammarType, std::regex>& grammatics):
 grammatics(grammatics) {
-    tree = new Node(new ExpressionFunctionCall("main"));
+    tree = node;
 }
 
 Parser::~Parser() {
-    //delete tree;
+
 }
 
 void Parser::addTokens(const std::list<Token>& tokens) {
@@ -380,15 +379,16 @@ void Parser::parseIf(std::list<Token>& tokens) {
     }
 
     auto condition = parseOperations(localTokens);
-    auto conditionNode = addNodeExpr(toPostfix(condition));
+    auto conditionBlock = addNodeExpr(toPostfix(condition));
 
     tokens.pop_front(); // remove {
     tokens.pop_back();  // remove }
 
-    Parser parser(grammatics);
+    Node* blockExecute = new Node("if block");
+    Parser parser(blockExecute, grammatics);
     parser.addTokens(tokens);
 
-    tree->addChildBack(new Node(new ExpressionIf(conditionNode, parser.getTree())));
+    tree->addChildBack(new Node(new ExpressionIf(conditionBlock, blockExecute)));
 }
 
 void Parser::parseWhile(std::list<Token>& tokens) {
@@ -410,15 +410,16 @@ void Parser::parseWhile(std::list<Token>& tokens) {
     }
 
     auto condition = parseOperations(localTokens);
-    auto conditionNode = addNodeExpr(toPostfix(condition));
+    auto conditionBlock = addNodeExpr(toPostfix(condition));
 
     tokens.pop_front(); // remove {
     tokens.pop_back();  // remove }
 
-    Parser parser(grammatics);
+    Node* blockExecute = new Node("while block");
+    Parser parser(blockExecute, grammatics);
     parser.addTokens(tokens);
 
-    tree->addChildBack(new Node(new ExpressionWhile(conditionNode, parser.getTree())));
+    tree->addChildBack(new Node(new ExpressionWhile(conditionBlock, blockExecute)));
 }
 
 std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {

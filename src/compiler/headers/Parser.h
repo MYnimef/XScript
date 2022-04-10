@@ -47,8 +47,8 @@ private:
     Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
-    explicit Parser(const std::string& name);
-    explicit Parser(const std::map<GrammarType, std::regex>&);
+    explicit Parser(Node* node);
+    explicit Parser(Node* node, const std::map<GrammarType, std::regex>&);
     ~Parser();
 
     void addTokens(const std::list<Token>&);

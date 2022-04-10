@@ -19,6 +19,8 @@ int main() {
 
     clock_t start = clock();
 
+    Node* application = new Node("main");
+
     try {
         Lexer lexer;
         lexer.scanFile("main.dsl");
@@ -29,13 +31,13 @@ int main() {
             }
         }
 
-        Parser parser("main");
+        Parser parser(application);
         parser.addTokens(lexer.getTokens());
 
         std::cout << std::endl << parser.getTree()->toString() << std::endl;
 
         Compiler compiler;
-        compiler.execute(parser.getTree());
+        compiler.execute(application);
 
         std::cout << std::endl;
         for (const auto& var: *compiler.getVariables()) {
@@ -45,6 +47,8 @@ int main() {
     } catch (const std::exception& ex) {
         std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     }
+
+    delete application;
 
     clock_t stop = clock();
     double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
