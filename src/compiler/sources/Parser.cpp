@@ -34,11 +34,11 @@ Parser::Parser(const std::string& name):
 grammatics({
     { GR_CODE_BLOCK,              std::regex( R"(\{.*\})" )                                                                                                         },
     { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                        },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=(\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*)" )  },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=(\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*)" )            },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )  },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )            },
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                          },
     //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
-    { GR_IF,                      std::regex( R"(if(\-)?((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
+    { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
     { GR_LOOP_WHILE,              std::regex( R"(while\(.*\)\{.*\})" )                                                                                              },
     { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                },
     { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                             }
@@ -186,11 +186,6 @@ void Parser::parseAssignment(std::list<Token>& tokens) {
     tokens.pop_front();
     expressions.emplace_back(new ExpressionOpAssignment());
     tokens.pop_front();
-
-    if (tokens.front().getType() == SUB_OP) {
-        tokens.push_front(Token(INT_DIGIT, "0"));
-    }
-
     expressions.splice(expressions.end(), parseOperations(tokens));
 
     tree->addChildBack(addNodeExpr(toPostfix(expressions)));
@@ -228,34 +223,39 @@ std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
         const auto& type = token.getType();
 
         if (token.isOperator() && brackets == 0) {
-            subOperations(expressions, localTokens);
-
-            if (type == SUM_OP) {
-                expressions.emplace_back(new ExpressionOpSum());
-            } else if (type == SUB_OP) {
+            if (localTokens.size() == 0 && type == SUB_OP) {
+                expressions.emplace_back(new ExpressionValInteger(0));
                 expressions.emplace_back(new ExpressionOpSub());
-            } else if (type == MULT_OP) {
-                expressions.emplace_back(new ExpressionOpMult());
-            } else if (type == DIV_OP) {
-                expressions.emplace_back(new ExpressionOpDiv());
-            } else if (type == AND_OP) {
-                expressions.emplace_back(new ExpressionOpLogicalAnd());
-            } else if (type == OR_OP) {
-                expressions.emplace_back(new ExpressionOpLogicalOr());
-            } else if (type == EQUAL_OP) {
-                expressions.emplace_back(new ExpressionOpEqual());
-            } else if (type == GREATER_OR_EQUAL_OP) {
-                expressions.emplace_back(new ExpressionOpGreaterOrEqual());
-            } else if (type == SMALLER_OR_EQUAL_OP) {
-                expressions.emplace_back(new ExpressionOpSmallerOrEqual());
-            } else if (type == GREATER_OP) {
-                expressions.emplace_back(new ExpressionOpGreater());
-            } else if (type == SMALLER_OP) {
-                expressions.emplace_back(new ExpressionOpSmaller());
-            } else if (type == NOT_EQUAL_OP) {
-                expressions.emplace_back(new ExpressionOpNotEqual());
             } else {
-                expressions.emplace_back(new ExpressionOpNot());
+                subOperations(expressions, localTokens);
+
+                if (type == SUM_OP) {
+                    expressions.emplace_back(new ExpressionOpSum());
+                } else if (type == SUB_OP) {
+                    expressions.emplace_back(new ExpressionOpSub());
+                } else if (type == MULT_OP) {
+                    expressions.emplace_back(new ExpressionOpMult());
+                } else if (type == DIV_OP) {
+                    expressions.emplace_back(new ExpressionOpDiv());
+                } else if (type == AND_OP) {
+                    expressions.emplace_back(new ExpressionOpLogicalAnd());
+                } else if (type == OR_OP) {
+                    expressions.emplace_back(new ExpressionOpLogicalOr());
+                } else if (type == EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpEqual());
+                } else if (type == GREATER_OR_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpGreaterOrEqual());
+                } else if (type == SMALLER_OR_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpSmallerOrEqual());
+                } else if (type == GREATER_OP) {
+                    expressions.emplace_back(new ExpressionOpGreater());
+                } else if (type == SMALLER_OP) {
+                    expressions.emplace_back(new ExpressionOpSmaller());
+                } else if (type == NOT_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpNotEqual());
+                } else {
+                    expressions.emplace_back(new ExpressionOpNot());
+                }
             }
 
             foundId = false;

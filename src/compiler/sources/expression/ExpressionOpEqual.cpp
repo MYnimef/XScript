@@ -21,5 +21,5 @@ void ExpressionOpEqual::action(const CompilerArgs& args) const {
 }
 
 std::string ExpressionOpEqual::toString() const {
-    return "=";
+    return "==";
 }
