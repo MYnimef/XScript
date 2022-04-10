@@ -6,8 +6,8 @@
 #include "Lexer.h"
 
 Lexer::Lexer(): lexems({
-    {LEX_ONE_CHAR,     std::regex(R"([;,\+\-\*\/=\}\{\)\(<>])" )                          },
-    {LEX_TWO_CHAR,     std::regex(R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(<=)|(>=))" )         },
+    {LEX_ONE_CHAR,     std::regex(R"([!;,\+\-\*\/=\}\{\)\(<>])" )                          },
+    {LEX_TWO_CHAR,     std::regex(R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" )         },
     {LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(for)|(true)|(false))" ) },
     {LEX_STRING,       std::regex( R"("[^"]*")" )                                         },
     {LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )                                 },
@@ -164,6 +164,8 @@ TokenType Lexer::checkTwoChar(const std::string &input) {
     } else if (input == "||") {
         return OR_OP;
     } else if (input == "==") {
+        return EQUAL_OP;
+    } else if (input == "!=") {
         return EQUAL_OP;
     } else if (input == "<=") {
         return SMALLER_OR_EQUAL_OP;
