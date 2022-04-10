@@ -35,6 +35,7 @@ enum TokenType {
     SMALLER_OP,
     GREATER_OR_EQUAL_OP,
     SMALLER_OR_EQUAL_OP,
+    NOT_OP,
     EQUAL_OP,
     NOT_EQUAL_OP,
     COMMA,

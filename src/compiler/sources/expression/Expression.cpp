@@ -16,7 +16,15 @@ ExpressionType Expression::getType() const {
     return type;
 }
 
-bool Expression::isOperator() const {
+bool Expression::isOperation() const {
+    return (isUnaryOperation() || isBinaryOperation());
+}
+
+bool Expression::isUnaryOperation() const {
+    return (type == EXP_OP_NOT);
+}
+
+bool Expression::isBinaryOperation() const {
     return (
             type == EXP_OP_ASSIGNMENT ||
             type == EXP_OP_SUM ||

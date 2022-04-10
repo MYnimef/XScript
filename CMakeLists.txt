@@ -4,6 +4,7 @@ project(dsl)
 set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src/compiler/headers)
+include_directories(src/compiler/headers/exception)
 include_directories(src/compiler/headers/expression)
 include_directories(src/compiler/headers/variable)
 
@@ -112,4 +113,13 @@ add_executable(
 
         src/compiler/headers/expression/ExpressionOpLogicalAnd.h
         src/compiler/sources/expression/ExpressionOpLogicalAnd.cpp
+
+        src/compiler/headers/expression/ExpressionOpNot.h
+        src/compiler/sources/expression/ExpressionOpNot.cpp
+
+        src/compiler/headers/exception/ExceptionParser.h
+        src/compiler/sources/exception/ExceptionParser.cpp
+
+        src/compiler/headers/exception/ExceptionLexer.h
+        src/compiler/sources/exception/ExceptionLexer.cpp
 )

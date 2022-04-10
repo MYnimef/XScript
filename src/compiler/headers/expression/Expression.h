@@ -28,6 +28,7 @@ enum ExpressionType {
     EXP_OP_NOT_EQUAL,
     EXP_LOGICAL_AND,
     EXP_LOGICAL_OR,
+    EXP_OP_NOT,
     EXP_OP_ASSIGNMENT,
 
     EXP_IF,
@@ -58,37 +59,23 @@ public:
 
     virtual void action(const CompilerArgs& args) const = 0;
 
-    [[nodiscard]] bool isOperator() const;
+    [[nodiscard]] bool isOperation() const;
+    [[nodiscard]] bool isUnaryOperation() const;
+    [[nodiscard]] bool isBinaryOperation() const;
 
     [[nodiscard]] virtual std::string toString() const = 0;
 };
 
-class ExpressionBracketL: public Expression {
+class ExpressionBracketL final: public Expression {
 public:
-    ExpressionBracketL() {
-        type = EXP_BRACKET_L;
-    }
-
-    void action(const CompilerArgs& args) const override {
-
-    }
-
-    [[nodiscard]] std::string toString() const override {
-        return "(";
-    }
+    ExpressionBracketL() { type = EXP_BRACKET_L; }
+    void action(const CompilerArgs& args) const override { }
+    [[nodiscard]] std::string toString() const override { return "("; }
 };
 
-class ExpressionBracketR: public Expression {
+class ExpressionBracketR final: public Expression {
 public:
-    ExpressionBracketR() {
-        type = EXP_BRACKET_R;
-    }
-
-    void action(const CompilerArgs& args) const override {
-
-    }
-
-    [[nodiscard]] std::string toString() const override {
-        return ")";
-    }
+    ExpressionBracketR() { type = EXP_BRACKET_R; }
+    void action(const CompilerArgs& args) const override { }
+    [[nodiscard]] std::string toString() const override { return ")"; }
 };

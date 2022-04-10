@@ -13,6 +13,10 @@ Variable::~Variable() {
 
 }
 
+Variable* Variable::operator ! () const {
+    return new VariableBool(!getBool());
+}
+
 Variable* Variable::operator < (const Variable& second) const {
     if (second.getType() == STRING_VAR) {
         return new VariableBool(getString().length() < second.getString().length());

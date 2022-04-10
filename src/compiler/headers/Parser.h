@@ -38,7 +38,7 @@ private:
     void parseAssignment(std::list<Token>&);
     void parseIncrementDecrement(std::list<Token>&);
     std::list<Expression*> parseOperations(std::list<Token>&);
-    void subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver);
+    void subOperations(std::list<Expression*>& expressions, std::list<Token>& localTokens);
     void parseFuncDefinition(std::list<Token>&);
     void parseIf(std::list<Token>&);
 

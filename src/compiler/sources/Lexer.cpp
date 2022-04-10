@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "Lexer.h"
+#include "ExceptionLexer.h"
 
 Lexer::Lexer(): lexems({
     {LEX_ONE_CHAR,     std::regex(R"([!;,\+\-\*\/=\}\{\)\(<>])" )                          },
@@ -99,7 +100,7 @@ void Lexer::addToken(const std::string& input, const int& lineNum) {
         }
     }
 
-    throw std::invalid_argument("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
+    throw ExceptionLexer("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
 }
 
 std::list<Token> Lexer::getTokens() {
@@ -148,8 +149,10 @@ TokenType Lexer::checkOneChar(const std::string& input) {
         return SUB_OP;
     } else if (input == "*") {
         return MULT_OP;
-    } else {
+    } else if (input == "/") {
         return DIV_OP;
+    } else {
+        return NOT_OP;
     }
 }
 

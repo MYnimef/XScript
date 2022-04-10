@@ -9,7 +9,6 @@ ExpressionOpSum::ExpressionOpSum() {
 }
 
 void ExpressionOpSum::action(const CompilerArgs& args) const {
-
     auto arg2 = args.stack.top();
     args.stack.pop();
     auto arg1 = args.stack.top();

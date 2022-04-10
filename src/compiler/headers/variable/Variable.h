@@ -17,6 +17,7 @@ public:
     virtual Variable* operator * (const Variable&) const = 0;
     virtual Variable* operator / (const Variable&) const = 0;
 
+    Variable* operator ! () const;
     Variable* operator < (const Variable&) const;
     Variable* operator <= (const Variable&) const;
     Variable* operator > (const Variable&) const;
