@@ -10,7 +10,7 @@ expression(expression) {
 
 Node::~Node() {
     delete expression;
-    for (auto child: nodes) {
+    for (auto child: children) {
         delete child;
     }
 }
@@ -20,17 +20,31 @@ ExpressionType Node::getType() {
 }
 
 void Node::addChildFront(Node* child) {
-    nodes.push_front(child);
+    children.push_front(child);
 }
 
 void Node::addChildBack(Node* child) {
-    nodes.push_back(child);
+    children.push_back(child);
 }
 
-std::list<Node *> Node::getChild() {
-    return nodes;
+std::list<Node *> Node::getChildren() const {
+    return children;
 }
 
-const Expression* Node::getToken() const {
+const Expression* Node::getExpression() const {
     return expression;
+}
+
+std::string Node::toString(int gen) const {
+    std::string tab;
+    for (int i = 0; i <= gen; i++) {
+        tab += "    ";
+    }
+
+    std::string res = expression->toString();
+    for (auto node: children) {
+        res += "\n" + tab + node->toString(gen + 1);
+    }
+
+    return res;
 }

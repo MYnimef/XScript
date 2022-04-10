@@ -8,15 +8,33 @@ ExpressionOpAssignment::ExpressionOpAssignment() {
     type = EXP_OP_ASSIGNMENT;
 }
 
-void ExpressionOpAssignment::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack
-        ) const {
-    auto var = stack.top();
+void ExpressionOpAssignment::action(const CompilerArgs& args) const {
 
-    variables.insert_or_assign(stackVariablesId.top(), var);
-    stackVariablesId.pop();
+    auto val = args.stack.top();
+    args.stack.pop();
+    auto id = args.stackVariablesId.top();
+    args.stackVariablesId.pop();
 
-    stack.pop();
+    for (auto scope: args.variablesGlobal) {
+        auto it = scope->find(id);
+        if (it != scope->end()) {
+            auto var = it->second;
+            scope->insert_or_assign(id, val);
+            delete var;
+            return;
+        }
+    }
+
+    auto it = args.variables->find(id);
+    if (it != args.variables->end()) {
+        auto var = it->second;
+        args.variables->insert_or_assign(id, val);
+        delete var;
+    } else {
+        args.variables->insert_or_assign(id, val);
+    }
+}
+
+std::string ExpressionOpAssignment::toString() const {
+    return "=";
 }

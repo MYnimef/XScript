@@ -13,11 +13,12 @@ private:
 public:
     explicit VariableString(const std::string& value);
 
-    Variable* operator + (const Variable&) override;
-    Variable* operator - (const Variable&) override;
-    Variable* operator * (const Variable&) override;
-    Variable* operator / (const Variable&) override;
+    Variable* operator + (const Variable&) const override;
+    Variable* operator - (const Variable&) const override;
+    Variable* operator * (const Variable&) const override;
+    Variable* operator / (const Variable&) const override;
 
+    [[nodiscard]] bool getBool() const override;
     [[nodiscard]] int getInteger() const override;
     [[nodiscard]] double getDouble() const override;
     [[nodiscard]] std::string getString() const override;

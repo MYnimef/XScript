@@ -4,6 +4,7 @@ project(dsl)
 set(CMAKE_CXX_STANDARD 23)
 
 include_directories(src/compiler/headers)
+include_directories(src/compiler/headers/exception)
 include_directories(src/compiler/headers/expression)
 include_directories(src/compiler/headers/variable)
 
@@ -27,8 +28,25 @@ add_executable(
         src/compiler/headers/Compiler.h
         src/compiler/sources/Compiler.cpp
 
+        src/compiler/headers/CompilerArgs.h
+        src/compiler/sources/CompilerArgs.cpp
+
         src/compiler/headers/variable/Variable.h
         src/compiler/sources/variable/Variable.cpp
+
+        src/compiler/headers/variable/VariableInteger.h
+        src/compiler/sources/variable/VariableInteger.cpp
+
+        src/compiler/headers/variable/VariableDouble.h
+        src/compiler/sources/variable/VariableDouble.cpp
+
+        src/compiler/headers/variable/VariableString.h
+        src/compiler/sources/variable/VariableString.cpp
+
+        src/compiler/headers/variable/VariableBool.h
+        src/compiler/sources/variable/VariableBool.cpp
+
+        src/compiler/headers/variable/VariableList.h
 
         src/compiler/headers/expression/Expression.h
         src/compiler/sources/expression/Expression.cpp
@@ -66,12 +84,45 @@ add_executable(
         src/compiler/headers/expression/ExpressionFunctionCall.h
         src/compiler/sources/expression/ExpressionFunctionCall.cpp
 
-        src/compiler/headers/variable/VariableInteger.h
-        src/compiler/sources/variable/VariableInteger.cpp
+        src/compiler/headers/expression/ExpressionValBool.h
+        src/compiler/sources/expression/ExpressionValBool.cpp
 
-        src/compiler/headers/variable/VariableDouble.h
-        src/compiler/sources/variable/VariableDouble.cpp
+        src/compiler/headers/expression/ExpressionIf.h
+        src/compiler/sources/expression/ExpressionIf.cpp
 
-        src/compiler/headers/variable/VariableString.h
-        src/compiler/sources/variable/VariableString.cpp
+        src/compiler/headers/expression/ExpressionOpSmaller.h
+        src/compiler/sources/expression/ExpressionOpSmaller.cpp
+
+        src/compiler/headers/expression/ExpressionOpSmallerOrEqual.h
+        src/compiler/sources/expression/ExpressionOpSmallerOrEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpGreater.h
+        src/compiler/sources/expression/ExpressionOpGreater.cpp
+
+        src/compiler/headers/expression/ExpressionOpGreaterOrEqual.h
+        src/compiler/sources/expression/ExpressionOpGreaterOrEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpEqual.h
+        src/compiler/sources/expression/ExpressionOpEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpNotEqual.h
+        src/compiler/sources/expression/ExpressionOpNotEqual.cpp
+
+        src/compiler/headers/expression/ExpressionOpLogicalOr.h
+        src/compiler/sources/expression/ExpressionOpLogicalOr.cpp
+
+        src/compiler/headers/expression/ExpressionOpLogicalAnd.h
+        src/compiler/sources/expression/ExpressionOpLogicalAnd.cpp
+
+        src/compiler/headers/expression/ExpressionOpNot.h
+        src/compiler/sources/expression/ExpressionOpNot.cpp
+
+        src/compiler/headers/exception/ExceptionParser.h
+        src/compiler/sources/exception/ExceptionParser.cpp
+
+        src/compiler/headers/exception/ExceptionLexer.h
+        src/compiler/sources/exception/ExceptionLexer.cpp
+
+        src/compiler/headers/expression/ExpressionWhile.h
+        src/compiler/sources/expression/ExpressionWhile.cpp
 )

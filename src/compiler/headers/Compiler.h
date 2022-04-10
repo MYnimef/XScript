@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <list>
 #include <map>
 #include <stack>
 #include "Node.h"
@@ -11,15 +12,20 @@
 
 class Compiler final {
 private:
-    std::map<std::string, Variable*> variables;
-    std::stack<std::string> stackVariablesId;
+    std::list<std::map<std::string, Variable*>*> variablesGlobal;
+    std::map<std::string, Variable*>* variables;
 
+    std::stack<std::string> stackVariablesId;
     std::stack<Variable*> stack;
 
 public:
     Compiler();
-    ~Compiler();
-    void execute(Node*);
+    explicit Compiler(const std::list<std::map<std::string, Variable*>*>& variablesGlobal);
 
-    [[nodiscard]] const std::map<std::string, Variable*>& getVariables() const;
+    ~Compiler();
+
+    void execute(const Node*);
+
+    [[nodiscard]] const std::map<std::string, Variable*>* getVariables() const;
+    std::stack<Variable*>& getStack();
 };

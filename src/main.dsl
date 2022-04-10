@@ -1,14 +1,14 @@
+flag = true
+a = 0
+b = 0
 
+while flag {
+    a++
 
-pi = 3.14;
+    while b < 9 {
+        b++
+        a += "wow"
+    }
 
-a = 2 / 7
-
-b = 5
-
-b--
-b++
-b++
-
-c = 9
-c -= c
+    flag = false
+}

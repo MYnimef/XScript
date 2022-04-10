@@ -10,44 +10,40 @@ value(value) {
     type = DOUBLE_VAR;
 }
 
-Variable* VariableDouble::operator + (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() + second.getDouble());
-        case STRING_VAR:
-            return new VariableString(getString() + second.getString());
+Variable* VariableDouble::operator + (const Variable& second) const {
+    if (second.getType() == STRING_VAR) {
+        return new VariableString(getString() + second.getString());
+    } else {
+        return new VariableDouble(getDouble() + second.getDouble());
     }
 }
 
-Variable* VariableDouble::operator - (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() - second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+Variable* VariableDouble::operator - (const Variable& second) const {
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() - second.getDouble());
     }
 }
 
-Variable* VariableDouble::operator * (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() * second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+Variable* VariableDouble::operator * (const Variable& second) const {
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() * second.getDouble());
     }
 }
 
-Variable* VariableDouble::operator / (const Variable& second) {
-    switch(second.getType()) {
-        case INTEGER_VAR:
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() * second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+Variable* VariableDouble::operator / (const Variable& second) const {
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() / second.getDouble());
     }
+}
+
+bool VariableDouble::getBool() const {
+    return (bool) value;
 }
 
 int VariableDouble::getInteger() const {

@@ -15,9 +15,7 @@ private:
 public:
     explicit ExpressionFunctionCall(const std::string& value);
 
-    void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable *> &stack
-    ) const override;
+    void action(const CompilerArgs& args) const override;
+
+    [[nodiscard]] std::string toString() const override;
 };

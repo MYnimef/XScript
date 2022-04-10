@@ -33,14 +33,15 @@ std::string Token::toString() const {
 std::string Token::typeToString() const {
     switch (type) {
         case ID:
-            return "id";
+            return "@";
         case DOUBLE_DIGIT:
             return "d";
         case INT_DIGIT:
             return "i";
         case STRING:
             return "s";
-
+        case BOOL:
+            return "b";
         case FUNC_KW:
             return "func";
         case IF_KW:
@@ -51,7 +52,6 @@ std::string Token::typeToString() const {
             return "while";
         case FOR_KW:
             return "for";
-
         case L_BRACKET:
             return "(";
         case R_BRACKET:
@@ -60,13 +60,12 @@ std::string Token::typeToString() const {
             return "{";
         case R_BRACE:
             return "}";
-
-        case ASSIGN_OP:
-            return "=";
         case INCREMENT_OP:
             return "I";
         case DECREMENT_OP:
             return "D";
+        case ASSIGN_OP:
+            return "=";
         case SUM_OP:
             return "+";
         case SUB_OP:
@@ -75,11 +74,28 @@ std::string Token::typeToString() const {
             return "*";
         case DIV_OP:
             return "/";
-
         case COMMA:
-            return "comma";
+            return ",";
         case SEMICOLON:
-            return "semicolon";
+            return ";";
+        case OR_OP:
+            return "|";
+        case AND_OP:
+            return "&";
+        case GREATER_OP:
+            return ">";
+        case SMALLER_OP:
+            return "<";
+        case GREATER_OR_EQUAL_OP:
+            return "G";
+        case SMALLER_OR_EQUAL_OP:
+            return "S";
+        case EQUAL_OP:
+            return "E";
+        case NOT_EQUAL_OP:
+            return "N";
+        case NOT_OP:
+            return "!";
     }
 }
 
@@ -89,7 +105,16 @@ bool Token::isOperator() const {
             type == SUM_OP ||
             type == SUB_OP ||
             type == MULT_OP ||
-            type == DIV_OP
+            type == DIV_OP ||
+            type == EQUAL_OP ||
+            type == NOT_EQUAL_OP ||
+            type == SMALLER_OP ||
+            type == GREATER_OP ||
+            type == SMALLER_OR_EQUAL_OP ||
+            type == GREATER_OR_EQUAL_OP ||
+            type == AND_OP ||
+            type == OR_OP ||
+            type == NOT_OP
             );
 }
 

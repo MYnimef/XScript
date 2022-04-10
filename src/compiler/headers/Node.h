@@ -10,16 +10,18 @@
 class Node final {
 private:
     const Expression* expression;
-    std::list<Node*> nodes;
+    std::list<Node*> children;
 
 public:
-    Node(const Expression*);
+    explicit Node(const Expression*);
     ~Node();
 
     ExpressionType getType();
-    [[nodiscard]] const Expression* getToken() const;
+    [[nodiscard]] const Expression* getExpression() const;
 
     void addChildFront(Node *child);
     void addChildBack(Node *child);
-    std::list<Node*> getChild();
+    [[nodiscard]] std::list<Node*> getChildren() const;
+
+    [[nodiscard]] std::string toString(int gen = 0) const;
 };

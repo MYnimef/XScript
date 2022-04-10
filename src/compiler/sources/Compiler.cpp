@@ -5,13 +5,19 @@
 #include "Compiler.h"
 
 Compiler::Compiler() {
+    variables = new std::map<std::string, Variable*>();
+}
 
+Compiler::Compiler(const std::list<std::map<std::string, Variable*>*>& variablesGlobal):
+variablesGlobal(variablesGlobal) {
+    variables = new std::map<std::string, Variable*>();
 }
 
 Compiler::~Compiler() {
-    for (auto var: variables) {
+    for (const auto& var: *variables) {
         delete var.second;
     }
+    delete variables;
 
     while (!stack.empty()) {
         auto var = stack.top();
@@ -20,16 +26,20 @@ Compiler::~Compiler() {
     }
 }
 
-void Compiler::execute(Node* tree) {
-    auto child = tree->getChild();
+void Compiler::execute(const Node* tree) {
+    auto child = tree->getChildren();
 
-    for (auto node: tree->getChild()) {
+    for (auto node: tree->getChildren()) {
         execute(node);
     }
 
-    tree->getToken()->action(variables, stackVariablesId, stack);
+    tree->getExpression()->action(CompilerArgs(variablesGlobal, variables, stackVariablesId, stack));
 }
 
-const std::map<std::string, Variable*> &Compiler::getVariables() const {
+const std::map<std::string, Variable*>* Compiler::getVariables() const {
     return variables;
+}
+
+std::stack<Variable*>& Compiler::getStack() {
+    return stack;
 }

@@ -6,6 +6,7 @@
 #include <iostream>
 #include <regex>
 #include "Parser.h"
+#include "ExpressionValBool.h"
 #include "ExpressionValInteger.h"
 #include "ExpressionValDouble.h"
 #include "ExpressionValString.h"
@@ -17,19 +18,31 @@
 #include "ExpressionVarInit.h"
 #include "ExpressionVarCall.h"
 #include "ExpressionFunctionCall.h"
+#include "ExpressionIf.h"
+#include "ExpressionOpLogicalAnd.h"
+#include "ExpressionOpLogicalOr.h"
+#include "ExpressionOpEqual.h"
+#include "ExpressionOpGreaterOrEqual.h"
+#include "ExpressionOpSmallerOrEqual.h"
+#include "ExpressionOpGreater.h"
+#include "ExpressionOpSmaller.h"
+#include "ExpressionOpNotEqual.h"
+#include "ExceptionParser.h"
+#include "ExpressionOpNot.h"
+#include "ExpressionWhile.h"
 
 Parser::Parser(const std::string& name):
 grammatics({
-    { GR_VAR_ASSIGNMENT_COMPLEX, std::regex( R"(id[\+\-\*\/]=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" ) },
-    { GR_VAR_ASSIGNMENT,         std::regex( R"(id=(\-)?([\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*[\+\-\*\/])*[\(]*((id\(.*\))|(id)|(i)|(d)|(s))[\)]*)" )           },
-    { GR_VAR_INCREMENT,          std::regex( R"(idI)" )                                                                                                           },
-    { GR_VAR_DECREMENT,          std::regex( R"(idD)" )                                                                                                           },
-    { GR_FUNC,                   std::regex( R"(id\(.*\))" )                                                                                                      },
-    { GR_IF,                     std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                                        },
-    { GR_LOOP_WHILE,             std::regex( R"(while\(.*\)\{.*\})" )                                                                                             },
-    { GR_LOOP_FOR,               std::regex( R"(for\(.*\)\{.*\})" )                                                                                               },
-    { GR_FUNC_DEFINITION,        std::regex( R"(funcid\((((id,)*(id))|((id)?))\)\{.*\})" )                                                                        },
-    { GR_CODE_BLOCK,             std::regex( R"(\{.*\})" )                                                                                                        }
+    { GR_CODE_BLOCK,              std::regex( R"(\{.*\})" )                                                                                                         },
+    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                        },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )  },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )            },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                          },
+    //{ GR_IF,                      std::regex( R"(if\(.*\)\{.*\}(elseif\(.*\)\{.*\})*(else\(.*\)\{.*\})?)" )                                    },
+    { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )  },
+    { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )         },
+    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                                                                                },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                             }
 }) {
     tree = new Node(new ExpressionFunctionCall("main"));
 }
@@ -40,7 +53,7 @@ grammatics(grammatics) {
 }
 
 Parser::~Parser() {
-    delete tree;
+    //delete tree;
 }
 
 void Parser::addTokens(const std::list<Token>& tokens) {
@@ -115,17 +128,16 @@ void Parser::generateExpression(std::list<Token>& tokens) {
         case GR_VAR_ASSIGNMENT:
             parseAssignment(tokens);
             break;
-        case GR_VAR_INCREMENT:
-            parseIncrement(tokens);
-            break;
-        case GR_VAR_DECREMENT:
-            parseDecrement(tokens);
+        case GR_VAR_INCREMENT_DECREMENT:
+            parseIncrementDecrement(tokens);
             break;
         case GR_FUNC:
             break;
         case GR_IF:
+            parseIf(tokens);
             break;
         case GR_LOOP_WHILE:
+            parseWhile(tokens);
             break;
         case GR_LOOP_FOR:
             break;
@@ -144,21 +156,13 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
     }
     std::cout << comp;
 
-    GrammarType type;
-    bool didFind = false;
-
     for (const auto &grammar: grammatics) {
         if (std::regex_match(comp, grammar.second)) {
-            type = grammar.first;
-            didFind = true;
+            return grammar.first;
         }
     }
 
-    if (didFind) {
-        return type;
-    } else {
-        throw std::overflow_error("wrong grammar");
-    }
+    throw ExceptionParser("wrong grammar");
 }
 
 void Parser::parseAssignmentComplex(std::list<Token>& tokens) {
@@ -184,41 +188,27 @@ void Parser::parseAssignment(std::list<Token>& tokens) {
     tokens.pop_front();
     expressions.emplace_back(new ExpressionOpAssignment());
     tokens.pop_front();
-
-    if (tokens.front().getType() == SUB_OP) {
-        tokens.push_front(Token(INT_DIGIT, "0"));
-    }
-
     expressions.splice(expressions.end(), parseOperations(tokens));
 
     tree->addChildBack(addNodeExpr(toPostfix(expressions)));
 }
 
-void Parser::parseIncrement(std::list<Token>& tokens) {
+void Parser::parseIncrementDecrement(std::list<Token>& tokens) {
     std::list<Expression*> expressions;
 
     std::string id = tokens.front().getValue();
+    tokens.pop_front();
+    auto op = tokens.front().getType();
     tokens.clear();
 
     expressions.emplace_back(new ExpressionVarInit(id));
     expressions.emplace_back(new ExpressionVarCall(id));
     expressions.emplace_back(new ExpressionValInteger(1));
-    expressions.emplace_back(new ExpressionOpSum());
-    expressions.emplace_back(new ExpressionOpAssignment());
-
-    tree->addChildBack(addNodeExpr(expressions));
-}
-
-void Parser::parseDecrement(std::list<Token>& tokens) {
-    std::list<Expression*> expressions;
-
-    std::string id = tokens.front().getValue();
-    tokens.clear();
-
-    expressions.emplace_back(new ExpressionVarInit(id));
-    expressions.emplace_back(new ExpressionVarCall(id));
-    expressions.emplace_back(new ExpressionValInteger(1));
-    expressions.emplace_back(new ExpressionOpSub());
+    if (op == INCREMENT_OP) {
+        expressions.emplace_back(new ExpressionOpSum());
+    } else {
+        expressions.emplace_back(new ExpressionOpSub());
+    }
     expressions.emplace_back(new ExpressionOpAssignment());
 
     tree->addChildBack(addNodeExpr(expressions));
@@ -227,78 +217,110 @@ void Parser::parseDecrement(std::list<Token>& tokens) {
 std::list<Expression*> Parser::parseOperations(std::list<Token>& tokens) {
     std::list<Expression*> expressions;
 
-    std::stack<Token> stack;
+    std::list<Token> localTokens;
     int brackets = 0;
-    bool bracketsOver = false;
+    bool foundId = false;
 
     for (const auto &token: tokens) {
         const auto& type = token.getType();
 
         if (token.isOperator() && brackets == 0) {
-            subOperations(expressions, stack, bracketsOver);
-
-            if (type == SUM_OP) {
-                expressions.emplace_back(new ExpressionOpSum());
-            } else if (type == SUB_OP) {
+            if (localTokens.size() == 0 && type == SUB_OP) {
+                expressions.emplace_back(new ExpressionValInteger(0));
                 expressions.emplace_back(new ExpressionOpSub());
-            } else if (type == MULT_OP) {
-                expressions.emplace_back(new ExpressionOpMult());
             } else {
-                expressions.emplace_back(new ExpressionOpDiv());
+                subOperations(expressions, localTokens);
+
+                if (type == SUM_OP) {
+                    expressions.emplace_back(new ExpressionOpSum());
+                } else if (type == SUB_OP) {
+                    expressions.emplace_back(new ExpressionOpSub());
+                } else if (type == MULT_OP) {
+                    expressions.emplace_back(new ExpressionOpMult());
+                } else if (type == DIV_OP) {
+                    expressions.emplace_back(new ExpressionOpDiv());
+                } else if (type == AND_OP) {
+                    expressions.emplace_back(new ExpressionOpLogicalAnd());
+                } else if (type == OR_OP) {
+                    expressions.emplace_back(new ExpressionOpLogicalOr());
+                } else if (type == EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpEqual());
+                } else if (type == GREATER_OR_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpGreaterOrEqual());
+                } else if (type == SMALLER_OR_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpSmallerOrEqual());
+                } else if (type == GREATER_OP) {
+                    expressions.emplace_back(new ExpressionOpGreater());
+                } else if (type == SMALLER_OP) {
+                    expressions.emplace_back(new ExpressionOpSmaller());
+                } else if (type == NOT_EQUAL_OP) {
+                    expressions.emplace_back(new ExpressionOpNotEqual());
+                } else {
+                    expressions.emplace_back(new ExpressionOpNot());
+                }
             }
+
+            foundId = false;
         } else if (type == L_BRACKET) {
-            if (brackets != 0) {
-                stack.push(token);
+            if (brackets != 0 || foundId) {
+                localTokens.push_back(token);
             } else {
                 expressions.emplace_back(new ExpressionBracketL());
             }
             brackets++;
         } else if (type == R_BRACKET) {
             brackets--;
-            if (brackets != 0) {
-                stack.push(token);
+            if (brackets != 0 || foundId) {
+                localTokens.push_back(token);
+                foundId = false;
             } else {
-                bracketsOver = true;
+                subOperations(expressions, localTokens);
+                expressions.emplace_back(new ExpressionBracketR());
             }
         } else {
-            stack.push(token);
+            if (type == ID && brackets == 0) {
+                foundId = true;
+            } else {
+                foundId = false;
+            }
+            localTokens.push_back(token);
         }
     }
 
-    subOperations(expressions, stack, bracketsOver);
-    tokens.clear();
-    return expressions;
+    if (brackets > 0) {
+        throw ExceptionParser("expected )");
+    } else if (brackets < 0) {
+        throw ExceptionParser("expected (");
+    } else {
+        subOperations(expressions, localTokens);
+        tokens.clear();
+        return expressions;
+    }
 }
 
-void Parser::subOperations(std::list<Expression*>& expressions, std::stack<Token>& stack, bool bracketsOver) {
-    std::list<Token> localTokens;
-    while (!stack.empty()) {
-        localTokens.push_front(stack.top());
-        stack.pop();
-    }
-
+void Parser::subOperations(std::list<Expression*>& expressions, std::list<Token>& localTokens) {
     std::string localString;
     for (const auto& localToken: localTokens) {
         localString += localToken.typeToString();
     }
 
-    if (localString == "id") {
+    if (localString == "@") {
         expressions.emplace_back(new ExpressionVarCall(localTokens.front().getValue()));
+    } else if (localString == "b") {
+        expressions.emplace_back(new ExpressionValBool(localTokens.front().getValue()));
     } else if (localString == "i") {
         expressions.emplace_back(new ExpressionValInteger(localTokens.front().getValue()));
     } else if (localString == "d") {
         expressions.emplace_back(new ExpressionValDouble(localTokens.front().getValue()));
     } else if (localString == "s") {
         expressions.emplace_back(new ExpressionValString(localTokens.front().getValue()));
-    } else if (std::regex_match(localString, std::regex(R"(id\(.*\))"))) {
+    } else if (std::regex_match(localString, std::regex(R"(@\(.*\))"))) {
 
     } else if (!localTokens.empty()) {
         expressions.splice(expressions.end(), parseOperations(localTokens));
-
-        if (bracketsOver) {
-            expressions.emplace_back(new ExpressionBracketR());
-        }
     }
+
+    localTokens.clear();
 }
 
 //funcid\((((id,)*(id))|((id)+))\)\{.*\}
@@ -343,6 +365,66 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
      */
 }
 
+void Parser::parseIf(std::list<Token>& tokens) {
+    tokens.pop_front(); // remove if
+
+    std::list<Token> localTokens;
+    int amount = 0;
+    for (const auto& token: tokens) {
+        if (token.getType() != L_BRACE) {
+            localTokens.push_back(token);
+            amount++;
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < amount; i++) {
+        tokens.pop_front();
+    }
+
+    auto condition = parseOperations(localTokens);
+    auto conditionNode = addNodeExpr(toPostfix(condition));
+
+    tokens.pop_front(); // remove {
+    tokens.pop_back();  // remove }
+
+    Parser parser(grammatics);
+    parser.addTokens(tokens);
+
+    tree->addChildBack(new Node(new ExpressionIf(conditionNode, parser.getTree())));
+}
+
+void Parser::parseWhile(std::list<Token>& tokens) {
+    tokens.pop_front(); // remove while
+
+    std::list<Token> localTokens;
+    int amount = 0;
+    for (const auto& token: tokens) {
+        if (token.getType() != L_BRACE) {
+            localTokens.push_back(token);
+            amount++;
+        } else {
+            break;
+        }
+    }
+
+    for (int i = 0; i < amount; i++) {
+        tokens.pop_front();
+    }
+
+    auto condition = parseOperations(localTokens);
+    auto conditionNode = addNodeExpr(toPostfix(condition));
+
+    tokens.pop_front(); // remove {
+    tokens.pop_back();  // remove }
+
+    Parser parser(grammatics);
+    parser.addTokens(tokens);
+
+    tree->addChildBack(new Node(new ExpressionWhile(conditionNode, parser.getTree())));
+}
+
 std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
     std::list<Expression*> postfix;
     std::stack<Expression*> operators;
@@ -363,8 +445,8 @@ std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
             delete prev;
 
             delete expression;
-        } else if (expression->isOperator()) {
-            while (!operators.empty() && operatorPriority(type) <= operatorPriority(operators.top()->getType())) {
+        } else if (expression->isOperation()) {
+            while (!operators.empty() && operatorPriority(type) >= operatorPriority(operators.top()->getType())) {
                 postfix.push_back(operators.top());
                 operators.pop();
             }
@@ -379,18 +461,32 @@ std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {
         operators.pop();
     }
 
+    std::cout<<std::endl;
+    for (auto i: postfix) {
+        std::cout << i->toString();
+    }
+    std::cout<<std::endl;
+
     return postfix;
 }
 
 short Parser::operatorPriority(const ExpressionType& type) {
-    if (type == EXP_OP_MULTIPLICATION || type == EXP_OP_DIVISION) {
-        return 4;
+    if (type == EXP_OP_NOT) {
+        return 0;
+    } else if (type == EXP_OP_MULTIPLICATION || type == EXP_OP_DIVISION) {
+        return 1;
     } else if (type == EXP_OP_SUM || type == EXP_OP_SUBTRACTION) {
-        return 3;
-    } else if (type == EXP_OP_ASSIGNMENT) {
         return 2;
-    } else {
-        return -1;
+    } else if (type == EXP_OP_SMALLER || type == EXP_OP_SMALLER_OR_EQUAL || type == EXP_OP_GREATER || type == EXP_OP_GREATER_OR_EQUAL) {
+        return 3;
+    } else if (type == EXP_OP_EQUAL || type == EXP_OP_NOT_EQUAL) {
+        return 4;
+    } else if (type == EXP_LOGICAL_AND) {
+        return 5;
+    } else if (type == EXP_LOGICAL_OR) {
+        return 6;
+    } else { //type == EXP_OP_ASSIGNMENT
+        return 7;
     }
 }
 
@@ -399,9 +495,12 @@ Node* Parser::addNodeExpr(const std::list<Expression*>& postfix) {
 
     for (const auto& exp: postfix) {
         Node* node = new Node(exp);
-        if (node->getToken()->isOperator()) {
+        if (node->getExpression()->isBinaryOperation()) {
             node->addChildFront(st.top());
             st.pop();
+            node->addChildFront(st.top());
+            st.pop();
+        } else if (node->getExpression()->isUnaryOperation()) {
             node->addChildFront(st.top());
             st.pop();
         }

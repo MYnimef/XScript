@@ -4,24 +4,34 @@
 
 #pragma once
 
-#include <string>
-#include <map>
-#include <stack>
+#include "CompilerArgs.h"
 #include "Variable.h"
 
 enum ExpressionType {
     EXP_VAR_INITIALIZATION,
 
     EXP_ID,
+    EXP_BOOL,
     EXP_INTEGER,
     EXP_DOUBLE,
     EXP_STRING,
 
-    EXP_OP_ASSIGNMENT,
-    EXP_OP_SUM,
-    EXP_OP_SUBTRACTION,
     EXP_OP_MULTIPLICATION,
     EXP_OP_DIVISION,
+    EXP_OP_SUM,
+    EXP_OP_SUBTRACTION,
+    EXP_OP_SMALLER,
+    EXP_OP_SMALLER_OR_EQUAL,
+    EXP_OP_GREATER,
+    EXP_OP_GREATER_OR_EQUAL,
+    EXP_OP_EQUAL,
+    EXP_OP_NOT_EQUAL,
+    EXP_LOGICAL_AND,
+    EXP_LOGICAL_OR,
+    EXP_OP_NOT,
+    EXP_OP_ASSIGNMENT,
+
+    EXP_IF,
 
     EXP_LOOP_WHILE,
     EXP_LOOP_FOR,
@@ -43,38 +53,29 @@ protected:
 
 public:
     Expression();
+    virtual ~Expression();
 
     [[nodiscard]] ExpressionType getType() const;
 
-    virtual void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable *> &stack
-            ) const = 0;
+    virtual void action(const CompilerArgs& args) const = 0;
 
-    [[nodiscard]] bool isOperator() const;
+    [[nodiscard]] bool isOperation() const;
+    [[nodiscard]] bool isUnaryOperation() const;
+    [[nodiscard]] bool isBinaryOperation() const;
+
+    [[nodiscard]] virtual std::string toString() const = 0;
 };
 
-class ExpressionBracketL: public Expression {
+class ExpressionBracketL final: public Expression {
 public:
-    ExpressionBracketL() {
-        type = EXP_BRACKET_L;
-    }
-
-    virtual void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {}
+    ExpressionBracketL() { type = EXP_BRACKET_L; }
+    void action(const CompilerArgs& args) const override { }
+    [[nodiscard]] std::string toString() const override { return "("; }
 };
 
-class ExpressionBracketR: public Expression {
+class ExpressionBracketR final: public Expression {
 public:
-    ExpressionBracketR() {
-        type = EXP_BRACKET_R;
-    }
-
-    virtual void action(
-            std::map<std::string, Variable *> &variables,
-            std::stack<std::string> &stackVariablesId,
-            std::stack<Variable *> &stack) const override {}
+    ExpressionBracketR() { type = EXP_BRACKET_R; }
+    void action(const CompilerArgs& args) const override { }
+    [[nodiscard]] std::string toString() const override { return ")"; }
 };

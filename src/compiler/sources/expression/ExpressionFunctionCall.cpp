@@ -9,11 +9,10 @@ name(value) {
     type = EXP_FUNC;
 }
 
-void
-ExpressionFunctionCall::action(
-        std::map<std::string, Variable *> &variables,
-        std::stack<std::string> &stackVariablesId,
-        std::stack<Variable *> &stack
-        ) const {
+void ExpressionFunctionCall::action(const CompilerArgs& args) const {
 
+}
+
+std::string ExpressionFunctionCall::toString() const {
+    return "function " + name;
 }

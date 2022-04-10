@@ -5,14 +5,16 @@
 #include "VariableInteger.h"
 #include "VariableDouble.h"
 #include "VariableString.h"
+#include "VariableBool.h"
 
 VariableInteger::VariableInteger(int value):
 value(value) {
     type = INTEGER_VAR;
 }
 
-Variable* VariableInteger::operator + (const Variable& second) {
+Variable* VariableInteger::operator + (const Variable& second) const {
     switch (second.getType()) {
+        case BOOL_VAR:
         case INTEGER_VAR:
             return new VariableInteger(getInteger() + second.getInteger());
         case DOUBLE_VAR:
@@ -22,8 +24,9 @@ Variable* VariableInteger::operator + (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator - (const Variable& second) {
+Variable* VariableInteger::operator - (const Variable& second) const {
     switch (second.getType()) {
+        case BOOL_VAR:
         case INTEGER_VAR:
             return new VariableInteger(getInteger() - second.getInteger());
         case DOUBLE_VAR:
@@ -33,8 +36,9 @@ Variable* VariableInteger::operator - (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator * (const Variable& second) {
+Variable* VariableInteger::operator * (const Variable& second) const {
     switch (second.getType()) {
+        case BOOL_VAR:
         case INTEGER_VAR:
             return new VariableInteger(getInteger() * second.getInteger());
         case DOUBLE_VAR:
@@ -50,15 +54,16 @@ Variable* VariableInteger::operator * (const Variable& second) {
     }
 }
 
-Variable* VariableInteger::operator / (const Variable& second) {
-    switch (second.getType()) {
-        case INTEGER_VAR:
-            return new VariableDouble(getDouble() / second.getDouble());
-        case DOUBLE_VAR:
-            return new VariableDouble(getDouble() / second.getDouble());
-        case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+Variable* VariableInteger::operator / (const Variable& second) const {
+    if (second.getType() == STRING_VAR) {
+        throw std::overflow_error("wrong operand for type string");
+    } else {
+        return new VariableDouble(getDouble() / second.getDouble());
     }
+}
+
+bool VariableInteger::getBool() const {
+    return (bool) value;
 }
 
 int VariableInteger::getInteger() const {
