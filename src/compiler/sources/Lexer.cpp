@@ -166,7 +166,7 @@ TokenType Lexer::checkTwoChar(const std::string &input) {
     } else if (input == "==") {
         return EQUAL_OP;
     } else if (input == "!=") {
-        return EQUAL_OP;
+        return NOT_EQUAL_OP;
     } else if (input == "<=") {
         return SMALLER_OR_EQUAL_OP;
     } else {

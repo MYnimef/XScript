@@ -92,6 +92,8 @@ std::string Token::typeToString() const {
             return "S";
         case EQUAL_OP:
             return "E";
+        case NOT_EQUAL_OP:
+            return "N";
     }
 }
 
@@ -103,6 +105,7 @@ bool Token::isOperator() const {
             type == MULT_OP ||
             type == DIV_OP ||
             type == EQUAL_OP ||
+            type == NOT_EQUAL_OP ||
             type == SMALLER_OP ||
             type == GREATER_OP ||
             type == SMALLER_OR_EQUAL_OP ||

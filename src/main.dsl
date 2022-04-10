@@ -1,6 +1,6 @@
 a = "not great"
 
-if (2 + 3 == 5)
+if (2 + 3 != 5)
 {
     a = "great"
 }

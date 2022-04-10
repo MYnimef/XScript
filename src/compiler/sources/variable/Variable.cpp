@@ -50,7 +50,7 @@ Variable* Variable::operator == (const Variable& second) const {
 }
 
 Variable* Variable::operator != (const Variable& second) const {
-    return new VariableBool(getString() == second.getString());
+    return new VariableBool(getString() != second.getString());
 }
 
 Variable* Variable::operator && (const Variable& second) const {
