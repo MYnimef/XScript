@@ -29,17 +29,19 @@
 #include "ExceptionParser.h"
 #include "ExpressionOpNot.h"
 #include "ExpressionWhile.h"
+#include "ExpressionFunctionCall.h"
 
 Parser::Parser(Node* node):
+actions(R"(((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)"),
 grammatics({
-    { GR_FUNC,                    std::regex( R"(@\(.*\))" )                                                                                                         },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=((!?[\(])*!?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )    },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)" )          },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                                                                           },
-    { GR_IF,                      std::regex( R"(if((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" )    },
-    { GR_LOOP_WHILE,              std::regex( R"(while((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*\{.*\})" ) },
-    { GR_LOOP_FOR,                std::regex( R"(for\(((.*,)*(.*,))?\)\{.*\})" )                                                                                                 },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                                                                              }
+    { GR_FUNC,                    std::regex( R"(@\((()" + actions + R"(,)*)" + actions + R"()?)" + R"(\))" ) },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + actions )                                   },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + actions )                                             },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                    },
+    { GR_IF,                      std::regex( R"(if)" + actions + R"(\{.*\})" )                               },
+    { GR_LOOP_WHILE,              std::regex( R"(while)" + actions + R"(\{.*\})" )                            },
+    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                          },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\((((@,)*(@))|((@)?))\)\{.*\})" )                       }
 }) {
     tree = node;
 }
@@ -129,6 +131,7 @@ void Parser::generateExpression(std::list<Token>& tokens) {
             parseIncrementDecrement(tokens);
             break;
         case GR_FUNC:
+            parseFunctionCall(tokens);
             break;
         case GR_IF:
             parseIf(tokens);
@@ -420,6 +423,29 @@ void Parser::parseWhile(std::list<Token>& tokens) {
     parser.addTokens(tokens);
 
     tree->addChildBack(new Node(new ExpressionWhile(conditionBlock, blockExecute)));
+}
+
+void Parser::parseFunctionCall(std::list<Token>& tokens) {
+    tokens.pop_front(); // remove func
+    auto id = tokens.front().getValue();
+    tokens.pop_front(); // remove id
+
+    tokens.pop_front(); // remove (
+    tokens.pop_back(); // remove )
+
+    std::list<Node*> arguments;
+    std::list<Token> localTokens;
+    for (const auto& token: tokens) {
+        if (token.getType() == COMMA) {
+
+            auto exp = parseOperations(localTokens);
+            arguments.push_back(addNodeExpr(toPostfix(exp)));
+        } else {
+            localTokens.push_back(token);
+        }
+    }
+
+    tree->addChildBack(new Node(new ExpressionFunctionCall(id, arguments)));
 }
 
 std::list<Expression*> Parser::toPostfix(std::list<Expression*>& expressions) {

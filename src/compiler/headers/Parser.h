@@ -25,6 +25,7 @@ private:
         GR_FUNC_DEFINITION,
         };
 
+    const std::string actions;
     const std::map<GrammarType, std::regex> grammatics;
     Node* tree;
     std::map<std::string, Node*> functions;
@@ -41,6 +42,7 @@ private:
     void parseFuncDefinition(std::list<Token>&);
     void parseIf(std::list<Token>&);
     void parseWhile(std::list<Token>&);
+    void parseFunctionCall(std::list<Token>&);
 
     std::list<Expression*> toPostfix(std::list<Expression*>&);
     static short operatorPriority(const ExpressionType& type);

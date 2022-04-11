@@ -9,6 +9,10 @@ name(value) {
     type = EXP_FUNC;
 }
 
+ExpressionFunctionCall::ExpressionFunctionCall(const std::string &value, std::list<Node *> arguments) {
+
+}
+
 void ExpressionFunctionCall::action(const CompilerArgs& args) const {
 
 }
