@@ -5,6 +5,7 @@
 #include "Compiler.h"
 
 Compiler::Compiler() {
+    functions = new std::map<std::string, Node*>();
     variables = new std::map<std::string, Variable*>();
 }
 
@@ -33,7 +34,7 @@ void Compiler::execute(const Node* tree) {
         execute(node);
     }
 
-    tree->getExpression()->action(CompilerArgs(variablesGlobal, variables, stackVariablesId, stack));
+    tree->getExpression()->action(CompilerArgs(functionsGlobal, functions, variablesGlobal, variables, stackVariablesId, stack));
 }
 
 const std::map<std::string, Variable*>* Compiler::getVariables() const {

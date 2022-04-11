@@ -13,7 +13,6 @@ private:
     std::list<Node*> children;
 
 public:
-    Node(const std::string& value);
     explicit Node(const Expression*);
     ~Node();
 

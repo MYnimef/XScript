@@ -1,5 +1,5 @@
 //
-// Created by Ivan Markov on 07.04.2022.
+// Created by Ivan Markov on 11.04.2022.
 //
 
 #pragma once
@@ -9,13 +9,14 @@
 #include "Expression.h"
 #include "Node.h"
 
-class ExpressionFunctionCall final: public Expression {
+class ExpressionFunctionDef final: public Expression {
 private:
     const std::string name;
     const std::list<Node*> arguments;
+    const Node* body;
 
 public:
-    explicit ExpressionFunctionCall(const std::string& value, const std::list<Node*>& arguments);
+    explicit ExpressionFunctionDef(const std::string& value, const std::list<Node*>& arguments, const Node* body);
 
     void action(const CompilerArgs& args) const override;
 

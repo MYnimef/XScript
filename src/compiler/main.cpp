@@ -3,6 +3,7 @@
 #include "Parser.h"
 #include "Compiler.h"
 #include "ExceptionParser.h"
+#include "ExpressionCodeBlock.h"
 
 int main() {
     std::cout <<
@@ -19,7 +20,7 @@ int main() {
 
     clock_t start = clock();
 
-    Node* application = new Node("main");
+    Node* application = new Node(new ExpressionCodeBlock("main"));
 
     try {
         Lexer lexer;

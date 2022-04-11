@@ -14,7 +14,7 @@ private:
 
 public:
     explicit ExpressionWhile(const Node* blockCondition, const Node* blockExecute);
-    ~ExpressionWhile();
+    ~ExpressionWhile() override;
 
     void action(const CompilerArgs& args) const override;
 

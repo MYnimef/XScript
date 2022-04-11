@@ -12,6 +12,9 @@
 
 class Compiler final {
 private:
+    std::list<std::map<std::string, Node*>*> functionsGlobal;
+    std::map<std::string, Node*>* functions;
+
     std::list<std::map<std::string, Variable*>*> variablesGlobal;
     std::map<std::string, Variable*>* variables;
 

@@ -14,7 +14,7 @@ private:
 
 public:
     explicit ExpressionIf(const Node* blockCondition, const Node* blockExecute);
-    ~ExpressionIf();
+    ~ExpressionIf() override;
 
     void action(const CompilerArgs& args) const override;
 

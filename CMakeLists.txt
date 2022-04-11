@@ -125,4 +125,10 @@ add_executable(
 
         src/compiler/headers/expression/ExpressionWhile.h
         src/compiler/sources/expression/ExpressionWhile.cpp
+
+        src/compiler/headers/expression/ExpressionCodeBlock.h
+        src/compiler/sources/expression/ExpressionCodeBlock.cpp
+
+        src/compiler/headers/expression/ExpressionFunctionDef.h
+        src/compiler/sources/expression/ExpressionFunctionDef.cpp
 )

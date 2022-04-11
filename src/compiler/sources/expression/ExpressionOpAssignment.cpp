@@ -9,7 +9,6 @@ ExpressionOpAssignment::ExpressionOpAssignment() {
 }
 
 void ExpressionOpAssignment::action(const CompilerArgs& args) const {
-
     auto val = args.stack.top();
     args.stack.pop();
     auto id = args.stackVariablesId.top();

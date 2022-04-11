@@ -39,5 +39,5 @@ void ExpressionWhile::action(const CompilerArgs& args) const {
 }
 
 std::string ExpressionWhile::toString() const {
-    return "\n    " + blockCondition->toString(1) + "\n    " + blockExecute->toString(1) + "\n    endif";
+    return "while\n        " + blockCondition->toString(2) + "\n        execute " + blockExecute->toString(2);
 }
