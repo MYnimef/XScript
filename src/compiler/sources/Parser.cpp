@@ -34,7 +34,7 @@
 #include "ExpressionFunctionDef.h"
 
 Parser::Parser(Node* node):
-actions(R"(((!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*)"),
+actions(R"(((([!\-]?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*[\+\-\*\/<>GSEN\|&])*(!?[\(])*!?((@\(.*\))|[@bids])[\)]*)|(([!\-]?[\(])*[!\-]?((@\(.*\))|[@bids])[\)]*))"),
 grammatics({
     { GR_FUNC,                    std::regex( R"(@\((()" + actions + R"(,)*)" + actions + R"()?)" + R"(\))" ) },
     { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + actions )                                   },
