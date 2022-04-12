@@ -36,25 +36,25 @@
 Parser::Parser(Node* node, std::map<std::string, Node*>* functions):
 tree(node),
 functions(functions),
-actions(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
-grammatics({
-    { GR_FUNC,                    std::regex( R"(@\((()" + actions + R"(,)*)" + actions + R"()?)" + R"(\))" ) },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + actions )                                   },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + actions )                                             },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                                    },
-    { GR_IF,                      std::regex( R"(if)" + actions + R"(\{.*\})" )                               },
-    { GR_LOOP_WHILE,              std::regex( R"(while)" + actions + R"(\{.*\})" )                            },
-    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                          },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})" )                                 }
+val(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
+syntax({
+    { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" ) },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + val )                               },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val )                                         },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                            },
+    { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})" )                           },
+    { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})" )                        },
+    { GR_LOOP_FOR,                std::regex( R"(for\(.*\)\{.*\})" )                                  },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})" )                         }
 }) {
     tree = node;
 }
 
 Parser::Parser(Node* node, std::map<std::string, Node*>* functions, const std::string& actions, const std::map<GrammarType, std::regex>& grammatics):
-tree(node),
-functions(functions),
-actions(actions),
-grammatics(grammatics) {
+        tree(node),
+        functions(functions),
+        val(actions),
+        syntax(grammatics) {
 }
 
 Parser::~Parser() {
@@ -160,13 +160,13 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
     }
     std::cout << comp;
 
-    for (const auto &grammar: grammatics) {
+    for (const auto &grammar: syntax) {
         if (std::regex_match(comp, grammar.second)) {
             return grammar.first;
         }
     }
 
-    throw ExcParser("wrong grammar");
+    throw ExcParser("wrong syntax");
 }
 
 void Parser::parseAssignmentComplex(std::list<Token>& tokens) {
@@ -366,7 +366,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     } else {
         auto funcBody = new Node(new ExpBlock(funcName));
         auto functionsLocal = new std::map<std::string, Node*>();
-        Parser parser(funcBody, functionsLocal, actions, grammatics);
+        Parser parser(funcBody, functionsLocal, val, syntax);
         parser.addTokens(tokens);
 
         auto node = new Node(new ExpFuncDef(funcName, funcBody, functionsLocal), arguments);
@@ -400,7 +400,7 @@ void Parser::parseIf(std::list<Token>& tokens) {
 
     Node* blockExecute = new Node(new ExpBlock("if"));
     auto functionsLocal = new std::map<std::string, Node*>();
-    Parser parser(blockExecute, functionsLocal, actions, grammatics);
+    Parser parser(blockExecute, functionsLocal, val, syntax);
     parser.addTokens(tokens);
 
     tree->addChildBack(new Node(new ExpBlockIf(conditionBlock, blockExecute, functionsLocal)));
@@ -433,7 +433,7 @@ void Parser::parseWhile(std::list<Token>& tokens) {
     Node* blockExecute = new Node(new ExpBlock("while"));
 
     auto functionsLocal = new std::map<std::string, Node*>();
-    Parser parser(blockExecute, functionsLocal, actions, grammatics);
+    Parser parser(blockExecute, functionsLocal, val, syntax);
     parser.addTokens(tokens);
 
     tree->addChildBack(new Node(new ExpBlockWhile(conditionBlock, blockExecute, functionsLocal)));

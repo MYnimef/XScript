@@ -25,8 +25,8 @@ private:
         GR_FUNC_DEFINITION,
         };
 
-    const std::string actions;
-    const std::map<GrammarType, std::regex> grammatics;
+    const std::string val;
+    const std::map<GrammarType, std::regex> syntax;
     Node* tree;
     std::map<std::string, Node*>* functions;
 

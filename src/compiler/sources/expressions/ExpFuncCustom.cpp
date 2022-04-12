@@ -6,6 +6,7 @@
 
 ExpFuncCustom::ExpFuncCustom(const std::list<std::string>& args):
 funcArgs(args) {
+    type = EXP_FUNC_DEFINITION;
 }
 
 ExpFuncCustom::~ExpFuncCustom() {
