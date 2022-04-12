@@ -15,6 +15,7 @@ private:
 
 public:
     explicit ExpBlockWhile(
+            const int& lineNum,
             const Node* blockCondition,
             const Node* blockExecute,
             std::map<std::string, Node*>* functions

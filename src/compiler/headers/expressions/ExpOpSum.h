@@ -8,7 +8,7 @@
 
 class ExpOpSum final: public Exp {
 public:
-    explicit ExpOpSum();
+    explicit ExpOpSum(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

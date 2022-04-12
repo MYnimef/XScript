@@ -4,17 +4,21 @@
 
 #include "Token.h"
 
-Token::Token(const TokenType &type, const std::string& value)
-: type(type), value(value) {
+Token::Token(const TokenType &type, const std::string& value, const int& lineNum):
+type(type),
+value(value),
+lineNum(lineNum) {
+
+}
+
+Token::Token(const Token& token):
+type(token.type),
+value(token.value),
+lineNum(token.lineNum) {
 
 }
 
 Token::~Token() {
-
-}
-
-Token::Token(const Token& token)
-: type(token.type), value(token.value) {
 
 }
 
@@ -24,6 +28,10 @@ TokenType Token::getType() const {
 
 std::string Token::getValue() const {
     return value;
+}
+
+int Token::getLineNum() const {
+    return lineNum;
 }
 
 std::string Token::toString() const {
@@ -50,8 +58,6 @@ std::string Token::typeToString() const {
             return "else";
         case WHILE_KW:
             return "while";
-        case FOR_KW:
-            return "for";
         case L_BRACKET:
             return "(";
         case R_BRACKET:
@@ -123,7 +129,6 @@ bool Token::isKeyWord() const {
             type == FUNC_KW ||
             type == IF_KW ||
             type == ELSE_KW ||
-            type == WHILE_KW ||
-            type == FOR_KW
+            type == WHILE_KW
             );
 }

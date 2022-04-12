@@ -5,14 +5,13 @@
 #include "ExpValBool.h"
 #include "VarBool.h"
 
-ExpValBool::ExpValBool(const std::string &value):
+ExpValBool::ExpValBool(const int& lineNum, const std::string &value):
+Exp(EXP_BOOL, lineNum),
 value(value == "true") {
-    type = EXP_BOOL;
 }
 
 void ExpValBool::action(const CompilerArgs& args) const {
-
-    args.stack.push(new VarBool(value));
+    args.stack.push(new VarBool(lineNum, value));
 }
 
 std::string ExpValBool::toString() const {

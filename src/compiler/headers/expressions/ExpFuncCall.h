@@ -17,7 +17,7 @@ private:
     void executeFunction(Node* func, const CompilerArgs& args) const;
 
 public:
-    explicit ExpFuncCall(const std::string& value, const std::list<Node*>& arguments);
+    explicit ExpFuncCall(const int& lineNum, const std::string& value, const std::list<Node*>& arguments);
     ~ExpFuncCall() override;
 
     void action(const CompilerArgs& args) const override;

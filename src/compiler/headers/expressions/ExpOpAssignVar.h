@@ -13,7 +13,7 @@ private:
     std::string id;
 
 public:
-    explicit ExpOpAssignVar(const std::string& value);
+    explicit ExpOpAssignVar(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

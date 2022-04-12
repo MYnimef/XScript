@@ -8,7 +8,7 @@
 
 class ExpLogicalOr final: public Exp {
 public:
-    explicit ExpLogicalOr();
+    explicit ExpLogicalOr(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

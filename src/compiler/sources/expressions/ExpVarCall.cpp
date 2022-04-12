@@ -7,14 +7,14 @@
 #include "VarDouble.h"
 #include "VarString.h"
 #include "VarBool.h"
+#include "ExcExp.h"
 
-ExpVarCall::ExpVarCall(const std::string &value):
+ExpVarCall::ExpVarCall(const int& lineNum, const std::string &value):
+Exp(EXP_ID, lineNum),
 id(value) {
-    type = EXP_ID;
 }
 
 void ExpVarCall::action(const CompilerArgs& args) const {
-
     for (auto scope: args.variablesGlobal) {
         if (callVariableFrom(scope, args.stack)) {
             return;
@@ -22,7 +22,7 @@ void ExpVarCall::action(const CompilerArgs& args) const {
     }
 
     if (!callVariableFrom(args.variables, args.stack)) {
-        throw std::overflow_error("usage of undeclared var");
+        throw ExcExp("usage of undeclared var '" + id +  "' at line " + std::to_string(lineNum));
     }
 }
 
@@ -36,16 +36,16 @@ bool ExpVarCall::callVariableFrom(std::map<std::string, Var*>* container, std::s
         auto var = it->second;
         switch (var->getType()) {
             case Var::BOOL_VAR:
-                stack.push(new VarBool(var->getBool()));
+                stack.push(new VarBool(lineNum, var->getBool()));
                 return true;
             case Var::INTEGER_VAR:
-                stack.push(new VarInteger(var->getInteger()));
+                stack.push(new VarInteger(lineNum, var->getInteger()));
                 return true;
             case Var::DOUBLE_VAR:
-                stack.push(new VarDouble(var->getDouble()));
+                stack.push(new VarDouble(lineNum, var->getDouble()));
                 return true;
             case Var::STRING_VAR:
-                stack.push(new VarString(var->getString()));
+                stack.push(new VarString(lineNum, var->getString()));
                 return true;
         }
     }

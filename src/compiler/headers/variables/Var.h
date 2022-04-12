@@ -5,11 +5,14 @@
 #pragma once
 
 #include <string>
-//#include <list>
+#include <list>
 
 class Var {
+protected:
+    int lineNum;
+
 public:
-    explicit Var();
+    explicit Var(const int& lineNum);
     virtual ~Var();
 
     virtual Var* operator + (const Var&) const = 0;
@@ -31,14 +34,14 @@ public:
     [[nodiscard]] virtual long long getInteger() const = 0;
     [[nodiscard]] virtual long double getDouble() const = 0;
     [[nodiscard]] virtual std::string getString() const = 0;
-    //[[nodiscard]] virtual std::list<Var*> getList() const = 0;
+    [[nodiscard]] virtual std::list<Var*> getList() const = 0;
 
     enum VarType {
         BOOL_VAR,
         INTEGER_VAR,
         DOUBLE_VAR,
         STRING_VAR,
-        //LIST_VAR,
+        LIST_VAR,
     };
 
     [[nodiscard]] VarType getType() const;

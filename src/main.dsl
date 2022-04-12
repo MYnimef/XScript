@@ -1,13 +1,11 @@
 
-a = "gg"
-b = "ss"
-pi = "not success"
 
-print(3, 4)
 
-func print(a, b) {
-    pi = b
-    a = b
-}
 
-print("Hello, world!")
+b = -(-5 + 6 * (2 - 3))
+
+print(b)
+
+str = "string"
+
+str /= 2

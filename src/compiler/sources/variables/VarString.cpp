@@ -4,18 +4,27 @@
 
 #include "VarString.h"
 #include "VarBool.h"
+#include "VarList.h"
+#include "ExcVar.h"
 
-VarString::VarString(const std::string& value):
+VarString::VarString(const int& lineNum, const std::string& value):
+Var(lineNum),
 value(value) {
     type = STRING_VAR;
 }
 
 Var* VarString::operator + (const Var& second) const {
-    return new VarString(getString() + second.getString());
+    if (second.getType() == LIST_VAR) {
+        auto list = getList();
+        list.splice(list.end(), second.getList());
+        return new VarList(lineNum, list);
+    } else {
+        return new VarString(lineNum, getString() + second.getString());
+    }
 }
 
 Var* VarString::operator - (const Var& second) const {
-    throw std::overflow_error("wrong operand for type string");
+    throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
 }
 
 Var* VarString::operator * (const Var& second) const {
@@ -25,14 +34,14 @@ Var* VarString::operator * (const Var& second) const {
         for (int i = 0; i < second.getInteger(); i++) {
             result += str;
         }
-        return new VarString(result);
+        return new VarString(lineNum, result);
     } else {
-        throw std::overflow_error("wrong operand for type string");
+        throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
     }
 }
 
 Var* VarString::operator / (const Var& second) const {
-    throw std::overflow_error("wrong operand for type string");
+    throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
 }
 
 bool VarString::getBool() const {
@@ -49,4 +58,8 @@ long double VarString::getDouble() const {
 
 std::string VarString::getString() const {
     return value;
+}
+
+std::list<Var*> VarString::getList() const {
+    return { new VarString(lineNum, value) };
 }

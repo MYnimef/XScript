@@ -6,14 +6,15 @@
 #include "Compiler.h"
 
 ExpBlockWhile::ExpBlockWhile(
+        const int& lineNum,
         const Node* blockCondition,
         const Node* blockExecute,
         std::map<std::string, Node*>* functions
 ):
+Exp(EXP_LOOP_WHILE, lineNum),
 blockCondition(blockCondition),
 blockExecute(blockExecute),
 functions(functions) {
-    type = EXP_LOOP_WHILE;
 }
 
 ExpBlockWhile::~ExpBlockWhile() {

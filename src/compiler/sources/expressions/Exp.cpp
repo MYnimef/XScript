@@ -4,7 +4,9 @@
 
 #include "Exp.h"
 
-Exp::Exp() {
+Exp::Exp(const ExpressionType& type, const int& lineNum):
+type(type),
+lineNum(lineNum) {
 
 }
 

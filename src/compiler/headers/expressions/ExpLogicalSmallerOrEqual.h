@@ -8,7 +8,7 @@
 
 class ExpLogicalSmallerOrEqual final: public Exp {
 public:
-    explicit ExpLogicalSmallerOrEqual();
+    explicit ExpLogicalSmallerOrEqual(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

@@ -6,14 +6,15 @@
 #include "Compiler.h"
 
 ExpFuncDef::ExpFuncDef(
+        const int& lineNum,
         const std::string& value,
         const Node* body,
         std::map<std::string,Node*>* functions
 ):
+Exp(EXP_FUNC_DEFINITION, lineNum),
 name(name),
 body(body),
 functions(functions) {
-    type = EXP_FUNC_DEFINITION;
 }
 
 ExpFuncDef::~ExpFuncDef() {

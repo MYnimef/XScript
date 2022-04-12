@@ -48,6 +48,7 @@ add_executable(
         src/compiler/sources/variables/VarBool.cpp
 
         src/compiler/headers/variables/VarList.h
+        src/compiler/sources/variables/VarList.cpp
 
         src/compiler/headers/expressions/Exp.h
         src/compiler/sources/expressions/Exp.cpp
@@ -141,4 +142,10 @@ add_executable(
 
         src/compiler/headers/functions/FuncPrintln.h
         src/compiler/sources/functions/FuncPrintln.cpp
+
+        src/compiler/headers/exceptions/ExcVar.h
+        src/compiler/sources/exceptions/ExcVar.cpp
+
+        src/compiler/headers/exceptions/ExcExp.h
+        src/compiler/sources/exceptions/ExcExp.cpp
 )

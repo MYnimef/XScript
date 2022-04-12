@@ -5,9 +5,11 @@
 #include "VarInteger.h"
 #include "VarDouble.h"
 #include "VarString.h"
-#include "VarBool.h"
+#include "VarList.h"
+#include "ExcVar.h"
 
-VarInteger::VarInteger(long long value):
+VarInteger::VarInteger(const int& lineNum, long long value):
+Var(lineNum),
 value(value) {
     type = INTEGER_VAR;
 }
@@ -16,11 +18,16 @@ Var* VarInteger::operator + (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(getInteger() + second.getInteger());
+            return new VarInteger(lineNum, getInteger() + second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() + second.getDouble());
+            return new VarDouble(lineNum, getDouble() + second.getDouble());
+        case LIST_VAR: {
+            auto list = getList();
+            list.splice(list.end(), second.getList());
+            return new VarList(lineNum, list);
+        }
         case STRING_VAR:
-            return new VarString(getString() + second.getString());
+            return new VarString(lineNum, getString() + second.getString());
     }
 }
 
@@ -28,11 +35,13 @@ Var* VarInteger::operator - (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(getInteger() - second.getInteger());
+            return new VarInteger(lineNum, getInteger() - second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() - second.getDouble());
+            return new VarDouble(lineNum, getDouble() - second.getDouble());
+        case LIST_VAR:
+            throw ExcVar("wrong operand '-' for type 'list' at line " + std::to_string(lineNum));
         case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+            throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
     }
 }
 
@@ -40,25 +49,30 @@ Var* VarInteger::operator * (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(getInteger() * second.getInteger());
+            return new VarInteger(lineNum, getInteger() * second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() * second.getDouble());
+            return new VarDouble(lineNum, getDouble() * second.getDouble());
+        case LIST_VAR:
+            throw ExcVar("wrong operand '*' for type 'list' at line " + std::to_string(lineNum));
         case STRING_VAR: {
             auto str = second.getString();
             std::string result;
             for (int i = 0; i < getInteger(); i++) {
                 result += str;
             }
-            return new VarString(result);
+            return new VarString(lineNum, result);
         }
     }
 }
 
 Var* VarInteger::operator / (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
-        throw std::overflow_error("wrong operand for type string");
+    auto type = second.getType();
+    if (type == STRING_VAR) {
+        throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
+    } else if (type == LIST_VAR) {
+        throw ExcVar("wrong operand '/' for type 'list' at line " + std::to_string(lineNum));
     } else {
-        return new VarDouble(getDouble() / second.getDouble());
+        return new VarDouble(lineNum, getDouble() / second.getDouble());
     }
 }
 
@@ -76,4 +90,8 @@ long double VarInteger::getDouble() const {
 
 std::string VarInteger::getString() const {
     return std::to_string(value);
+}
+
+std::list<Var*> VarInteger::getList() const {
+    return { new VarInteger(lineNum, value) };
 }

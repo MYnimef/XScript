@@ -47,9 +47,10 @@ enum ExpressionType {
 class Exp {
 protected:
     ExpressionType type;
+    int lineNum;
 
 public:
-    Exp();
+    Exp(const ExpressionType& type, const int& lineNum);
     virtual ~Exp();
 
     [[nodiscard]] ExpressionType getType() const;
@@ -65,14 +66,14 @@ public:
 
 class ExpressionBracketL final: public Exp {
 public:
-    ExpressionBracketL() { type = EXP_BRACKET_L; }
+    ExpressionBracketL(): Exp(EXP_BRACKET_L, 0) { }
     void action(const CompilerArgs& args) const override { }
     [[nodiscard]] std::string toString() const override { return "("; }
 };
 
 class ExpressionBracketR final: public Exp {
 public:
-    ExpressionBracketR() { type = EXP_BRACKET_R; }
+    ExpressionBracketR(): Exp(EXP_BRACKET_R, 0) { }
     void action(const CompilerArgs& args) const override { }
     [[nodiscard]] std::string toString() const override { return ")"; }
 };

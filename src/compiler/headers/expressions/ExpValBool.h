@@ -11,7 +11,7 @@ private:
     bool value;
 
 public:
-    explicit ExpValBool(const std::string& value);
+    explicit ExpValBool(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

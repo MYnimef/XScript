@@ -5,8 +5,8 @@
 #include "ExpFuncCustom.h"
 
 ExpFuncCustom::ExpFuncCustom(const std::list<std::string>& args):
+Exp(EXP_FUNC_DEFINITION, 0),
 funcArgs(args) {
-    type = EXP_FUNC_DEFINITION;
 }
 
 ExpFuncCustom::~ExpFuncCustom() {

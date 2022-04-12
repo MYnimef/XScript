@@ -8,7 +8,7 @@
 
 class ExpOpDiv final: public Exp {
 public:
-    explicit ExpOpDiv();
+    explicit ExpOpDiv(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

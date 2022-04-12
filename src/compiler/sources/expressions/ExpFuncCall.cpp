@@ -4,11 +4,12 @@
 
 #include "ExpFuncCall.h"
 #include "Compiler.h"
+#include "ExcExp.h"
 
-ExpFuncCall::ExpFuncCall(const std::string &value, const std::list<Node*>& arguments):
+ExpFuncCall::ExpFuncCall(const int& lineNum, const std::string &value, const std::list<Node*>& arguments):
+Exp(EXP_FUNC_CALL, lineNum),
 name(value),
 arguments(arguments) {
-    type = EXP_FUNC_CALL;
 }
 
 ExpFuncCall::~ExpFuncCall() {
@@ -25,7 +26,7 @@ void ExpFuncCall::action(const CompilerArgs& args) const {
             return;
         }
     }
-    throw std::overflow_error("usage of undeclared func");
+    throw ExcExp("usage of undeclared func " + name + " at line " + std::to_string(lineNum));
 }
 
 void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {

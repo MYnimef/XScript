@@ -8,7 +8,7 @@
 
 class ExpLogicalNot final: public Exp {
 public:
-    explicit ExpLogicalNot();
+    explicit ExpLogicalNot(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

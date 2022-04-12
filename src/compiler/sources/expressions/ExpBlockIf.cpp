@@ -6,14 +6,15 @@
 #include "Compiler.h"
 
 ExpBlockIf::ExpBlockIf(
+        const int& lineNum,
         const Node* blockCondition,
         const Node* blockExecute,
         std::map<std::string, Node*>* functions
 ):
+Exp(EXP_IF, lineNum),
 blockCondition(blockCondition),
 blockExecute(blockExecute),
 functions(functions) {
-    type = EXP_IF;
 }
 
 ExpBlockIf::~ExpBlockIf() {

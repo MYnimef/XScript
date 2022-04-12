@@ -11,7 +11,7 @@ private:
     bool value;
 
 public:
-    explicit VarBool(bool value);
+    explicit VarBool(const int& lineNum, bool value);
 
     Var* operator + (const Var&) const override;
     Var* operator - (const Var&) const override;
@@ -22,4 +22,5 @@ public:
     [[nodiscard]] long long getInteger() const override;
     [[nodiscard]] long double getDouble() const override;
     [[nodiscard]] std::string getString() const override;
+    [[nodiscard]] std::list<Var*> getList() const override;
 };

@@ -17,6 +17,7 @@ private:
 
 public:
     explicit ExpFuncDef(
+            const int& lineNum,
             const std::string& value,
             const Node* body,
             std::map<std::string,Node*>* functions

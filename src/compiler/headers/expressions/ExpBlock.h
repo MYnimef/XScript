@@ -14,7 +14,7 @@ private:
     const std::string name;
 
 public:
-    explicit ExpBlock(const std::string& name);
+    explicit ExpBlock(const int& lineNum, const std::string& name);
 
     void action(const CompilerArgs& args) const override;
 

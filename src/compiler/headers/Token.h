@@ -19,7 +19,6 @@ enum TokenType {
     IF_KW,
     ELSE_KW,
     WHILE_KW,
-    FOR_KW,
     L_BRACKET,
     R_BRACKET,
     L_BRACE,
@@ -46,14 +45,16 @@ class Token final {
 private:
     TokenType type;
     std::string value;
+    int lineNum;
 
 public:
-    Token(const TokenType&, const std::string&);
-    ~Token();
+    Token(const TokenType&, const std::string&, const int& lineNum);
     Token(const Token&);
+    ~Token();
 
     [[nodiscard]] TokenType getType() const;
     [[nodiscard]] std::string getValue() const;
+    [[nodiscard]] int getLineNum() const;
 
     [[nodiscard]] std::string toString() const;
     [[nodiscard]] std::string typeToString() const;

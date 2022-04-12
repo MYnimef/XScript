@@ -4,41 +4,56 @@
 
 #include "VarDouble.h"
 #include "VarString.h"
+#include "VarList.h"
+#include "ExcVar.h"
 
-VarDouble::VarDouble(long double value):
+VarDouble::VarDouble(const int& lineNum, long double value):
+Var(lineNum),
 value(value) {
     type = DOUBLE_VAR;
 }
 
 Var* VarDouble::operator + (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
-        return new VarString(getString() + second.getString());
+    auto type = second.getType();
+
+    if (type == STRING_VAR) {
+        return new VarString(lineNum, getString() + second.getString());
+    } else if (type == LIST_VAR) {
+        auto list = getList();
+        list.splice(list.end(), second.getList());
+        return new VarList(lineNum, list);
     } else {
-        return new VarDouble(getDouble() + second.getDouble());
+        return new VarDouble(lineNum, getDouble() + second.getDouble());
     }
 }
 
 Var* VarDouble::operator - (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw std::overflow_error("wrong operand for type string");
+        throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
+    } else if (type == LIST_VAR) {
+        throw ExcVar("wrong operand '-' for type 'list' at line " + std::to_string(lineNum));
     } else {
-        return new VarDouble(getDouble() - second.getDouble());
+        return new VarDouble(lineNum, getDouble() - second.getDouble());
     }
 }
 
 Var* VarDouble::operator * (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw std::overflow_error("wrong operand for type string");
+        throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
+    } else if (type == LIST_VAR) {
+        throw ExcVar("wrong operand '*' for type 'list' at line " + std::to_string(lineNum));
     } else {
-        return new VarDouble(getDouble() * second.getDouble());
+        return new VarDouble(lineNum, getDouble() * second.getDouble());
     }
 }
 
 Var* VarDouble::operator / (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw std::overflow_error("wrong operand for type string");
+        throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
+    } else if (type == LIST_VAR) {
+        throw ExcVar("wrong operand '/' for type 'list' at line " + std::to_string(lineNum));
     } else {
-        return new VarDouble(getDouble() / second.getDouble());
+        return new VarDouble(lineNum, getDouble() / second.getDouble());
     }
 }
 
@@ -56,4 +71,8 @@ long double VarDouble::getDouble() const {
 
 std::string VarDouble::getString() const {
     return std::to_string(value);
+}
+
+std::list<Var *> VarDouble::getList() const {
+    return { new VarDouble(lineNum, value) };
 }

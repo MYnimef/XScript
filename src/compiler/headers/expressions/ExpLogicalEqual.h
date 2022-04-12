@@ -8,7 +8,7 @@
 
 class ExpLogicalEqual final: public Exp {
 public:
-    explicit ExpLogicalEqual();
+    explicit ExpLogicalEqual(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

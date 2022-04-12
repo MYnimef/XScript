@@ -8,7 +8,7 @@
 
 class ExpLogicalGreater final: public Exp {
 public:
-    explicit ExpLogicalGreater();
+    explicit ExpLogicalGreater(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

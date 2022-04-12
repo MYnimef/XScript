@@ -13,7 +13,7 @@ private:
     std::string value;
 
 public:
-    explicit ExpValString(const std::string& value);
+    explicit ExpValString(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

@@ -5,14 +5,13 @@
 #include "ExpValDouble.h"
 #include "VarDouble.h"
 
-ExpValDouble::ExpValDouble(const std::string& value):
+ExpValDouble::ExpValDouble(const int& lineNum, const std::string& value):
+Exp(EXP_DOUBLE, lineNum),
 value(std::stold(value)) {
-    type = EXP_DOUBLE;
 }
 
 void ExpValDouble::action(const CompilerArgs& args) const {
-
-    args.stack.push(new VarDouble(value));
+    args.stack.push(new VarDouble(lineNum, value));
 }
 
 std::string ExpValDouble::toString() const {

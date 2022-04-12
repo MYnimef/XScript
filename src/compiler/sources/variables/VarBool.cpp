@@ -6,8 +6,10 @@
 #include "VarInteger.h"
 #include "VarDouble.h"
 #include "VarString.h"
+#include "ExcVar.h"
 
-VarBool::VarBool(bool value):
+VarBool::VarBool(const int& lineNum, bool value):
+Var(lineNum),
 value(value) {
     type = BOOL_VAR;
 }
@@ -15,47 +17,47 @@ value(value) {
 Var* VarBool::operator + (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
-            return new VarBool(getBool() || second.getBool());
+            return new VarBool(lineNum, getBool() || second.getBool());
         case INTEGER_VAR:
-            return new VarInteger(getInteger() + second.getInteger());
+            return new VarInteger(lineNum, getInteger() + second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() + second.getDouble());
+            return new VarDouble(lineNum, getDouble() + second.getDouble());
         case STRING_VAR:
-            return new VarString(getString() + second.getString());
+            return new VarString(lineNum, getString() + second.getString());
     }
 }
 
 Var* VarBool::operator - (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
-            return new VarInteger(getInteger() - second.getInteger());
+            return new VarInteger(lineNum, getInteger() - second.getInteger());
         case INTEGER_VAR:
-            return new VarInteger(getInteger() - second.getInteger());
+            return new VarInteger(lineNum, getInteger() - second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() - second.getDouble());
+            return new VarDouble(lineNum, getDouble() - second.getDouble());
         case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+            throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
     }
 }
 
 Var* VarBool::operator * (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
-            return new VarInteger(getInteger() * second.getInteger());
+            return new VarInteger(lineNum, getInteger() * second.getInteger());
         case INTEGER_VAR:
-            return new VarInteger(getInteger() * second.getInteger());
+            return new VarInteger(lineNum, getInteger() * second.getInteger());
         case DOUBLE_VAR:
-            return new VarDouble(getDouble() * second.getDouble());
+            return new VarDouble(lineNum, getDouble() * second.getDouble());
         case STRING_VAR:
-            throw std::overflow_error("wrong operand for type string");
+            throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
     }
 }
 
 Var* VarBool::operator / (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw std::overflow_error("wrong operand for type string");
+        throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
     } else {
-        return new VarDouble(getDouble() / second.getDouble());
+        return new VarDouble(lineNum, getDouble() / second.getDouble());
     }
 }
 
@@ -73,4 +75,8 @@ long double VarBool::getDouble() const {
 
 std::string VarBool::getString() const {
     return (value ? "true" : "false");
+}
+
+std::list<Var*> VarBool::getList() const {
+    return { new VarBool(lineNum, value) };
 }

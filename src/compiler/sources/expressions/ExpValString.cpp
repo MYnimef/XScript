@@ -5,14 +5,13 @@
 #include "ExpValString.h"
 #include "VarString.h"
 
-ExpValString::ExpValString(const std::string& value) {
+ExpValString::ExpValString(const int& lineNum, const std::string& value):
+Exp(EXP_STRING, lineNum) {
     this->value = value.substr(1, value.size() - 2);
-    type = EXP_STRING;
 }
 
 void ExpValString::action(const CompilerArgs& args) const {
-
-    args.stack.push(new VarString(value));
+    args.stack.push(new VarString(lineNum, value));
 }
 
 std::string ExpValString::toString() const {

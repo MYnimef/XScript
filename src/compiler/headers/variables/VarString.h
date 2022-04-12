@@ -11,7 +11,7 @@ private:
     std::string value;
 
 public:
-    explicit VarString(const std::string& value);
+    explicit VarString(const int& lineNum, const std::string& value);
 
     Var* operator + (const Var&) const override;
     Var* operator - (const Var&) const override;
@@ -22,4 +22,5 @@ public:
     [[nodiscard]] long long getInteger() const override;
     [[nodiscard]] long double getDouble() const override;
     [[nodiscard]] std::string getString() const override;
+    [[nodiscard]] virtual std::list<Var*> getList() const override;
 };

@@ -5,8 +5,8 @@
 #include "Var.h"
 #include "VarBool.h"
 
-Var::Var() {
-
+Var::Var(const int& lineNum):
+lineNum(lineNum) {
 }
 
 Var::~Var() {
@@ -14,55 +14,55 @@ Var::~Var() {
 }
 
 Var* Var::operator ! () const {
-    return new VarBool(!getBool());
+    return new VarBool(lineNum, !getBool());
 }
 
 Var* Var::operator < (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        return new VarBool(getString().length() < second.getString().length());
+        return new VarBool(lineNum, getString().length() < second.getString().length());
     } else {
-        return new VarBool(getDouble() < second.getDouble());
+        return new VarBool(lineNum, getDouble() < second.getDouble());
     }
 }
 
 Var* Var::operator <= (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        return new VarBool(getString().length() <= second.getString().length());
+        return new VarBool(lineNum, getString().length() <= second.getString().length());
     } else {
-        return new VarBool(getDouble() <= second.getDouble());
+        return new VarBool(lineNum, getDouble() <= second.getDouble());
     }
 }
 
 Var* Var::operator > (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        return new VarBool(getString().length() > second.getString().length());
+        return new VarBool(lineNum, getString().length() > second.getString().length());
     } else {
-        return new VarBool(getDouble() > second.getDouble());
+        return new VarBool(lineNum, getDouble() > second.getDouble());
     }
 }
 
 Var* Var::operator >= (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        return new VarBool(getString().length() >= second.getString().length());
+        return new VarBool(lineNum, getString().length() >= second.getString().length());
     } else {
-        return new VarBool(getDouble() >= second.getDouble());
+        return new VarBool(lineNum, getDouble() >= second.getDouble());
     }
 }
 
 Var* Var::operator == (const Var& second) const {
-    return new VarBool(getString() == second.getString());
+    return new VarBool(lineNum, getString() == second.getString());
 }
 
 Var* Var::operator != (const Var& second) const {
-    return new VarBool(getString() != second.getString());
+    return new VarBool(lineNum, getString() != second.getString());
 }
 
 Var* Var::operator && (const Var& second) const {
-    return new VarBool(getBool() && second.getBool());
+    return new VarBool(lineNum, getBool() && second.getBool());
 }
 
 Var* Var::operator || (const Var& second) const {
-    return new VarBool(getBool() || second.getBool());
+    return new VarBool(lineNum, getBool() || second.getBool());
 }
 
 Var::VarType Var::getType() const {

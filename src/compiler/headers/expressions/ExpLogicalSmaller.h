@@ -8,7 +8,7 @@
 
 class ExpLogicalSmaller final: public Exp {
 public:
-    explicit ExpLogicalSmaller();
+    explicit ExpLogicalSmaller(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

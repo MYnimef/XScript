@@ -8,7 +8,7 @@
 
 class ExpLogicalAnd final: public Exp {
 public:
-    explicit ExpLogicalAnd();
+    explicit ExpLogicalAnd(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

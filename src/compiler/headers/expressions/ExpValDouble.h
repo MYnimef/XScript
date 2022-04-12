@@ -11,7 +11,7 @@ private:
     long double value;
 
 public:
-    explicit ExpValDouble(const std::string& value);
+    explicit ExpValDouble(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

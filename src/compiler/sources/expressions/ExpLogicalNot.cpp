@@ -3,16 +3,21 @@
 //
 
 #include "ExpLogicalNot.h"
+#include "ExcExp.h"
 
-ExpLogicalNot::ExpLogicalNot() {
-    type = EXP_OP_NOT;
+ExpLogicalNot::ExpLogicalNot(const int& lineNum):
+Exp(EXP_OP_NOT, lineNum) {
 }
 
 void ExpLogicalNot::action(const CompilerArgs &args) const {
-    auto arg = args.stack.top();
-    args.stack.pop();
-    args.stack.push(!*arg);
-    delete arg;
+    if (!args.stack.empty()) {
+        auto arg = args.stack.top();
+        args.stack.pop();
+        args.stack.push(!*arg);
+        delete arg;
+    } else {
+        throw ExcExp("function doesn't return any value at line " + std::to_string(lineNum));
+    }
 }
 
 std::string ExpLogicalNot::toString() const {

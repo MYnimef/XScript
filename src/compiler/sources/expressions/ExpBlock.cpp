@@ -4,7 +4,8 @@
 
 #include "ExpBlock.h"
 
-ExpBlock::ExpBlock(const std::string& name):
+ExpBlock::ExpBlock(const int& lineNum, const std::string& name):
+Exp(EXP_CODE_BLOCK, lineNum),
 name(name) {
     type = EXP_CODE_BLOCK;
 }

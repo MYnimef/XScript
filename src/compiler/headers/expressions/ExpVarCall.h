@@ -15,7 +15,7 @@ private:
     bool callVariableFrom(std::map<std::string, Var*>* container, std::stack<Var*>& stack) const;
 
 public:
-    explicit ExpVarCall(const std::string& value);
+    explicit ExpVarCall(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

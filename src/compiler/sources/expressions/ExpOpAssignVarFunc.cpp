@@ -4,9 +4,9 @@
 
 #include "ExpOpAssignVarFunc.h"
 
-ExpOpAssignVarFunc::ExpOpAssignVarFunc(const std::string &value):
+ExpOpAssignVarFunc::ExpOpAssignVarFunc(const int& lineNum, const std::string &value):
+Exp(EXP_OP_ASSIGN_VAR_FUNC, lineNum),
 id(value) {
-    type = EXP_OP_ASSIGN_VAR_FUNC;
 }
 
 void ExpOpAssignVarFunc::action(const CompilerArgs &args) const {

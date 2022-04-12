@@ -22,7 +22,7 @@ int main() {
 
     auto start = clock();
 
-    auto application = new Node(new ExpBlock("main"));
+    auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
             {"print1", new Node(new FuncPrint({"out"}))},
             {"println1", new Node(new FuncPrintln({"out"}))}
@@ -32,25 +32,29 @@ int main() {
         Lexer lexer;
         lexer.scanFile("main.dsl");
 
+        /*
         for (const auto& token: lexer.getTokens()) {
             if (token.getType() != SEMICOLON) {
                 std::cout << token.toString() << std::endl;
             }
         }
+        */
 
         Parser parser(application, functions);
         parser.addTokens(lexer.getTokens());
 
-        std::cout << std::endl << parser.getTree()->toString() << std::endl;
+        //std::cout << std::endl << parser.getTree()->toString() << std::endl;
 
         Compiler compiler(functions);
         compiler.execute(application);
 
+        /*
         std::cout << std::endl;
         for (const auto& var: *compiler.getVariables()) {
             std::cout << std::endl << var.first + " = " + var.second->getString();
         }
         std::cout << std::endl;
+        */
     } catch (const std::exception& ex) {
         std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     }

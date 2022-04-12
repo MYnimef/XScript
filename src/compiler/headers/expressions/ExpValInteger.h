@@ -11,8 +11,8 @@ private:
     long long value;
 
 public:
-    explicit ExpValInteger(long long value);
-    explicit ExpValInteger(const std::string& value);
+    explicit ExpValInteger(const int& lineNum, long long value);
+    explicit ExpValInteger(const int& lineNum, const std::string& value);
 
     void action(const CompilerArgs& args) const override;
 

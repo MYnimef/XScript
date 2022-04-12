@@ -3,33 +3,38 @@
 //
 
 #include "ExpOpAssignVar.h"
+#include "ExcExp.h"
 
-ExpOpAssignVar::ExpOpAssignVar(const std::string &value):
+ExpOpAssignVar::ExpOpAssignVar(const int& lineNum, const std::string &value):
+Exp(EXP_OP_ASSIGN_VAR, lineNum),
 id(value) {
-    type = EXP_OP_ASSIGN_VAR;
 }
 
 void ExpOpAssignVar::action(const CompilerArgs& args) const {
-    auto val = args.stack.top();
-    args.stack.pop();
+    if (!args.stack.empty()) {
+        auto val = args.stack.top();
+        args.stack.pop();
 
-    for (auto scope: args.variablesGlobal) {
-        auto it = scope->find(id);
-        if (it != scope->end()) {
-            auto var = it->second;
-            scope->insert_or_assign(id, val);
-            delete var;
-            return;
+        for (auto scope: args.variablesGlobal) {
+            auto it = scope->find(id);
+            if (it != scope->end()) {
+                auto var = it->second;
+                scope->insert_or_assign(id, val);
+                delete var;
+                return;
+            }
         }
-    }
 
-    auto it = args.variables->find(id);
-    if (it != args.variables->end()) {
-        auto var = it->second;
-        args.variables->insert_or_assign(id, val);
-        delete var;
+        auto it = args.variables->find(id);
+        if (it != args.variables->end()) {
+            auto var = it->second;
+            args.variables->insert_or_assign(id, val);
+            delete var;
+        } else {
+            args.variables->insert_or_assign(id, val);
+        }
     } else {
-        args.variables->insert_or_assign(id, val);
+        throw ExcExp("function doesn't return any value at line " + std::to_string(lineNum));
     }
 }
 

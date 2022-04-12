@@ -8,7 +8,7 @@
 
 class ExpOpSub final: public Exp {
 public:
-    explicit ExpOpSub();
+    explicit ExpOpSub(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 

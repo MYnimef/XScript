@@ -8,7 +8,7 @@
 
 class ExpOpMult final: public Exp {
 public:
-    explicit ExpOpMult();
+    explicit ExpOpMult(const int& lineNum);
 
     void action(const CompilerArgs& args) const override;
 
