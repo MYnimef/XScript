@@ -14,6 +14,7 @@ private:
 
 public:
     explicit Node(const Exp*);
+    Node(const Exp*, const std::list<Node*>&);
     ~Node();
 
     ExpressionType getType();

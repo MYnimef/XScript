@@ -363,6 +363,9 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     tokens.pop_back();  // delete }
 
     if (functions->count(funcName)) {
+        for (auto arg: arguments) {
+            delete arg;
+        }
         throw ExcParser("attempt to re-declare function " + id);
     } else {
         auto funcBody = new Node(new ExpBlock(funcName));
@@ -370,10 +373,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         Parser parser(funcBody, functionsLocal, actions, grammatics);
         parser.addTokens(tokens);
 
-        auto node = new Node(new ExpFuncDef(funcName, funcBody, functionsLocal));
-        for (auto arg: arguments) {
-            node->addChildBack(arg);
-        }
+        auto node = new Node(new ExpFuncDef(funcName, funcBody, functionsLocal), arguments);
         functions->insert_or_assign(funcName, node);
     }
 }
@@ -478,7 +478,7 @@ Exp* Parser::subFunction(std::list<Token>& tokens) {
 
     if (!localTokens.empty()) {
         auto exp = parseOperations(localTokens);
-        arguments.push_back(addNodeExpr(toPostfix(exp)));
+        arguments.push_front(addNodeExpr(toPostfix(exp)));
         amountOfArgs++;
     }
 

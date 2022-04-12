@@ -8,6 +8,11 @@ Node::Node(const Exp* expression):
 expression(expression) {
 }
 
+Node::Node(const Exp* expression, const std::list<Node*>& children):
+expression(expression),
+children(children) {
+}
+
 Node::~Node() {
     delete expression;
     for (auto child: children) {
