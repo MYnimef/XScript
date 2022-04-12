@@ -5,6 +5,7 @@
 #include "ExcParser.h"
 #include "ExpBlock.h"
 #include "FuncPrint.h"
+#include "FuncPrintln.h"
 
 int main() {
     std::cout <<
@@ -19,11 +20,12 @@ int main() {
     "\033[0m" <<
     std::endl;
 
-    clock_t start = clock();
+    auto start = clock();
 
     auto application = new Node(new ExpBlock("main"));
     auto functions = new std::map<std::string, Node*> {
-            {"print1", new Node(new FuncPrint({"out"}))}
+            {"print1", new Node(new FuncPrint({"out"}))},
+            {"println1", new Node(new FuncPrintln({"out"}))}
     };
 
     try {
@@ -59,9 +61,13 @@ int main() {
     }
     delete functions;
 
-    clock_t stop = clock();
-    double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
-    std::cout << std::endl << "\033[1;32m" << "Program compiled in " << elapsed << " seconds"  << "\033[0m" << std::endl;
+    std::cout <<
+    std::endl <<
+    "\033[1;32m" <<
+    "Program compiled in " <<
+    (double) (clock() - start) / CLOCKS_PER_SEC <<
+    " seconds"  << "\033[0m" <<
+    std::endl;
 
     return 0;
 }
