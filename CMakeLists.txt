@@ -31,104 +31,104 @@ add_executable(
         src/compiler/headers/CompilerArgs.h
         src/compiler/sources/CompilerArgs.cpp
 
-        src/compiler/headers/variable/Variable.h
-        src/compiler/sources/variable/Variable.cpp
+        src/compiler/headers/variable/Var.h
+        src/compiler/sources/variable/Var.cpp
 
-        src/compiler/headers/variable/VariableInteger.h
-        src/compiler/sources/variable/VariableInteger.cpp
+        src/compiler/headers/variable/VarInteger.h
+        src/compiler/sources/variable/VarInteger.cpp
 
-        src/compiler/headers/variable/VariableDouble.h
-        src/compiler/sources/variable/VariableDouble.cpp
+        src/compiler/headers/variable/VarDouble.h
+        src/compiler/sources/variable/VarDouble.cpp
 
-        src/compiler/headers/variable/VariableString.h
-        src/compiler/sources/variable/VariableString.cpp
+        src/compiler/headers/variable/VarString.h
+        src/compiler/sources/variable/VarString.cpp
 
-        src/compiler/headers/variable/VariableBool.h
-        src/compiler/sources/variable/VariableBool.cpp
+        src/compiler/headers/variable/VarBool.h
+        src/compiler/sources/variable/VarBool.cpp
 
-        src/compiler/headers/variable/VariableList.h
+        src/compiler/headers/variable/VarList.h
 
-        src/compiler/headers/expression/Expression.h
-        src/compiler/sources/expression/Expression.cpp
+        src/compiler/headers/expression/Exp.h
+        src/compiler/sources/expression/Exp.cpp
 
-        src/compiler/headers/expression/ExpressionValInteger.h
-        src/compiler/sources/expression/ExpressionValInteger.cpp
+        src/compiler/headers/expression/ExpValInteger.h
+        src/compiler/sources/expression/ExpValInteger.cpp
 
-        src/compiler/headers/expression/ExpressionValString.h
-        src/compiler/sources/expression/ExpressionValString.cpp
+        src/compiler/headers/expression/ExpValString.h
+        src/compiler/sources/expression/ExpValString.cpp
 
-        src/compiler/headers/expression/ExpressionValDouble.h
-        src/compiler/sources/expression/ExpressionValDouble.cpp
+        src/compiler/headers/expression/ExpValDouble.h
+        src/compiler/sources/expression/ExpValDouble.cpp
 
-        src/compiler/headers/expression/ExpressionOpSum.h
-        src/compiler/sources/expression/ExpressionOpSum.cpp
+        src/compiler/headers/expression/ExpOpSum.h
+        src/compiler/sources/expression/ExpOpSum.cpp
 
-        src/compiler/headers/expression/ExpressionOpSub.h
-        src/compiler/sources/expression/ExpressionOpSub.cpp
+        src/compiler/headers/expression/ExpOpSub.h
+        src/compiler/sources/expression/ExpOpSub.cpp
 
-        src/compiler/headers/expression/ExpressionOpMult.h
-        src/compiler/sources/expression/ExpressionOpMult.cpp
+        src/compiler/headers/expression/ExpOpMult.h
+        src/compiler/sources/expression/ExpOpMult.cpp
 
-        src/compiler/headers/expression/ExpressionOpDiv.h
-        src/compiler/sources/expression/ExpressionOpDiv.cpp
+        src/compiler/headers/expression/ExpOpDiv.h
+        src/compiler/sources/expression/ExpOpDiv.cpp
 
-        src/compiler/headers/expression/ExpressionVarInit.h
-        src/compiler/sources/expression/ExpressionVarInit.cpp
+        src/compiler/headers/expression/ExpOpAssignVar.h
+        src/compiler/sources/expression/ExpOpAssignVar.cpp
 
-        src/compiler/headers/expression/ExpressionVarCall.h
-        src/compiler/sources/expression/ExpressionVarCall.cpp
+        src/compiler/headers/expression/ExpVarCall.h
+        src/compiler/sources/expression/ExpVarCall.cpp
 
-        src/compiler/headers/expression/ExpressionOpAssignment.h
-        src/compiler/sources/expression/ExpressionOpAssignment.cpp
+        src/compiler/headers/expression/ExpFuncCall.h
+        src/compiler/sources/expression/ExpFuncCall.cpp
 
-        src/compiler/headers/expression/ExpressionFunctionCall.h
-        src/compiler/sources/expression/ExpressionFunctionCall.cpp
+        src/compiler/headers/expression/ExpValBool.h
+        src/compiler/sources/expression/ExpValBool.cpp
 
-        src/compiler/headers/expression/ExpressionValBool.h
-        src/compiler/sources/expression/ExpressionValBool.cpp
+        src/compiler/headers/expression/ExpBlockIf.h
+        src/compiler/sources/expression/ExpBlockIf.cpp
 
-        src/compiler/headers/expression/ExpressionIf.h
-        src/compiler/sources/expression/ExpressionIf.cpp
+        src/compiler/headers/expression/ExpLogicalSmaller.h
+        src/compiler/sources/expression/ExpLogicalSmaller.cpp
 
-        src/compiler/headers/expression/ExpressionOpSmaller.h
-        src/compiler/sources/expression/ExpressionOpSmaller.cpp
+        src/compiler/headers/expression/ExpLogicalSmallerOrEqual.h
+        src/compiler/sources/expression/ExpLogicalSmallerOrEqual.cpp
 
-        src/compiler/headers/expression/ExpressionOpSmallerOrEqual.h
-        src/compiler/sources/expression/ExpressionOpSmallerOrEqual.cpp
+        src/compiler/headers/expression/ExpLogicalGreater.h
+        src/compiler/sources/expression/ExpLogicalGreater.cpp
 
-        src/compiler/headers/expression/ExpressionOpGreater.h
-        src/compiler/sources/expression/ExpressionOpGreater.cpp
+        src/compiler/headers/expression/ExpLogicalGreaterOrEqual.h
+        src/compiler/sources/expression/ExpLogicalGreaterOrEqual.cpp
 
-        src/compiler/headers/expression/ExpressionOpGreaterOrEqual.h
-        src/compiler/sources/expression/ExpressionOpGreaterOrEqual.cpp
+        src/compiler/headers/expression/ExpLogicalEqual.h
+        src/compiler/sources/expression/ExpLogicalEqual.cpp
 
-        src/compiler/headers/expression/ExpressionOpEqual.h
-        src/compiler/sources/expression/ExpressionOpEqual.cpp
+        src/compiler/headers/expression/ExpLogicalNotEqual.h
+        src/compiler/sources/expression/ExpLogicalNotEqual.cpp
 
-        src/compiler/headers/expression/ExpressionOpNotEqual.h
-        src/compiler/sources/expression/ExpressionOpNotEqual.cpp
+        src/compiler/headers/expression/ExpLogicalOr.h
+        src/compiler/sources/expression/ExpLogicalOr.cpp
 
-        src/compiler/headers/expression/ExpressionOpLogicalOr.h
-        src/compiler/sources/expression/ExpressionOpLogicalOr.cpp
+        src/compiler/headers/expression/ExpLogicalAnd.h
+        src/compiler/sources/expression/ExpLogicalAnd.cpp
 
-        src/compiler/headers/expression/ExpressionOpLogicalAnd.h
-        src/compiler/sources/expression/ExpressionOpLogicalAnd.cpp
+        src/compiler/headers/expression/ExpLogicalNot.h
+        src/compiler/sources/expression/ExpLogicalNot.cpp
 
-        src/compiler/headers/expression/ExpressionOpNot.h
-        src/compiler/sources/expression/ExpressionOpNot.cpp
+        src/compiler/headers/exception/ExcParser.h
+        src/compiler/sources/exception/ExcParser.cpp
 
-        src/compiler/headers/exception/ExceptionParser.h
-        src/compiler/sources/exception/ExceptionParser.cpp
+        src/compiler/headers/exception/ExcLexer.h
+        src/compiler/sources/exception/ExcLexer.cpp
 
-        src/compiler/headers/exception/ExceptionLexer.h
-        src/compiler/sources/exception/ExceptionLexer.cpp
+        src/compiler/headers/expression/ExpBlockWhile.h
+        src/compiler/sources/expression/ExpBlockWhile.cpp
 
-        src/compiler/headers/expression/ExpressionWhile.h
-        src/compiler/sources/expression/ExpressionWhile.cpp
+        src/compiler/headers/expression/ExpBlock.h
+        src/compiler/sources/expression/ExpBlock.cpp
 
-        src/compiler/headers/expression/ExpressionCodeBlock.h
-        src/compiler/sources/expression/ExpressionCodeBlock.cpp
+        src/compiler/headers/expression/ExpFuncDef.h
+        src/compiler/sources/expression/ExpFuncDef.cpp
 
-        src/compiler/headers/expression/ExpressionFunctionDef.h
-        src/compiler/sources/expression/ExpressionFunctionDef.cpp
+        src/compiler/headers/expression/ExpOpAssignVarFunc.h
+        src/compiler/sources/expression/ExpOpAssignVarFunc.cpp
 )

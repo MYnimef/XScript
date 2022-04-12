@@ -4,7 +4,7 @@
 
 #include "Node.h"
 
-Node::Node(const Expression* expression):
+Node::Node(const Exp* expression):
 expression(expression) {
 }
 
@@ -31,7 +31,7 @@ std::list<Node *> Node::getChildren() const {
     return children;
 }
 
-const Expression* Node::getExpression() const {
+const Exp* Node::getExpression() const {
     return expression;
 }
 

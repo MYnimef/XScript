@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include "Lexer.h"
-#include "ExceptionLexer.h"
+#include "ExcLexer.h"
 
 Lexer::Lexer(): lexems({
     {LEX_ONE_CHAR,     std::regex(R"([!;,\+\-\*\/=\}\{\)\(<>])" )                          },
@@ -27,7 +27,7 @@ void Lexer::scanFile(const std::string& filename) {
 
     if (!file.is_open()) {
         file.close();
-        throw ExceptionLexer("can't open file " + filename);
+        throw ExcLexer("can't open file " + filename);
     }
 
     std::string line;
@@ -101,7 +101,7 @@ void Lexer::addToken(const std::string& input, const int& lineNum) {
         }
     }
 
-    throw ExceptionLexer("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
+    throw ExcLexer("wrong syntax at line " + std::to_string(lineNum + 1) + ": " + input);
 }
 
 std::list<Token> Lexer::getTokens() {

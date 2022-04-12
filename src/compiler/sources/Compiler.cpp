@@ -6,16 +6,16 @@
 
 Compiler::Compiler(std::map<std::string, Node*>* functions) {
     this->functions.push_front(functions);
-    variables = new std::map<std::string, Variable*>();
+    variables = new std::map<std::string, Var*>();
 }
 
 Compiler::Compiler(
         const std::list<std::map<std::string, Node*>*>& functions,
-        const std::list<std::map<std::string, Variable*>*>& variablesGlobal
+        const std::list<std::map<std::string, Var*>*>& variablesGlobal
 ):
 functions(functions),
 variablesGlobal(variablesGlobal) {
-    variables = new std::map<std::string, Variable*>();
+    variables = new std::map<std::string, Var*>();
 }
 
 Compiler::~Compiler() {
@@ -38,13 +38,13 @@ void Compiler::execute(const Node* tree) {
         execute(node);
     }
 
-    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stackVariablesId, stack));
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
 }
 
-const std::map<std::string, Variable*>* Compiler::getVariables() const {
+const std::map<std::string, Var*>* Compiler::getVariables() const {
     return variables;
 }
 
-std::stack<Variable*>& Compiler::getStack() {
+std::stack<Var*>& Compiler::getStack() {
     return stack;
 }

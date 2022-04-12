@@ -2,8 +2,8 @@
 #include "Lexer.h"
 #include "Parser.h"
 #include "Compiler.h"
-#include "ExceptionParser.h"
-#include "ExpressionCodeBlock.h"
+#include "ExcParser.h"
+#include "ExpBlock.h"
 
 int main() {
     std::cout <<
@@ -20,7 +20,7 @@ int main() {
 
     clock_t start = clock();
 
-    auto application = new Node(new ExpressionCodeBlock("main"));
+    auto application = new Node(new ExpBlock("main"));
     auto functions = new std::map<std::string, Node*> {
             {"print1", nullptr}
     };
