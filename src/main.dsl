@@ -8,4 +8,6 @@ print(b)
 
 str = "string"
 
-str /= 2
+str = input()
+
+print(str)

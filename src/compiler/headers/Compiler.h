@@ -19,6 +19,9 @@ private:
 
     std::stack<Var*> stack;
 
+    void executeChild(const Node*);
+    void cleanStack();
+
 public:
     explicit Compiler(std::map<std::string, Node*>* functions);
     explicit Compiler(

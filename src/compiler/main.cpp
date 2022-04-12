@@ -6,6 +6,7 @@
 #include "ExpBlock.h"
 #include "FuncPrint.h"
 #include "FuncPrintln.h"
+#include "FuncInput.h"
 
 int main() {
     std::cout <<
@@ -25,7 +26,8 @@ int main() {
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
             {"print1", new Node(new FuncPrint({"out"}))},
-            {"println1", new Node(new FuncPrintln({"out"}))}
+            {"println1", new Node(new FuncPrintln({"out"}))},
+            {"input0", new Node(new FuncInput({}))}
     };
 
     try {

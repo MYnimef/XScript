@@ -19,5 +19,5 @@ void ExpFuncCustom::action(const CompilerArgs &args) const {
         params.insert_or_assign(name, args.stack.top());
         args.stack.pop();
     }
-    action(params);
+    action(params, args.stack);
 }

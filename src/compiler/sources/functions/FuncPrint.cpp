@@ -14,7 +14,7 @@ FuncPrint::~FuncPrint() {
 
 }
 
-void FuncPrint::action(const std::map<std::string, Var*>& params) const {
+void FuncPrint::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
     for (const auto& name: funcArgs) {
         std::cout << params.find(name)->second->getString();
     }

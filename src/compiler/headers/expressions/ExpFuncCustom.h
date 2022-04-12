@@ -20,5 +20,5 @@ public:
 
     void action(const CompilerArgs& args) const override;
 
-    virtual void action(const std::map<std::string, Var*>& params) const = 0;
+    virtual void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const = 0;
 };

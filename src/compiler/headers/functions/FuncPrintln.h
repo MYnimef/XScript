@@ -13,7 +13,7 @@ public:
 
     ~FuncPrintln() override;
 
-    void action(const std::map<std::string, Var*>& params) const override;
+    void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const override;
 
     [[nodiscard]] std::string toString() const override;
 };

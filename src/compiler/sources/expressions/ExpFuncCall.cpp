@@ -38,6 +38,11 @@ void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {
     }
     compiler.execute(func);
 
+    if (!compiler.getStack().empty()) {
+        args.stack.push(compiler.getStack().top());
+        compiler.getStack().pop();
+    }
+
     args.variablesGlobal.pop_front();
 }
 

@@ -148,4 +148,7 @@ add_executable(
 
         src/compiler/headers/exceptions/ExcExp.h
         src/compiler/sources/exceptions/ExcExp.cpp
+
+        src/compiler/headers/functions/FuncInput.h
+        src/compiler/sources/functions/FuncInput.cpp
 )

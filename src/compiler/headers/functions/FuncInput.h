@@ -7,11 +7,11 @@
 
 #include "ExpFuncCustom.h"
 
-class FuncPrint final: public ExpFuncCustom {
+class FuncInput final: public ExpFuncCustom {
 public:
-    explicit FuncPrint(const std::list<std::string>& args);
+    explicit FuncInput(const std::list<std::string>& args);
 
-    ~FuncPrint() override;
+    ~FuncInput() override;
 
     void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const override;
 

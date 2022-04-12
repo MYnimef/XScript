@@ -23,22 +23,32 @@ Compiler::~Compiler() {
         delete var.second;
     }
     delete variables;
+    cleanStack();
+}
 
+void Compiler::execute(const Node* tree) {
+    for (auto node: tree->getChildren()) {
+        executeChild(node);
+        cleanStack();
+    }
+
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+}
+
+void Compiler::executeChild(const Node* tree) {
+    for (auto node: tree->getChildren()) {
+        executeChild(node);
+    }
+
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+}
+
+void Compiler::cleanStack() {
     while (!stack.empty()) {
         auto var = stack.top();
         stack.pop();
         delete var;
     }
-}
-
-void Compiler::execute(const Node* tree) {
-    auto child = tree->getChildren();
-
-    for (auto node: tree->getChildren()) {
-        execute(node);
-    }
-
-    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
 }
 
 const std::map<std::string, Var*>* Compiler::getVariables() const {
