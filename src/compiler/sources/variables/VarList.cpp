@@ -19,15 +19,15 @@ Var* VarList::operator + (const Var& second) const {
 }
 
 Var* VarList::operator - (const Var& second) const {
-    throw ExcVar("wrong operand '-' for type 'list' at line " + std::to_string(lineNum));
+    throw ExcVar("wrong operand '-' for type 'list'", lineNum);
 }
 
 Var* VarList::operator * (const Var& second) const {
-    throw ExcVar("wrong operand '*' for type 'list' at line " + std::to_string(lineNum));
+    throw ExcVar("wrong operand '*' for type 'list'", lineNum);
 }
 
 Var* VarList::operator / (const Var& second) const {
-    throw ExcVar("wrong operand '/' for type 'list' at line " + std::to_string(lineNum));
+    throw ExcVar("wrong operand '/' for type 'list'", lineNum);
 }
 
 bool VarList::getBool() const {

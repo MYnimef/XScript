@@ -34,7 +34,7 @@ void ExpOpAssignVar::action(const CompilerArgs& args) const {
             args.variables->insert_or_assign(id, val);
         }
     } else {
-        throw ExcExp("function doesn't return any value at line " + std::to_string(lineNum));
+        throw ExcExp("function doesn't return any value", lineNum);
     }
 }
 

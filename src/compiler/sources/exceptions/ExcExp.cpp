@@ -4,7 +4,6 @@
 
 #include "ExcExp.h"
 
-ExcExp::ExcExp(const std::string &message) : runtime_error(
-        "DSL Expression Exception :: " + message) {
-
+ExcExp::ExcExp(const std::string &message, const int& lineNum):
+Exc("DSL Expression", message, lineNum) {
 }

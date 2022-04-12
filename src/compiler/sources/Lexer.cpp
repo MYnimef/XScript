@@ -27,7 +27,7 @@ void Lexer::scanFile(const std::string& filename) {
 
     if (!file.is_open()) {
         file.close();
-        throw ExcLexer("can't open file " + filename);
+        throw ExcLexer("can't open file " + filename, 0);
     }
 
     std::string line;
@@ -49,7 +49,7 @@ void Lexer::scanFile(const std::string& filename) {
                         endIndex--;
                         startIndex = endIndex;
                     } else if (endIndex == line.size()) {
-                        addToken(newStr, i);
+                        addToken(newStr, i + 1);
                         tokens.emplace_back(SEMICOLON, ";", i + 1);
                     }
 
@@ -101,7 +101,7 @@ void Lexer::addToken(const std::string& input, const int& lineNum) {
         }
     }
 
-    throw ExcLexer("wrong syntax at line " + std::to_string(lineNum) + ": " + input);
+    throw ExcLexer("wrong lexem '" + input + "'", lineNum);
 }
 
 std::list<Token> Lexer::getTokens() {

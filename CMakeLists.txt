@@ -116,12 +116,6 @@ add_executable(
         src/compiler/headers/expressions/ExpLogicalNot.h
         src/compiler/sources/expressions/ExpLogicalNot.cpp
 
-        src/compiler/headers/exceptions/ExcParser.h
-        src/compiler/sources/exceptions/ExcParser.cpp
-
-        src/compiler/headers/exceptions/ExcLexer.h
-        src/compiler/sources/exceptions/ExcLexer.cpp
-
         src/compiler/headers/expressions/ExpBlockWhile.h
         src/compiler/sources/expressions/ExpBlockWhile.cpp
 
@@ -143,6 +137,15 @@ add_executable(
         src/compiler/headers/functions/FuncPrintln.h
         src/compiler/sources/functions/FuncPrintln.cpp
 
+        src/compiler/headers/exceptions/Exc.h
+        src/compiler/sources/exceptions/Exc.cpp
+
+        src/compiler/headers/exceptions/ExcParser.h
+        src/compiler/sources/exceptions/ExcParser.cpp
+
+        src/compiler/headers/exceptions/ExcLexer.h
+        src/compiler/sources/exceptions/ExcLexer.cpp
+
         src/compiler/headers/exceptions/ExcVar.h
         src/compiler/sources/exceptions/ExcVar.cpp
 
@@ -151,4 +154,19 @@ add_executable(
 
         src/compiler/headers/functions/FuncInput.h
         src/compiler/sources/functions/FuncInput.cpp
+
+        src/compiler/headers/functions/FuncToInteger.h
+        src/compiler/sources/functions/FuncToInteger.cpp
+
+        src/compiler/headers/functions/FuncToString.h
+        src/compiler/sources/functions/FuncToString.cpp
+
+        src/compiler/headers/functions/FuncToDouble.h
+        src/compiler/sources/functions/FuncToDouble.cpp
+
+        src/compiler/headers/functions/FuncToList.h
+        src/compiler/sources/functions/FuncToList.cpp
+
+        src/compiler/headers/functions/FuncToBool.h
+        src/compiler/sources/functions/FuncToBool.cpp
 )

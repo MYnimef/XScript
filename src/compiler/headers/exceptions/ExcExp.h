@@ -4,10 +4,9 @@
 
 #pragma once
 
-#include <stdexcept>
-#include <string>
+#include "Exc.h"
 
-class ExcExp final: public std::runtime_error {
+class ExcExp final: public Exc {
 public:
-    explicit ExcExp(const std::string& message);
+    explicit ExcExp(const std::string& message, const int& lineNum);
 };

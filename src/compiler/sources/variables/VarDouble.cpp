@@ -29,9 +29,9 @@ Var* VarDouble::operator + (const Var& second) const {
 
 Var* VarDouble::operator - (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '-' for type 'string'", lineNum);
     } else if (type == LIST_VAR) {
-        throw ExcVar("wrong operand '-' for type 'list' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '-' for type 'list'", lineNum);
     } else {
         return new VarDouble(lineNum, getDouble() - second.getDouble());
     }
@@ -39,9 +39,9 @@ Var* VarDouble::operator - (const Var& second) const {
 
 Var* VarDouble::operator * (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '*' for type 'string'", lineNum);
     } else if (type == LIST_VAR) {
-        throw ExcVar("wrong operand '*' for type 'list' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '*' for type 'list'", lineNum);
     } else {
         return new VarDouble(lineNum, getDouble() * second.getDouble());
     }
@@ -49,9 +49,9 @@ Var* VarDouble::operator * (const Var& second) const {
 
 Var* VarDouble::operator / (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '/' for type 'string'", lineNum);
     } else if (type == LIST_VAR) {
-        throw ExcVar("wrong operand '/' for type 'list' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '/' for type 'list'", lineNum);
     } else {
         return new VarDouble(lineNum, getDouble() / second.getDouble());
     }

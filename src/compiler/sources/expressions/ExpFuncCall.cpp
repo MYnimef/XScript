@@ -26,17 +26,22 @@ void ExpFuncCall::action(const CompilerArgs& args) const {
             return;
         }
     }
-    throw ExcExp("usage of undeclared func " + name + " at line " + std::to_string(lineNum));
+    throw ExcExp("usage of undeclared func " + name, lineNum);
 }
 
 void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
     Compiler compiler(args.functions, args.variablesGlobal);
-    for (const auto node: arguments) {
+    for (auto node: arguments) {
         compiler.execute(node);
     }
-    compiler.execute(func);
+
+    try {
+        compiler.execute(func);
+    } catch (const std::exception& ex) {
+        throw ExcExp("error in function '" + name + "':\n" + ex.what(), lineNum);
+    }
 
     if (!compiler.getStack().empty()) {
         args.stack.push(compiler.getStack().top());

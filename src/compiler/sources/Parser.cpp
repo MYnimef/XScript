@@ -164,7 +164,7 @@ Parser::GrammarType Parser::checkGrammar(std::list<Token>& tokens) {
         }
     }
 
-    throw ExcParser("wrong syntax at line " + std::to_string(tokens.front().getLineNum()));
+    throw ExcParser("wrong syntax", tokens.front().getLineNum());
 }
 
 void Parser::parseAssignmentComplex(std::list<Token>& tokens) {
@@ -282,7 +282,9 @@ std::list<Exp*> Parser::parseOperations(std::list<Token>& tokens) {
             brackets--;
             if (brackets != 0 || foundId) {
                 localTokens.push_back(token);
-                foundId = false;
+                if (brackets == 0) {
+                    foundId = false;
+                }
             } else {
                 subOperations(expressions, localTokens);
                 expressions.emplace_back(new ExpressionBracketR());
@@ -298,9 +300,9 @@ std::list<Exp*> Parser::parseOperations(std::list<Token>& tokens) {
     }
 
     if (brackets > 0) {
-        throw ExcParser("expected ) at line " + std::to_string(tokens.front().getLineNum()));
+        throw ExcParser("expected ')'", lineNum);
     } else if (brackets < 0) {
-        throw ExcParser("expected ( at line " + std::to_string(tokens.front().getLineNum()));
+        throw ExcParser("expected '('", lineNum);
     } else {
         subOperations(expressions, localTokens);
         tokens.clear();
@@ -374,7 +376,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         for (auto arg: arguments) {
             delete arg;
         }
-        throw ExcParser("attempt to re-declare function " + id);
+        throw ExcParser("attempt to re-declare function " + id, lineNum);
     } else {
         auto funcBody = new Node(new ExpBlock(lineNum, funcName));
         auto functionsLocal = new std::map<std::string, Node*>();

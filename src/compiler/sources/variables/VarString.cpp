@@ -3,7 +3,6 @@
 //
 
 #include "VarString.h"
-#include "VarBool.h"
 #include "VarList.h"
 #include "ExcVar.h"
 
@@ -24,7 +23,7 @@ Var* VarString::operator + (const Var& second) const {
 }
 
 Var* VarString::operator - (const Var& second) const {
-    throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
+    throw ExcVar("wrong operand '-' for type 'string'", lineNum);
 }
 
 Var* VarString::operator * (const Var& second) const {
@@ -36,12 +35,12 @@ Var* VarString::operator * (const Var& second) const {
         }
         return new VarString(lineNum, result);
     } else {
-        throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '*' for type 'string'", lineNum);
     }
 }
 
 Var* VarString::operator / (const Var& second) const {
-    throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
+    throw ExcVar("wrong operand '/' for type 'string'", lineNum);
 }
 
 bool VarString::getBool() const {
@@ -49,11 +48,19 @@ bool VarString::getBool() const {
 }
 
 long long VarString::getInteger() const {
-    return std::stoll(value);
+    try {
+        return std::stoll(value);
+    } catch (const std::exception& ex) {
+        throw ExcVar("unable to convert '" + value + "' to  type 'int'", lineNum);
+    }
 }
 
 long double VarString::getDouble() const {
-    return std::stold(value);
+    try {
+        return std::stold(value);
+    } catch (const std::exception& ex) {
+        throw ExcVar("unable to convert '" + value + "' to type 'float'", lineNum);
+    }
 }
 
 std::string VarString::getString() const {

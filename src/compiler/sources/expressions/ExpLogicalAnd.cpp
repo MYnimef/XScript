@@ -20,7 +20,7 @@ void ExpLogicalAnd::action(const CompilerArgs &args) const {
         delete arg1;
         delete arg2;
     } else {
-        throw ExcExp("function doesn't return any value at line " + std::to_string(lineNum));
+        throw ExcExp("function doesn't return any value", lineNum);
     }
 }
 

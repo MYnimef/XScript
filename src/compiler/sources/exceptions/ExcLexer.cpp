@@ -4,7 +4,6 @@
 
 #include "ExcLexer.h"
 
-ExcLexer::ExcLexer(const std::string &message) : runtime_error(
-        "DSL Lexer Exception :: " + message) {
-
+ExcLexer::ExcLexer(const std::string &message, const int& lineNum):
+Exc("DSL Lexer", message, lineNum) {
 }

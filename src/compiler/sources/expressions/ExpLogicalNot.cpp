@@ -16,7 +16,7 @@ void ExpLogicalNot::action(const CompilerArgs &args) const {
         args.stack.push(!*arg);
         delete arg;
     } else {
-        throw ExcExp("function doesn't return any value at line " + std::to_string(lineNum));
+        throw ExcExp("function doesn't return any value", lineNum);
     }
 }
 

@@ -7,6 +7,7 @@
 #include "FuncPrint.h"
 #include "FuncPrintln.h"
 #include "FuncInput.h"
+#include "FuncToInteger.h"
 
 int main() {
     std::cout <<
@@ -27,7 +28,8 @@ int main() {
     auto functions = new std::map<std::string, Node*> {
             {"print1", new Node(new FuncPrint({"out"}))},
             {"println1", new Node(new FuncPrintln({"out"}))},
-            {"input0", new Node(new FuncInput({}))}
+            {"input0", new Node(new FuncInput({}))},
+            {"int1", new Node(new FuncToInteger({"val"}))}
     };
 
     try {

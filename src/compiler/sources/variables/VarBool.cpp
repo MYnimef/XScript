@@ -36,7 +36,7 @@ Var* VarBool::operator - (const Var& second) const {
         case DOUBLE_VAR:
             return new VarDouble(lineNum, getDouble() - second.getDouble());
         case STRING_VAR:
-            throw ExcVar("wrong operand '-' for type 'string' at line " + std::to_string(lineNum));
+            throw ExcVar("wrong operand '-' for type 'string'", lineNum);
     }
 }
 
@@ -49,13 +49,13 @@ Var* VarBool::operator * (const Var& second) const {
         case DOUBLE_VAR:
             return new VarDouble(lineNum, getDouble() * second.getDouble());
         case STRING_VAR:
-            throw ExcVar("wrong operand '*' for type 'string' at line " + std::to_string(lineNum));
+            throw ExcVar("wrong operand '*' for type 'string'", lineNum);
     }
 }
 
 Var* VarBool::operator / (const Var& second) const {
     if (second.getType() == STRING_VAR) {
-        throw ExcVar("wrong operand '/' for type 'string' at line " + std::to_string(lineNum));
+        throw ExcVar("wrong operand '/' for type 'string'", lineNum);
     } else {
         return new VarDouble(lineNum, getDouble() / second.getDouble());
     }

@@ -4,7 +4,6 @@
 
 #include "ExcVar.h"
 
-ExcVar::ExcVar(const std::string &message) : runtime_error(
-        "DSL Variable Exception :: " + message) {
-
+ExcVar::ExcVar(const std::string &message, const int& lineNum):
+Exc("DSL Variable", message, lineNum) {
 }

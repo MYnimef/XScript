@@ -5,6 +5,6 @@
 #include "ExcParser.h"
 
 
-ExcParser::ExcParser(const std::string &message) : runtime_error(
-        "DSL Parser Exception :: " + message) {
+ExcParser::ExcParser(const std::string &message, const int& lineNum):
+Exc("DSL Parser", message, lineNum) {
 }

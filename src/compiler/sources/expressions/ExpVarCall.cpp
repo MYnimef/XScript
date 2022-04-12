@@ -22,7 +22,7 @@ void ExpVarCall::action(const CompilerArgs& args) const {
     }
 
     if (!callVariableFrom(args.variables, args.stack)) {
-        throw ExcExp("usage of undeclared var '" + id +  "' at line " + std::to_string(lineNum));
+        throw ExcExp("usage of undeclared var '" + id +  "'", lineNum);
     }
 }
 
