@@ -41,10 +41,9 @@ syntax({
     { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + val )                                },
     { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val )                                          },
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                             },
-    { GR_VAR_LIST,                std::regex( R"(@=\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" ) },
     { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})" )                            },
     { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})" )                         },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})" )                          }
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})" )                          },
 }) {
     tree = node;
 }
@@ -135,8 +134,6 @@ void Parser::generateExpression(std::list<Token>& tokens) {
         case GR_VAR_INCREMENT_DECREMENT:
             parseIncrementDecrement(tokens);
             break;
-        case GR_VAR_LIST:
-            break;
         case GR_FUNC:
             parseFunctionCall(tokens);
             break;
@@ -216,10 +213,6 @@ void Parser::parseIncrementDecrement(std::list<Token>& tokens) {
     expressions.emplace_back(new ExpOpAssignVar(lineNum, id));
 
     tree->addChildBack(addNodeExpr(expressions));
-}
-
-void parseAssignmentList(std::list<Token>&) {
-
 }
 
 std::list<Exp*> Parser::parseOperations(std::list<Token>& tokens) {

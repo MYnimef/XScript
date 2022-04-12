@@ -7,13 +7,13 @@
 #include "ExcLexer.h"
 
 Lexer::Lexer(): lexems({
-    {LEX_ONE_CHAR,     std::regex(R"([!;,\+\-\*\/=\}\{\)\(<>])" )                          },
-    {LEX_TWO_CHAR,     std::regex(R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" )         },
-    {LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(true)|(false))" ) },
-    {LEX_STRING,       std::regex( R"("[^"]*")" )                                         },
-    {LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )                                 },
-    {LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" )                      },
-    {LEX_ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" )                           },
+    {LEX_ONE_CHAR,     std::regex(R"([!;,\+\-\*\/=\}\{\)\(<>])" )                      },
+    {LEX_TWO_CHAR,     std::regex(R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" ) },
+    {LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(true)|(false))" )    },
+    {LEX_STRING,       std::regex( R"("[^"]*")" )                                      },
+    {LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))" )                              },
+    {LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)" )                   },
+    {LEX_ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)" )                        },
 }) {
 
 }

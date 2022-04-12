@@ -37,7 +37,7 @@ int main() {
             { "int1",     new Node( new FuncToInteger({ "val" } ) ) },
             { "float1",   new Node( new FuncToDouble( { "val" } ) ) },
             { "string1",  new Node( new FuncToString( { "val" } ) ) },
-            { "list1",    new Node( new FuncToList(   { "val" } ) ) }
+            { "list1",    new Node( new FuncToList(   { "val" } ) ) },
     };
 
     try {

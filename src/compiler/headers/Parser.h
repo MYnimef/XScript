@@ -19,7 +19,6 @@ private:
         GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
         GR_VAR_INCREMENT_DECREMENT,
-        GR_VAR_LIST,
         GR_IF,
         GR_LOOP_WHILE,
         GR_FUNC_DEFINITION,
@@ -37,7 +36,6 @@ private:
     void parseAssignmentComplex(std::list<Token>&);
     void parseAssignment(std::list<Token>&);
     void parseIncrementDecrement(std::list<Token>&);
-    void parseAssignmentList(std::list<Token>&);
     std::list<Exp*> parseOperations(std::list<Token>&);
     void subOperations(std::list<Exp*>& expressions, std::list<Token>& localTokens);
     void parseFuncDefinition(std::list<Token>&);
