@@ -12,11 +12,15 @@
 class ExpressionFunctionDef final: public Expression {
 private:
     const std::string name;
-    const std::list<Node*> arguments;
     const Node* body;
+    std::map<std::string, Node*>* functions;
 
 public:
-    explicit ExpressionFunctionDef(const std::string& value, const std::list<Node*>& arguments, const Node* body);
+    explicit ExpressionFunctionDef(
+            const std::string& value,
+            const Node* body,
+            std::map<std::string,Node*>* functions
+            );
 
     void action(const CompilerArgs& args) const override;
 

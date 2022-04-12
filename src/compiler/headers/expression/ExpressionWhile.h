@@ -11,9 +11,14 @@ class ExpressionWhile final: public Expression {
 private:
     const Node* blockCondition;
     const Node* blockExecute;
+    std::map<std::string, Node*>* functions;
 
 public:
-    explicit ExpressionWhile(const Node* blockCondition, const Node* blockExecute);
+    explicit ExpressionWhile(
+            const Node* blockCondition,
+            const Node* blockExecute,
+            std::map<std::string, Node*>* functions
+            );
     ~ExpressionWhile() override;
 
     void action(const CompilerArgs& args) const override;

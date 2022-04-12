@@ -14,6 +14,8 @@ private:
     const std::string name;
     const std::list<Node*> arguments;
 
+    void executeFunction(Node* func, const CompilerArgs& args) const;
+
 public:
     explicit ExpressionFunctionCall(const std::string& value, const std::list<Node*>& arguments);
 

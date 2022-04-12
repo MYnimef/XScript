@@ -12,8 +12,7 @@
 
 class Compiler final {
 private:
-    std::list<std::map<std::string, Node*>*> functionsGlobal;
-    std::map<std::string, Node*>* functions;
+    std::list<std::map<std::string, Node*>*> functions;
 
     std::list<std::map<std::string, Variable*>*> variablesGlobal;
     std::map<std::string, Variable*>* variables;
@@ -22,8 +21,11 @@ private:
     std::stack<Variable*> stack;
 
 public:
-    Compiler();
-    explicit Compiler(const std::list<std::map<std::string, Variable*>*>& variablesGlobal);
+    explicit Compiler(std::map<std::string, Node*>* functions);
+    explicit Compiler(
+            const std::list<std::map<std::string, Node*>*>& functions,
+            const std::list<std::map<std::string, Variable*>*>& variablesGlobal
+            );
 
     ~Compiler();
 

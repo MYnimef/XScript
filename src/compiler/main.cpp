@@ -20,7 +20,10 @@ int main() {
 
     clock_t start = clock();
 
-    Node* application = new Node(new ExpressionCodeBlock("main"));
+    auto application = new Node(new ExpressionCodeBlock("main"));
+    auto functions = new std::map<std::string, Node*> {
+            {"print1", nullptr}
+    };
 
     try {
         Lexer lexer;
@@ -32,12 +35,12 @@ int main() {
             }
         }
 
-        Parser parser(application);
+        Parser parser(application, functions);
         parser.addTokens(lexer.getTokens());
 
         std::cout << std::endl << parser.getTree()->toString() << std::endl;
 
-        Compiler compiler;
+        Compiler compiler(functions);
         compiler.execute(application);
 
         std::cout << std::endl;
@@ -50,6 +53,10 @@ int main() {
     }
 
     delete application;
+    for (const auto& func: *functions) {
+        delete func.second;
+    }
+    delete functions;
 
     clock_t stop = clock();
     double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;

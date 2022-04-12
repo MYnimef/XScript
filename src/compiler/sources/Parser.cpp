@@ -33,7 +33,9 @@
 #include "ExpressionCodeBlock.h"
 #include "ExpressionFunctionDef.h"
 
-Parser::Parser(Node* node):
+Parser::Parser(Node* node, std::map<std::string, Node*>* functions):
+tree(node),
+functions(functions),
 actions(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
 grammatics({
     { GR_FUNC,                    std::regex( R"(@\((()" + actions + R"(,)*)" + actions + R"()?)" + R"(\))" ) },
@@ -48,9 +50,11 @@ grammatics({
     tree = node;
 }
 
-Parser::Parser(Node* node, const std::map<GrammarType, std::regex>& grammatics):
+Parser::Parser(Node* node, std::map<std::string, Node*>* functions, const std::string& actions, const std::map<GrammarType, std::regex>& grammatics):
+tree(node),
+functions(functions),
+actions(actions),
 grammatics(grammatics) {
-    tree = node;
 }
 
 Parser::~Parser() {
@@ -325,7 +329,7 @@ void Parser::subOperations(std::list<Expression*>& expressions, std::list<Token>
 
 void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     tokens.pop_front(); // remove func
-    std::string funcName = tokens.front().getValue();
+    std::string id = tokens.front().getValue();
     tokens.pop_front(); // remove func name
 
     tokens.pop_front(); // remove (
@@ -345,7 +349,7 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         }
     }
 
-    funcName += std::to_string(amountOfArgs);
+    auto funcName = id + std::to_string(amountOfArgs);
 
     {
         int remove = amountOfArgs;
@@ -361,15 +365,19 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     tokens.pop_front(); // delete {
     tokens.pop_back();  // delete }
 
-    if (functions.count(funcName)) {
-        throw ExceptionParser("attempt to re-declare function " + funcName);
+    if (functions->count(funcName)) {
+        throw ExceptionParser("attempt to re-declare function " + id);
     } else {
         auto funcBody = new Node(new ExpressionCodeBlock(funcName));
-        Parser parser(funcBody, grammatics);
+        auto functionsLocal = new std::map<std::string, Node*>();
+        Parser parser(funcBody, functionsLocal, actions, grammatics);
         parser.addTokens(tokens);
 
-        auto node = new Node(new ExpressionFunctionDef(funcName, arguments, funcBody));
-        functions.insert_or_assign(funcName, node);
+        auto node = new Node(new ExpressionFunctionDef(funcName, funcBody, functionsLocal));
+        for (auto arg: arguments) {
+            node->addChildBack(arg);
+        }
+        functions->insert_or_assign(funcName, node);
     }
 }
 
@@ -398,10 +406,11 @@ void Parser::parseIf(std::list<Token>& tokens) {
     tokens.pop_back();  // remove }
 
     Node* blockExecute = new Node(new ExpressionCodeBlock("if"));
-    Parser parser(blockExecute, grammatics);
+    auto functionsLocal = new std::map<std::string, Node*>();
+    Parser parser(blockExecute, functionsLocal, actions, grammatics);
     parser.addTokens(tokens);
 
-    tree->addChildBack(new Node(new ExpressionIf(conditionBlock, blockExecute)));
+    tree->addChildBack(new Node(new ExpressionIf(conditionBlock, blockExecute, functionsLocal)));
 }
 
 void Parser::parseWhile(std::list<Token>& tokens) {
@@ -429,10 +438,12 @@ void Parser::parseWhile(std::list<Token>& tokens) {
     tokens.pop_back();  // remove }
 
     Node* blockExecute = new Node(new ExpressionCodeBlock("while"));
-    Parser parser(blockExecute, grammatics);
+
+    auto functionsLocal = new std::map<std::string, Node*>();
+    Parser parser(blockExecute, functionsLocal, actions, grammatics);
     parser.addTokens(tokens);
 
-    tree->addChildBack(new Node(new ExpressionWhile(conditionBlock, blockExecute)));
+    tree->addChildBack(new Node(new ExpressionWhile(conditionBlock, blockExecute, functionsLocal)));
 }
 
 void Parser::parseFunctionCall(std::list<Token>& tokens) {

@@ -4,12 +4,16 @@
 
 #include "Compiler.h"
 
-Compiler::Compiler() {
-    functions = new std::map<std::string, Node*>();
+Compiler::Compiler(std::map<std::string, Node*>* functions) {
+    this->functions.push_front(functions);
     variables = new std::map<std::string, Variable*>();
 }
 
-Compiler::Compiler(const std::list<std::map<std::string, Variable*>*>& variablesGlobal):
+Compiler::Compiler(
+        const std::list<std::map<std::string, Node*>*>& functions,
+        const std::list<std::map<std::string, Variable*>*>& variablesGlobal
+):
+functions(functions),
 variablesGlobal(variablesGlobal) {
     variables = new std::map<std::string, Variable*>();
 }
@@ -34,7 +38,7 @@ void Compiler::execute(const Node* tree) {
         execute(node);
     }
 
-    tree->getExpression()->action(CompilerArgs(functionsGlobal, functions, variablesGlobal, variables, stackVariablesId, stack));
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stackVariablesId, stack));
 }
 
 const std::map<std::string, Variable*>* Compiler::getVariables() const {

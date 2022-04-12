@@ -1,4 +1,5 @@
 
+
 a = 1 + 1
 b = - 1 - 1
 c = (-1)
@@ -13,3 +14,18 @@ pi = 3.14
 
 flag = true || false
 flag2 = (true && !false)
+
+if 5 == 5 {
+    pi = "success"
+}
+
+while g > 0 {
+    g--
+}
+
+func print() {
+    a = 7
+    b = 3
+}
+
+print()

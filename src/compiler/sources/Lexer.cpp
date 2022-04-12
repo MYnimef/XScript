@@ -26,7 +26,8 @@ void Lexer::scanFile(const std::string& filename) {
     std::ifstream file("../src/" + filename);
 
     if (!file.is_open()) {
-        throw std::invalid_argument( "can't open file " + filename );
+        file.close();
+        throw ExceptionLexer("can't open file " + filename);
     }
 
     std::string line;

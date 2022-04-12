@@ -28,7 +28,7 @@ private:
     const std::string actions;
     const std::map<GrammarType, std::regex> grammatics;
     Node* tree;
-    std::map<std::string, Node*> functions;
+    std::map<std::string, Node*>* functions;
 
     void addTokensLine(std::list<Token>&);
     void generateExpression(std::list<Token>&);
@@ -50,8 +50,8 @@ private:
     Node* addNodeExpr(const std::list<Expression*>&);
 
 public:
-    explicit Parser(Node* node);
-    explicit Parser(Node* node, const std::map<GrammarType, std::regex>&);
+    explicit Parser(Node* node, std::map<std::string, Node*>* functions);
+    explicit Parser(Node* node, std::map<std::string, Node*>* functions, const std::string& actions, const std::map<GrammarType, std::regex>&);
     ~Parser();
 
     void addTokens(const std::list<Token>&);
