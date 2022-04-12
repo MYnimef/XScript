@@ -329,10 +329,9 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
     tokens.pop_front(); // remove func
     std::string id = tokens.front().getValue();
     tokens.pop_front(); // remove func name
-
     tokens.pop_front(); // remove (
-    int amountOfArgs = 0;
 
+    int amountOfArgs = 0;
     std::list<Node*> arguments;
     for (const auto& token: tokens) {
         auto type = token.getType();
@@ -340,14 +339,11 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         if (type == R_BRACKET) {
             break;
         } else if (type != COMMA) {
-            Node* node = new Node(new ExpOpAssignVarFunc(token.getValue()));
-            arguments.push_back(node);
+            arguments.push_back(new Node(new ExpOpAssignVarFunc(token.getValue())));
             amountOfArgs++;
         }
     }
-
     auto funcName = id + std::to_string(amountOfArgs);
-
     {
         int remove = amountOfArgs;
         if (remove > 1) {

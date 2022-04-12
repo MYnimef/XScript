@@ -22,7 +22,7 @@ public:
             std::map<std::string,Node*>* functions
             );
 
-    ~ExpFuncDef();
+    ~ExpFuncDef() override;
 
     void action(const CompilerArgs& args) const override;
 

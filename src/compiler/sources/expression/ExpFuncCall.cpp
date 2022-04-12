@@ -11,6 +11,12 @@ arguments(arguments) {
     type = EXP_FUNC_CALL;
 }
 
+ExpFuncCall::~ExpFuncCall() {
+    for (auto arg: arguments) {
+        delete arg;
+    }
+}
+
 void ExpFuncCall::action(const CompilerArgs& args) const {
     for (auto functions: args.functions) {
         auto func = functions->find(name);
