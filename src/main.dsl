@@ -1,15 +1,16 @@
+flag = true
+a = 0
+b = 0
 
-a = 1 + 1
-b = - 1 - 1
-c = (-1)
-d = -(-(-(-1)))
-e = (-5 - 10)
-f = -7
-g = (5 + 7 - 9 * (-5))
-ff = !true
-a = -(3)
-c = true
-pi = 3.14
+while flag {
+    a++
 
-flag = true || false
-flag2 = (true && !false)
+    while b < 9 {
+        b++
+        a += "wow"
+    }
+
+    flag = false
+}
+
+print(a)

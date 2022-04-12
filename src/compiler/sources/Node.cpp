@@ -4,8 +4,13 @@
 
 #include "Node.h"
 
-Node::Node(const Expression* expression):
+Node::Node(const Exp* expression):
 expression(expression) {
+}
+
+Node::Node(const Exp* expression, const std::list<Node*>& children):
+expression(expression),
+children(children) {
 }
 
 Node::~Node() {
@@ -31,7 +36,7 @@ std::list<Node *> Node::getChildren() const {
     return children;
 }
 
-const Expression* Node::getExpression() const {
+const Exp* Node::getExpression() const {
     return expression;
 }
 

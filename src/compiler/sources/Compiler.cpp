@@ -4,14 +4,18 @@
 
 #include "Compiler.h"
 
-Compiler::Compiler() {
-    functions = new std::map<std::string, Node*>();
-    variables = new std::map<std::string, Variable*>();
+Compiler::Compiler(std::map<std::string, Node*>* functions) {
+    this->functions.push_front(functions);
+    variables = new std::map<std::string, Var*>();
 }
 
-Compiler::Compiler(const std::list<std::map<std::string, Variable*>*>& variablesGlobal):
+Compiler::Compiler(
+        const std::list<std::map<std::string, Node*>*>& functions,
+        const std::list<std::map<std::string, Var*>*>& variablesGlobal
+):
+functions(functions),
 variablesGlobal(variablesGlobal) {
-    variables = new std::map<std::string, Variable*>();
+    variables = new std::map<std::string, Var*>();
 }
 
 Compiler::~Compiler() {
@@ -19,7 +23,27 @@ Compiler::~Compiler() {
         delete var.second;
     }
     delete variables;
+    cleanStack();
+}
 
+void Compiler::execute(const Node* tree) {
+    for (auto node: tree->getChildren()) {
+        executeChild(node);
+        cleanStack();
+    }
+
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+}
+
+void Compiler::executeChild(const Node* tree) {
+    for (auto node: tree->getChildren()) {
+        executeChild(node);
+    }
+
+    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+}
+
+void Compiler::cleanStack() {
     while (!stack.empty()) {
         auto var = stack.top();
         stack.pop();
@@ -27,20 +51,10 @@ Compiler::~Compiler() {
     }
 }
 
-void Compiler::execute(const Node* tree) {
-    auto child = tree->getChildren();
-
-    for (auto node: tree->getChildren()) {
-        execute(node);
-    }
-
-    tree->getExpression()->action(CompilerArgs(functionsGlobal, functions, variablesGlobal, variables, stackVariablesId, stack));
-}
-
-const std::map<std::string, Variable*>* Compiler::getVariables() const {
+const std::map<std::string, Var*>* Compiler::getVariables() const {
     return variables;
 }
 
-std::stack<Variable*>& Compiler::getStack() {
+std::stack<Var*>& Compiler::getStack() {
     return stack;
 }

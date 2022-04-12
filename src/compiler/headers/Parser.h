@@ -9,7 +9,7 @@
 #include <stack>
 #include <regex>
 #include "Token.h"
-#include "Expression.h"
+#include "Exp.h"
 #include "Node.h"
 
 class Parser final {
@@ -19,16 +19,16 @@ private:
         GR_VAR_ASSIGNMENT_COMPLEX,
         GR_VAR_ASSIGNMENT,
         GR_VAR_INCREMENT_DECREMENT,
+        GR_VAR_LIST,
         GR_IF,
         GR_LOOP_WHILE,
-        GR_LOOP_FOR,
         GR_FUNC_DEFINITION,
         };
 
-    const std::string actions;
-    const std::map<GrammarType, std::regex> grammatics;
+    const std::string val;
+    const std::map<GrammarType, std::regex> syntax;
     Node* tree;
-    std::map<std::string, Node*> functions;
+    std::map<std::string, Node*>* functions;
 
     void addTokensLine(std::list<Token>&);
     void generateExpression(std::list<Token>&);
@@ -37,21 +37,22 @@ private:
     void parseAssignmentComplex(std::list<Token>&);
     void parseAssignment(std::list<Token>&);
     void parseIncrementDecrement(std::list<Token>&);
-    std::list<Expression*> parseOperations(std::list<Token>&);
-    void subOperations(std::list<Expression*>& expressions, std::list<Token>& localTokens);
+    void parseAssignmentList(std::list<Token>&);
+    std::list<Exp*> parseOperations(std::list<Token>&);
+    void subOperations(std::list<Exp*>& expressions, std::list<Token>& localTokens);
     void parseFuncDefinition(std::list<Token>&);
     void parseIf(std::list<Token>&);
     void parseWhile(std::list<Token>&);
     void parseFunctionCall(std::list<Token>&);
-    Expression* subFunction(std::list<Token>&);
+    Exp* subFunction(std::list<Token>&);
 
-    std::list<Expression*> toPostfix(std::list<Expression*>&);
+    std::list<Exp*> toPostfix(std::list<Exp*>&);
     static short operatorPriority(const ExpressionType& type);
-    Node* addNodeExpr(const std::list<Expression*>&);
+    Node* addNodeExpr(const std::list<Exp*>&);
 
 public:
-    explicit Parser(Node* node);
-    explicit Parser(Node* node, const std::map<GrammarType, std::regex>&);
+    explicit Parser(Node* node, std::map<std::string, Node*>* functions);
+    explicit Parser(Node* node, std::map<std::string, Node*>* functions, const std::string& actions, const std::map<GrammarType, std::regex>&);
     ~Parser();
 
     void addTokens(const std::list<Token>&);

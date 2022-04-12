@@ -2,8 +2,12 @@
 #include "Lexer.h"
 #include "Parser.h"
 #include "Compiler.h"
-#include "ExceptionParser.h"
-#include "ExpressionCodeBlock.h"
+#include "ExcParser.h"
+#include "ExpBlock.h"
+#include "FuncPrint.h"
+#include "FuncPrintln.h"
+#include "FuncInput.h"
+#include "FuncToInteger.h"
 
 int main() {
     std::cout <<
@@ -18,42 +22,60 @@ int main() {
     "\033[0m" <<
     std::endl;
 
-    clock_t start = clock();
+    auto start = clock();
 
-    Node* application = new Node(new ExpressionCodeBlock("main"));
+    auto application = new Node(new ExpBlock(0, "main"));
+    auto functions = new std::map<std::string, Node*> {
+            {"print1", new Node(new FuncPrint({"out"}))},
+            {"println1", new Node(new FuncPrintln({"out"}))},
+            {"input0", new Node(new FuncInput({}))},
+            {"int1", new Node(new FuncToInteger({"val"}))}
+    };
 
     try {
         Lexer lexer;
         lexer.scanFile("main.dsl");
 
+        /*
         for (const auto& token: lexer.getTokens()) {
             if (token.getType() != SEMICOLON) {
                 std::cout << token.toString() << std::endl;
             }
         }
+        */
 
-        Parser parser(application);
+        Parser parser(application, functions);
         parser.addTokens(lexer.getTokens());
 
-        std::cout << std::endl << parser.getTree()->toString() << std::endl;
+        //std::cout << std::endl << parser.getTree()->toString() << std::endl;
 
-        Compiler compiler;
+        Compiler compiler(functions);
         compiler.execute(application);
 
+        /*
         std::cout << std::endl;
         for (const auto& var: *compiler.getVariables()) {
             std::cout << std::endl << var.first + " = " + var.second->getString();
         }
         std::cout << std::endl;
+        */
     } catch (const std::exception& ex) {
         std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     }
 
     delete application;
+    for (const auto& func: *functions) {
+        delete func.second;
+    }
+    delete functions;
 
-    clock_t stop = clock();
-    double elapsed = (double) (stop - start) / CLOCKS_PER_SEC;
-    std::cout << std::endl << "\033[1;32m" << "Program compiled in " << elapsed << " seconds"  << "\033[0m" << std::endl;
+    std::cout <<
+    std::endl <<
+    "\033[1;32m" <<
+    "Program compiled in " <<
+    (double) (clock() - start) / CLOCKS_PER_SEC <<
+    " seconds"  << "\033[0m" <<
+    std::endl;
 
     return 0;
 }
