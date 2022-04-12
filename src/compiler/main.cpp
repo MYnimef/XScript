@@ -4,6 +4,7 @@
 #include "Compiler.h"
 #include "ExcParser.h"
 #include "ExpBlock.h"
+#include "FuncPrint.h"
 
 int main() {
     std::cout <<
@@ -22,7 +23,7 @@ int main() {
 
     auto application = new Node(new ExpBlock("main"));
     auto functions = new std::map<std::string, Node*> {
-            {"print1", nullptr}
+            {"print1", new Node(new FuncPrint({"out"}))}
     };
 
     try {

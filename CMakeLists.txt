@@ -7,6 +7,7 @@ include_directories(src/compiler/headers)
 include_directories(src/compiler/headers/exception)
 include_directories(src/compiler/headers/expression)
 include_directories(src/compiler/headers/variable)
+include_directories(src/compiler/headers/functions)
 
 add_executable(
         dsl
@@ -131,4 +132,10 @@ add_executable(
 
         src/compiler/headers/expression/ExpOpAssignVarFunc.h
         src/compiler/sources/expression/ExpOpAssignVarFunc.cpp
+
+        src/compiler/headers/expression/ExpFuncCustom.h
+        src/compiler/sources/expression/ExpFuncCustom.cpp
+
+        src/compiler/headers/functions/FuncPrint.h
+        src/compiler/sources/functions/FuncPrint.cpp
 )

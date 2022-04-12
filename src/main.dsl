@@ -9,3 +9,5 @@ func print(a, b) {
     pi = b
     a = b
 }
+
+print("Hello, world!")
