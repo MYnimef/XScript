@@ -30,7 +30,7 @@ void ExpBlockWhile::action(const CompilerArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
     Compiler compilerCondition(args.functions, args.variablesGlobal);
-    compilerCondition.execute(blockCondition);
+    compilerCondition.executeChild(blockCondition);
 
     auto condition = compilerCondition.getStack().top();
     compilerCondition.getStack().pop();
@@ -43,7 +43,7 @@ void ExpBlockWhile::action(const CompilerArgs& args) const {
 
         args.functions.pop_front();
 
-        compilerCondition.execute(blockCondition);
+        compilerCondition.executeChild(blockCondition);
         delete condition;
         condition = compilerCondition.getStack().top();
         compilerCondition.getStack().pop();

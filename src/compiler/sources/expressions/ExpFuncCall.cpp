@@ -34,7 +34,7 @@ void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {
 
     Compiler compiler(args.functions, args.variablesGlobal);
     for (auto node: arguments) {
-        compiler.execute(node);
+        compiler.executeChild(node);
     }
 
     try {

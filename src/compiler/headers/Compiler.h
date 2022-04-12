@@ -19,7 +19,6 @@ private:
 
     std::stack<Var*> stack;
 
-    void executeChild(const Node*);
     void cleanStack();
 
 public:
@@ -32,6 +31,7 @@ public:
     ~Compiler();
 
     void execute(const Node*);
+    void executeChild(const Node*);
 
     [[nodiscard]] const std::map<std::string, Var*>* getVariables() const;
     std::stack<Var*>& getStack();
