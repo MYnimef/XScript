@@ -8,6 +8,7 @@
 #include "VarString.h"
 #include "VarBool.h"
 #include "ExcExp.h"
+#include "VarList.h"
 
 ExpVarCall::ExpVarCall(const int& lineNum, const std::string &value):
 Exp(EXP_ID, lineNum),
@@ -46,6 +47,9 @@ bool ExpVarCall::callVariableFrom(std::map<std::string, Var*>* container, std::s
                 return true;
             case Var::STRING_VAR:
                 stack.push(new VarString(lineNum, var->getString()));
+                return true;
+            case Var::LIST_VAR:
+                stack.push(new VarList(lineNum, var->getList()));
                 return true;
         }
     }
