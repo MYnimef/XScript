@@ -5,19 +5,20 @@
 #pragma once
 
 #include <list>
-#include "Expression.h"
+#include "Exp.h"
 
 class Node final {
 private:
-    const Expression* expression;
+    const Exp* expression;
     std::list<Node*> children;
 
 public:
-    explicit Node(const Expression*);
+    explicit Node(const Exp*);
+    Node(const Exp*, const std::list<Node*>&);
     ~Node();
 
     ExpressionType getType();
-    [[nodiscard]] const Expression* getExpression() const;
+    [[nodiscard]] const Exp* getExpression() const;
 
     void addChildFront(Node *child);
     void addChildBack(Node *child);

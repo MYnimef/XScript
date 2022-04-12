@@ -7,18 +7,22 @@
 #include <list>
 #include <map>
 #include <stack>
-#include "Variable.h"
+#include "Var.h"
+
+class Node;
 
 struct CompilerArgs {
-    std::list<std::map<std::string, Variable*>*>& variablesGlobal;
-    std::map<std::string, Variable*>* variables;
-    std::stack<std::string>& stackVariablesId;
-    std::stack<Variable*>& stack;
+    std::list<std::map<std::string, Node*>*>& functions;
+
+    std::list<std::map<std::string, Var*>*>& variablesGlobal;
+    std::map<std::string, Var*>* variables;
+
+    std::stack<Var*>& stack;
 
     CompilerArgs(
-            std::list<std::map<std::string, Variable*>*>& variablesGlobal,
-            std::map<std::string, Variable*>* variables,
-            std::stack<std::string>& stackVariablesId,
-            std::stack<Variable*>& stack
+            std::list<std::map<std::string, Node*>*>& functions,
+            std::list<std::map<std::string, Var*>*>& variablesGlobal,
+            std::map<std::string, Var*>* variables,
+            std::stack<Var*>& stack
     );
 };
