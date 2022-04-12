@@ -1,3 +1,6 @@
-a = list(input())
-a += "string"
+
+
+
+
+a = int(input())
 print(a)

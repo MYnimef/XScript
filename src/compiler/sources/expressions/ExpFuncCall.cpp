@@ -38,7 +38,7 @@ void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {
     }
 
     try {
-        compiler.execute(func);
+        compiler.executeChild(func);
     } catch (const std::exception& ex) {
         throw ExcExp("error in function '" + name + "':\n" + ex.what(), lineNum);
     }

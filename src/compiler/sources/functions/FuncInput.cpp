@@ -16,7 +16,6 @@ FuncInput::~FuncInput() {
 
 void FuncInput::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
     std::string value;
-    std::cout << std::endl;
     std::cin >> value;
     stack.push(new VarString(0, value));
 }
