@@ -37,13 +37,13 @@ tree(node),
 functions(functions),
 val(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
 syntax({
-    { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" )  },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + val )                                },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val )                                          },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])" )                                             },
-    { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})" )                            },
-    { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})" )                         },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})" )                          },
+    { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" ) },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + val                               ) },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val                                         ) },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])"                                            ) },
+    { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})"                           ) },
+    { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})"                        ) },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})"                         ) },
 }) {
     tree = node;
 }
