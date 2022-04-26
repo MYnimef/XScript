@@ -14,8 +14,7 @@ ExpBlockIf::ExpBlockIf(
 Exp(EXP_IF, lineNum),
 blockCondition(blockCondition),
 blockExecute(blockExecute),
-functions(functions) {
-}
+functions(functions) {}
 
 ExpBlockIf::~ExpBlockIf() {
     delete blockCondition;

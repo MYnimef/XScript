@@ -7,14 +7,11 @@
 
 ExpValInteger::ExpValInteger(const int& lineNum, const long long value):
 Exp(EXP_INTEGER, lineNum),
-value(value) {
-}
+value(value) {}
 
 ExpValInteger::ExpValInteger(const int& lineNum, const std::string& value):
 Exp(EXP_INTEGER, lineNum),
-value(std::stoll(value)) {
-    type = EXP_INTEGER;
-}
+value(std::stoll(value)) {}
 
 void ExpValInteger::action(const InterpreterArgs& args) const {
     args.stack.push(new VarInteger(lineNum, value));

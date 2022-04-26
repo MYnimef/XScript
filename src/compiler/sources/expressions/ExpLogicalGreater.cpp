@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalGreater::ExpLogicalGreater(const int& lineNum):
-Exp(EXP_OP_GREATER, lineNum) {
-}
+Exp(EXP_OP_GREATER, lineNum) {}
 
 void ExpLogicalGreater::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpOpDiv::ExpOpDiv(const int& lineNum):
-Exp(EXP_OP_DIVISION, lineNum) {
-}
+Exp(EXP_OP_DIVISION, lineNum) {}
 
 void ExpOpDiv::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

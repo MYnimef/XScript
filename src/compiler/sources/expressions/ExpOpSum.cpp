@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpOpSum::ExpOpSum(const int& lineNum):
-Exp(EXP_OP_SUM, lineNum) {
-}
+Exp(EXP_OP_SUM, lineNum) {}
 
 void ExpOpSum::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

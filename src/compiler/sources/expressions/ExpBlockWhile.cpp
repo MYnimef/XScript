@@ -14,8 +14,7 @@ ExpBlockWhile::ExpBlockWhile(
 Exp(EXP_LOOP_WHILE, lineNum),
 blockCondition(blockCondition),
 blockExecute(blockExecute),
-functions(functions) {
-}
+functions(functions) {}
 
 ExpBlockWhile::~ExpBlockWhile() {
    delete blockCondition;

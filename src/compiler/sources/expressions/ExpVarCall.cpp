@@ -12,8 +12,7 @@
 
 ExpVarCall::ExpVarCall(const int& lineNum, const std::string &value):
 Exp(EXP_ID, lineNum),
-id(value) {
-}
+id(value) {}
 
 void ExpVarCall::action(const InterpreterArgs& args) const {
     for (auto scope: args.variablesGlobal) {

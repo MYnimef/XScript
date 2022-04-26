@@ -46,8 +46,8 @@ enum ExpressionType {
 
 class Exp {
 protected:
-    ExpressionType type;
-    int lineNum;
+    const ExpressionType type;
+    const int lineNum;
 
 public:
     Exp(const ExpressionType& type, const int& lineNum);

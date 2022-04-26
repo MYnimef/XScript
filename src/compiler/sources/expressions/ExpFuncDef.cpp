@@ -12,7 +12,7 @@ ExpFuncDef::ExpFuncDef(
         std::map<std::string,Node*>* functions
 ):
 Exp(EXP_FUNC_DEFINITION, lineNum),
-name(name),
+name(value),
 body(body),
 functions(functions) {
 }

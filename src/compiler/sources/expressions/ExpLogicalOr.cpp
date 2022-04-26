@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalOr::ExpLogicalOr(const int& lineNum):
-Exp(EXP_LOGICAL_OR, lineNum) {
-}
+Exp(EXP_LOGICAL_OR, lineNum) {}
 
 void ExpLogicalOr::action(const InterpreterArgs &args) const {
     if (args.stack.size() >= 2) {

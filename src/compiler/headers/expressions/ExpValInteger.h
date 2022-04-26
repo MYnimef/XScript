@@ -8,7 +8,7 @@
 
 class ExpValInteger final: public Exp {
 private:
-    long long value;
+    const long long value;
 
 public:
     explicit ExpValInteger(const int& lineNum, long long value);

@@ -7,8 +7,7 @@
 
 ExpValDouble::ExpValDouble(const int& lineNum, const std::string& value):
 Exp(EXP_DOUBLE, lineNum),
-value(std::stold(value)) {
-}
+value(std::stold(value)) {}
 
 void ExpValDouble::action(const InterpreterArgs& args) const {
     args.stack.push(new VarDouble(lineNum, value));

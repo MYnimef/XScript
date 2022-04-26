@@ -6,9 +6,7 @@
 
 ExpBlock::ExpBlock(const int& lineNum, const std::string& name):
 Exp(EXP_CODE_BLOCK, lineNum),
-name(name) {
-    type = EXP_CODE_BLOCK;
-}
+name(name) {}
 
 void ExpBlock::action(const InterpreterArgs &args) const {
 

@@ -6,9 +6,8 @@
 #include "VarString.h"
 
 ExpValString::ExpValString(const int& lineNum, const std::string& value):
-Exp(EXP_STRING, lineNum) {
-    this->value = value.substr(1, value.size() - 2);
-}
+Exp(EXP_STRING, lineNum),
+value(value.substr(1, value.size() - 2)) {}
 
 void ExpValString::action(const InterpreterArgs& args) const {
     args.stack.push(new VarString(lineNum, value));

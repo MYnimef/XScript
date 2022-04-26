@@ -7,8 +7,7 @@
 
 ExpOpAssignVar::ExpOpAssignVar(const int& lineNum, const std::string &value):
 Exp(EXP_OP_ASSIGN_VAR, lineNum),
-id(value) {
-}
+id(value) {}
 
 void ExpOpAssignVar::action(const InterpreterArgs& args) const {
     if (!args.stack.empty()) {

@@ -6,9 +6,7 @@
 
 Exp::Exp(const ExpressionType& type, const int& lineNum):
 type(type),
-lineNum(lineNum) {
-
-}
+lineNum(lineNum) {}
 
 Exp::~Exp() {
 

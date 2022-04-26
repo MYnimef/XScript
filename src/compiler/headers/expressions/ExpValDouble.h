@@ -8,7 +8,7 @@
 
 class ExpValDouble final: public Exp {
 private:
-    long double value;
+    const long double value;
 
 public:
     explicit ExpValDouble(const int& lineNum, const std::string& value);

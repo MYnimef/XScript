@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalSmaller::ExpLogicalSmaller(const int& lineNum):
-Exp(EXP_OP_SMALLER, lineNum) {
-}
+Exp(EXP_OP_SMALLER, lineNum) {}
 
 void ExpLogicalSmaller::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

@@ -6,8 +6,7 @@
 
 ExpFuncCustom::ExpFuncCustom(const std::list<std::string>& args):
 Exp(EXP_FUNC_DEFINITION, 0),
-funcArgs(args) {
-}
+funcArgs(args) {}
 
 ExpFuncCustom::~ExpFuncCustom() {
 

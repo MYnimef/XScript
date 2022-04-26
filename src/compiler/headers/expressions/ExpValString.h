@@ -10,7 +10,7 @@
 
 class ExpValString final: public Exp {
 private:
-    std::string value;
+    const std::string value;
 
 public:
     explicit ExpValString(const int& lineNum, const std::string& value);

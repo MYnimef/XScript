@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalNotEqual::ExpLogicalNotEqual(const int& lineNum):
-Exp(EXP_OP_NOT_EQUAL, lineNum) {
-}
+Exp(EXP_OP_NOT_EQUAL, lineNum) {}
 
 void ExpLogicalNotEqual::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {
