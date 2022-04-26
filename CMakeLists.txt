@@ -26,11 +26,11 @@ add_executable(
         src/compiler/headers/Node.h
         src/compiler/sources/Node.cpp
 
-        src/compiler/headers/Compiler.h
-        src/compiler/sources/Compiler.cpp
+        src/compiler/headers/Interpreter.h
+        src/compiler/sources/Interpreter.cpp
 
-        src/compiler/headers/CompilerArgs.h
-        src/compiler/sources/CompilerArgs.cpp
+        src/compiler/headers/InterpreterArgs.h
+        src/compiler/sources/InterpreterArgs.cpp
 
         src/compiler/headers/variables/Var.h
         src/compiler/sources/variables/Var.cpp

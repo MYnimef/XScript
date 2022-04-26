@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Lexer.h"
 #include "Parser.h"
-#include "Compiler.h"
+#include "Interpreter.h"
 #include "ExcParser.h"
 #include "ExpBlock.h"
 #include "FuncPrint.h"
@@ -57,7 +57,7 @@ int main() {
 
         //std::cout << std::endl << parser.getTree()->toString() << std::endl;
 
-        Compiler compiler(functions);
+        Interpreter compiler(functions);
         compiler.execute(application);
 
         /*

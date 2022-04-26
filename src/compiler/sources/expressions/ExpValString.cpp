@@ -10,7 +10,7 @@ Exp(EXP_STRING, lineNum) {
     this->value = value.substr(1, value.size() - 2);
 }
 
-void ExpValString::action(const CompilerArgs& args) const {
+void ExpValString::action(const InterpreterArgs& args) const {
     args.stack.push(new VarString(lineNum, value));
 }
 

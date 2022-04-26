@@ -8,7 +8,7 @@
 
 class VarInteger final: public Var {
 private:
-    long long value;
+    const long long value;
 
 public:
     explicit VarInteger(const int& lineNum, long long value);

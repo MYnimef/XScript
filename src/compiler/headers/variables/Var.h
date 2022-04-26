@@ -9,7 +9,7 @@
 
 class Var {
 protected:
-    int lineNum;
+    const int lineNum;
 
 public:
     explicit Var(const int& lineNum);

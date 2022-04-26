@@ -8,7 +8,7 @@
 
 class VarString final: public Var {
 private:
-    std::string value;
+    const std::string value;
 
 public:
     explicit VarString(const int& lineNum, const std::string& value);

@@ -10,7 +10,7 @@ class ExpLogicalSmallerOrEqual final: public Exp {
 public:
     explicit ExpLogicalSmallerOrEqual(const int& lineNum);
 
-    void action(const CompilerArgs& args) const override;
+    void action(const InterpreterArgs& args) const override;
 
     [[nodiscard]] std::string toString() const override;
 };

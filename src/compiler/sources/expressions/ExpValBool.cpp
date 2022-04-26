@@ -10,7 +10,7 @@ Exp(EXP_BOOL, lineNum),
 value(value == "true") {
 }
 
-void ExpValBool::action(const CompilerArgs& args) const {
+void ExpValBool::action(const InterpreterArgs& args) const {
     args.stack.push(new VarBool(lineNum, value));
 }
 

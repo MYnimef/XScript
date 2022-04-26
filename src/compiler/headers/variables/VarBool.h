@@ -8,7 +8,7 @@
 
 class VarBool final: public Var {
 private:
-    bool value;
+    const bool value;
 
 public:
     explicit VarBool(const int& lineNum, bool value);

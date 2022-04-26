@@ -10,7 +10,7 @@ name(name) {
     type = EXP_CODE_BLOCK;
 }
 
-void ExpBlock::action(const CompilerArgs &args) const {
+void ExpBlock::action(const InterpreterArgs &args) const {
 
 }
 

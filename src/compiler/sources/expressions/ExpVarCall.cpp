@@ -15,7 +15,7 @@ Exp(EXP_ID, lineNum),
 id(value) {
 }
 
-void ExpVarCall::action(const CompilerArgs& args) const {
+void ExpVarCall::action(const InterpreterArgs& args) const {
     for (auto scope: args.variablesGlobal) {
         if (callVariableFrom(scope, args.stack)) {
             return;

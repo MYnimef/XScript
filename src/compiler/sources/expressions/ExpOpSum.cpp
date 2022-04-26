@@ -9,7 +9,7 @@ ExpOpSum::ExpOpSum(const int& lineNum):
 Exp(EXP_OP_SUM, lineNum) {
 }
 
-void ExpOpSum::action(const CompilerArgs& args) const {
+void ExpOpSum::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {
         auto arg2 = args.stack.top();
         args.stack.pop();

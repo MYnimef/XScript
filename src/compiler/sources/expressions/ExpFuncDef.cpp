@@ -3,7 +3,7 @@
 //
 
 #include "ExpFuncDef.h"
-#include "Compiler.h"
+#include "Interpreter.h"
 
 ExpFuncDef::ExpFuncDef(
         const int& lineNum,
@@ -25,11 +25,11 @@ ExpFuncDef::~ExpFuncDef() {
     delete functions;
 }
 
-void ExpFuncDef::action(const CompilerArgs &args) const {
+void ExpFuncDef::action(const InterpreterArgs &args) const {
     args.variablesGlobal.push_front(args.variables);
     args.functions.push_front(functions);
 
-    Compiler compiler(args.functions, args.variablesGlobal);
+    Interpreter compiler(args.functions, args.variablesGlobal);
     compiler.execute(body);
 
     args.functions.pop_front();

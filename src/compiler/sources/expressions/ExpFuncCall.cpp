@@ -3,7 +3,7 @@
 //
 
 #include "ExpFuncCall.h"
-#include "Compiler.h"
+#include "Interpreter.h"
 #include "ExcExp.h"
 
 ExpFuncCall::ExpFuncCall(const int& lineNum, const std::string &value, const std::list<Node*>& arguments):
@@ -18,7 +18,7 @@ ExpFuncCall::~ExpFuncCall() {
     }
 }
 
-void ExpFuncCall::action(const CompilerArgs& args) const {
+void ExpFuncCall::action(const InterpreterArgs& args) const {
     for (auto functions: args.functions) {
         auto func = functions->find(name);
         if (func != functions->end()) {
@@ -29,10 +29,10 @@ void ExpFuncCall::action(const CompilerArgs& args) const {
     throw ExcExp("usage of undeclared func " + name, lineNum);
 }
 
-void ExpFuncCall::executeFunction(Node* func, const CompilerArgs& args) const {
+void ExpFuncCall::executeFunction(Node* func, const InterpreterArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
-    Compiler compiler(args.functions, args.variablesGlobal);
+    Interpreter compiler(args.functions, args.variablesGlobal);
     for (auto node: arguments) {
         compiler.executeChild(node);
     }

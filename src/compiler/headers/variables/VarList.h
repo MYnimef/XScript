@@ -8,7 +8,7 @@
 
 class VarList final: public Var {
 private:
-    std::list<Var*> value;
+    const std::list<Var*> value;
 
 public:
     explicit VarList(const int& lineNum, const std::list<Var*>& value);

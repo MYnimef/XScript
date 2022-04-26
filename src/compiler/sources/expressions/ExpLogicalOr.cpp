@@ -9,7 +9,7 @@ ExpLogicalOr::ExpLogicalOr(const int& lineNum):
 Exp(EXP_LOGICAL_OR, lineNum) {
 }
 
-void ExpLogicalOr::action(const CompilerArgs &args) const {
+void ExpLogicalOr::action(const InterpreterArgs &args) const {
     if (args.stack.size() >= 2) {
         auto arg2 = args.stack.top();
         args.stack.pop();

@@ -18,7 +18,7 @@ public:
 
     ~ExpFuncCustom() override;
 
-    void action(const CompilerArgs& args) const override;
+    void action(const InterpreterArgs& args) const override;
 
     virtual void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const = 0;
 };

@@ -8,7 +8,7 @@
 
 class VarDouble final: public Var {
 private:
-    long double value;
+    const long double value;
 
 public:
     explicit VarDouble(const int& lineNum, long double value);

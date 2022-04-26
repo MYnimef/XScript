@@ -14,13 +14,13 @@ private:
     const std::string name;
     const std::list<Node*> arguments;
 
-    void executeFunction(Node* func, const CompilerArgs& args) const;
+    void executeFunction(Node* func, const InterpreterArgs& args) const;
 
 public:
     explicit ExpFuncCall(const int& lineNum, const std::string& value, const std::list<Node*>& arguments);
     ~ExpFuncCall() override;
 
-    void action(const CompilerArgs& args) const override;
+    void action(const InterpreterArgs& args) const override;
 
     [[nodiscard]] std::string toString() const override;
 };

@@ -2,14 +2,14 @@
 // Created by Ivan Markov on 08.03.2022.
 //
 
-#include "Compiler.h"
+#include "Interpreter.h"
 
-Compiler::Compiler(std::map<std::string, Node*>* functions) {
+Interpreter::Interpreter(std::map<std::string, Node*>* functions) {
     this->functions.push_front(functions);
     variables = new std::map<std::string, Var*>();
 }
 
-Compiler::Compiler(
+Interpreter::Interpreter(
         const std::list<std::map<std::string, Node*>*>& functions,
         const std::list<std::map<std::string, Var*>*>& variablesGlobal
 ):
@@ -18,7 +18,7 @@ variablesGlobal(variablesGlobal) {
     variables = new std::map<std::string, Var*>();
 }
 
-Compiler::~Compiler() {
+Interpreter::~Interpreter() {
     for (const auto& var: *variables) {
         delete var.second;
     }
@@ -26,24 +26,24 @@ Compiler::~Compiler() {
     cleanStack();
 }
 
-void Compiler::execute(const Node* tree) {
+void Interpreter::execute(const Node* tree) {
     for (auto node: tree->getChildren()) {
         executeChild(node);
         cleanStack();
     }
 
-    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+    tree->getExpression()->action(InterpreterArgs(functions, variablesGlobal, variables, stack));
 }
 
-void Compiler::executeChild(const Node* tree) {
+void Interpreter::executeChild(const Node* tree) {
     for (auto node: tree->getChildren()) {
         executeChild(node);
     }
 
-    tree->getExpression()->action(CompilerArgs(functions, variablesGlobal, variables, stack));
+    tree->getExpression()->action(InterpreterArgs(functions, variablesGlobal, variables, stack));
 }
 
-void Compiler::cleanStack() {
+void Interpreter::cleanStack() {
     while (!stack.empty()) {
         auto var = stack.top();
         stack.pop();
@@ -51,10 +51,10 @@ void Compiler::cleanStack() {
     }
 }
 
-const std::map<std::string, Var*>* Compiler::getVariables() const {
+const std::map<std::string, Var*>* Interpreter::getVariables() const {
     return variables;
 }
 
-std::stack<Var*>& Compiler::getStack() {
+std::stack<Var*>& Interpreter::getStack() {
     return stack;
 }

@@ -16,7 +16,7 @@ private:
 public:
     explicit ExpBlock(const int& lineNum, const std::string& name);
 
-    void action(const CompilerArgs& args) const override;
+    void action(const InterpreterArgs& args) const override;
 
     [[nodiscard]] std::string toString() const override;
 };

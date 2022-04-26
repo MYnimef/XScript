@@ -11,7 +11,7 @@
 
 class Node;
 
-struct CompilerArgs {
+struct InterpreterArgs {
     std::list<std::map<std::string, Node*>*>& functions;
 
     std::list<std::map<std::string, Var*>*>& variablesGlobal;
@@ -19,7 +19,7 @@ struct CompilerArgs {
 
     std::stack<Var*>& stack;
 
-    CompilerArgs(
+    InterpreterArgs(
             std::list<std::map<std::string, Node*>*>& functions,
             std::list<std::map<std::string, Var*>*>& variablesGlobal,
             std::map<std::string, Var*>* variables,

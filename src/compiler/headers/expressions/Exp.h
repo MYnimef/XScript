@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "CompilerArgs.h"
+#include "InterpreterArgs.h"
 #include "Var.h"
 
 enum ExpressionType {
@@ -55,7 +55,7 @@ public:
 
     [[nodiscard]] ExpressionType getType() const;
 
-    virtual void action(const CompilerArgs& args) const = 0;
+    virtual void action(const InterpreterArgs& args) const = 0;
 
     [[nodiscard]] bool isOperation() const;
     [[nodiscard]] bool isUnaryOperation() const;
@@ -67,13 +67,13 @@ public:
 class ExpressionBracketL final: public Exp {
 public:
     ExpressionBracketL(): Exp(EXP_BRACKET_L, 0) { }
-    void action(const CompilerArgs& args) const override { }
+    void action(const InterpreterArgs& args) const override { }
     [[nodiscard]] std::string toString() const override { return "("; }
 };
 
 class ExpressionBracketR final: public Exp {
 public:
     ExpressionBracketR(): Exp(EXP_BRACKET_R, 0) { }
-    void action(const CompilerArgs& args) const override { }
+    void action(const InterpreterArgs& args) const override { }
     [[nodiscard]] std::string toString() const override { return ")"; }
 };

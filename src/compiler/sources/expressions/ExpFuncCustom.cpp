@@ -13,7 +13,7 @@ ExpFuncCustom::~ExpFuncCustom() {
 
 }
 
-void ExpFuncCustom::action(const CompilerArgs &args) const {
+void ExpFuncCustom::action(const InterpreterArgs &args) const {
     std::map<std::string, Var*> params;
     for (const auto& name: funcArgs) {
         params.insert_or_assign(name, args.stack.top());

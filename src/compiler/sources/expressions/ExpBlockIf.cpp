@@ -3,7 +3,7 @@
 //
 
 #include "ExpBlockIf.h"
-#include "Compiler.h"
+#include "Interpreter.h"
 
 ExpBlockIf::ExpBlockIf(
         const int& lineNum,
@@ -26,10 +26,10 @@ ExpBlockIf::~ExpBlockIf() {
     delete functions;
 }
 
-void ExpBlockIf::action(const CompilerArgs& args) const {
+void ExpBlockIf::action(const InterpreterArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
-    Compiler compilerCondition(args.functions, args.variablesGlobal);
+    Interpreter compilerCondition(args.functions, args.variablesGlobal);
     compilerCondition.executeChild(blockCondition);
 
     auto condition = compilerCondition.getStack().top();
@@ -38,7 +38,7 @@ void ExpBlockIf::action(const CompilerArgs& args) const {
     if (condition->getBool()) {
         args.functions.push_front(functions);
 
-        Compiler compilerBlock(args.functions, args.variablesGlobal);
+        Interpreter compilerBlock(args.functions, args.variablesGlobal);
         compilerBlock.execute(blockExecute);
 
         args.functions.pop_front();

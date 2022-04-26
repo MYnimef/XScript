@@ -16,7 +16,7 @@ value(std::stoll(value)) {
     type = EXP_INTEGER;
 }
 
-void ExpValInteger::action(const CompilerArgs& args) const {
+void ExpValInteger::action(const InterpreterArgs& args) const {
     args.stack.push(new VarInteger(lineNum, value));
 }
 

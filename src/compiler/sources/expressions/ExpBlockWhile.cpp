@@ -3,7 +3,7 @@
 //
 
 #include "ExpBlockWhile.h"
-#include "Compiler.h"
+#include "Interpreter.h"
 
 ExpBlockWhile::ExpBlockWhile(
         const int& lineNum,
@@ -26,10 +26,10 @@ ExpBlockWhile::~ExpBlockWhile() {
     delete functions;
 }
 
-void ExpBlockWhile::action(const CompilerArgs& args) const {
+void ExpBlockWhile::action(const InterpreterArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
-    Compiler compilerCondition(args.functions, args.variablesGlobal);
+    Interpreter compilerCondition(args.functions, args.variablesGlobal);
     compilerCondition.executeChild(blockCondition);
 
     auto condition = compilerCondition.getStack().top();
@@ -38,7 +38,7 @@ void ExpBlockWhile::action(const CompilerArgs& args) const {
     while (condition->getBool()) {
         args.functions.push_front(functions);
 
-        Compiler compilerExecute(args.functions, args.variablesGlobal);
+        Interpreter compilerExecute(args.functions, args.variablesGlobal);
         compilerExecute.execute(blockExecute);
 
         args.functions.pop_front();

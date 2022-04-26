@@ -10,7 +10,7 @@
 #include "Node.h"
 #include "Var.h"
 
-class Compiler final {
+class Interpreter final {
 private:
     std::list<std::map<std::string, Node*>*> functions;
 
@@ -22,13 +22,13 @@ private:
     void cleanStack();
 
 public:
-    explicit Compiler(std::map<std::string, Node*>* functions);
-    explicit Compiler(
+    explicit Interpreter(std::map<std::string, Node*>* functions);
+    explicit Interpreter(
             const std::list<std::map<std::string, Node*>*>& functions,
             const std::list<std::map<std::string, Var*>*>& variablesGlobal
             );
 
-    ~Compiler();
+    ~Interpreter();
 
     void execute(const Node*);
     void executeChild(const Node*);

@@ -9,7 +9,7 @@ ExpLogicalEqual::ExpLogicalEqual(const int& lineNum):
 Exp(EXP_OP_EQUAL, lineNum) {
 }
 
-void ExpLogicalEqual::action(const CompilerArgs& args) const {
+void ExpLogicalEqual::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {
         auto arg2 = args.stack.top();
         args.stack.pop();

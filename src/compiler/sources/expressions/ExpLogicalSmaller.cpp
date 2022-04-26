@@ -9,7 +9,7 @@ ExpLogicalSmaller::ExpLogicalSmaller(const int& lineNum):
 Exp(EXP_OP_SMALLER, lineNum) {
 }
 
-void ExpLogicalSmaller::action(const CompilerArgs& args) const {
+void ExpLogicalSmaller::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {
         auto arg2 = args.stack.top();
         args.stack.pop();

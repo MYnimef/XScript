@@ -10,7 +10,7 @@ Exp(EXP_OP_ASSIGN_VAR, lineNum),
 id(value) {
 }
 
-void ExpOpAssignVar::action(const CompilerArgs& args) const {
+void ExpOpAssignVar::action(const InterpreterArgs& args) const {
     if (!args.stack.empty()) {
         auto val = args.stack.top();
         args.stack.pop();

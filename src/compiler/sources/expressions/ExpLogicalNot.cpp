@@ -9,7 +9,7 @@ ExpLogicalNot::ExpLogicalNot(const int& lineNum):
 Exp(EXP_OP_NOT, lineNum) {
 }
 
-void ExpLogicalNot::action(const CompilerArgs &args) const {
+void ExpLogicalNot::action(const InterpreterArgs &args) const {
     if (!args.stack.empty()) {
         auto arg = args.stack.top();
         args.stack.pop();
