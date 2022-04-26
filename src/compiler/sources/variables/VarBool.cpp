@@ -6,14 +6,12 @@
 #include "VarInteger.h"
 #include "VarDouble.h"
 #include "VarString.h"
-#include "ExcVar.h"
 #include "VarList.h"
 
+
 VarBool::VarBool(const int& lineNum, bool value):
-Var(lineNum),
-value(value) {
-    type = BOOL_VAR;
-}
+Var(lineNum, BOOL_VAR),
+value(value) {}
 
 Var* VarBool::operator + (const Var& second) const {
     switch (second.getType()) {
@@ -41,9 +39,8 @@ Var* VarBool::operator - (const Var& second) const {
         case DOUBLE_VAR:
             return new VarDouble(lineNum, getDouble() - second.getDouble());
         case STRING_VAR:
-            throw ExcVar("wrong operand '-' for type 'string'", lineNum);
         case LIST_VAR:
-            throw ExcVar("wrong operand '-' for type 'list'", lineNum);
+            second.throwExcOperator("-");
     }
 }
 
@@ -55,17 +52,15 @@ Var* VarBool::operator * (const Var& second) const {
         case DOUBLE_VAR:
             return new VarDouble(lineNum, getDouble() * second.getDouble());
         case STRING_VAR:
-            throw ExcVar("wrong operand '*' for type 'string'", lineNum);
         case LIST_VAR:
-            throw ExcVar("wrong operand '*' for type 'list'", lineNum);
+            second.throwExcOperator("*");
     }
 }
 
 Var* VarBool::operator / (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
-        throw ExcVar("wrong operand '/' for type 'string'", lineNum);
-    } else if (second.getType() == LIST_VAR) {
-        throw ExcVar("wrong operand '/' for type 'list'", lineNum);
+    const auto& type = second.getType();
+    if (type == STRING_VAR || type == LIST_VAR) {
+        second.throwExcOperator("/");
     } else {
         return new VarDouble(lineNum, getDouble() / second.getDouble());
     }

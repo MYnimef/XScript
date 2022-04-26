@@ -169,4 +169,7 @@ add_executable(
 
         src/compiler/headers/functions/FuncToBool.h
         src/compiler/sources/functions/FuncToBool.cpp
+
+        src/compiler/headers/variables/VarMap.h
+        src/compiler/sources/variables/VarMap.cpp
 )

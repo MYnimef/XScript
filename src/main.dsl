@@ -1,2 +1,3 @@
-x = int(input())
-print(x)
+slava = "slava"
+slava *= 7
+print(slava)

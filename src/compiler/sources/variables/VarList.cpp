@@ -3,14 +3,11 @@
 //
 
 #include "VarList.h"
-#include "ExcVar.h"
 
 
 VarList::VarList(const int& lineNum, const std::list<Var*>& value):
-Var(lineNum),
-value(value) {
-    type = LIST_VAR;
-}
+Var(lineNum, LIST_VAR),
+value(value) {}
 
 Var* VarList::operator + (const Var& second) const {
     auto list = getList();
@@ -19,15 +16,15 @@ Var* VarList::operator + (const Var& second) const {
 }
 
 Var* VarList::operator - (const Var& second) const {
-    throw ExcVar("wrong operand '-' for type 'list'", lineNum);
+    return super::operator - (second);
 }
 
 Var* VarList::operator * (const Var& second) const {
-    throw ExcVar("wrong operand '*' for type 'list'", lineNum);
+    return super::operator * (second);
 }
 
 Var* VarList::operator / (const Var& second) const {
-    throw ExcVar("wrong operand '/' for type 'list'", lineNum);
+    return super::operator / (second);
 }
 
 bool VarList::getBool() const {
