@@ -1,7 +1,6 @@
-x = int(input())
-print(x)
-
-while x > 0 {
-    println(x + " - 7")
-    x -= 7
+ghoul = 1000
+while ghoul > 0 {
+    println(ghoul + " - 7")
+    ghoul -= 7
+    sleep(ghoul)
 }

@@ -30,15 +30,14 @@ Var* VarInteger::operator + (const Var& second) const {
 }
 
 Var* VarInteger::operator - (const Var& second) const {
-    switch (second.getType()) {
-        case BOOL_VAR:
-        case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() - second.getInteger());
-        case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() - second.getDouble());
-        case LIST_VAR:
-        case STRING_VAR:
-            return second.operator - (*this);
+    const auto& type = second.getType();
+
+    if (type == BOOL_VAR || type == INTEGER_VAR) {
+        return new VarInteger(lineNum, getInteger() - second.getInteger());
+    } else if (type == DOUBLE_VAR) {
+        return new VarDouble(lineNum, getDouble() - second.getDouble());
+    } else {
+        return second.operator - (*this);
     }
 }
 

@@ -172,4 +172,7 @@ add_executable(
 
         src/compiler/headers/variables/VarMap.h
         src/compiler/sources/variables/VarMap.cpp
+
+        src/compiler/headers/functions/FuncSleep.h
+        src/compiler/sources/functions/FuncSleep.cpp
 )
