@@ -55,3 +55,7 @@ std::string VarMap::getString() const {
 std::list<Var *> VarMap::getList() const {
     return { new VarMap(lineNum, value) };
 }
+
+std::map<Var *, Var *> VarMap::getMap() const {
+    return value;
+}

@@ -121,3 +121,7 @@ long long Var::getInteger() const {
 long double Var::getDouble() const {
     throwExcConvert(getString(), "'float'");
 }
+
+std::map<Var *, Var *> Var::getMap() const {
+    throwExcConvert(getString(), "'map'");
+}

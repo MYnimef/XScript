@@ -5,18 +5,17 @@
 #include "FuncToList.h"
 #include "VarList.h"
 
-FuncToList::FuncToList(const std::list<std::string> &args) : ExpFuncCustom(args) {
-
-}
+FuncToList::FuncToList(const std::list<std::string> &args):
+ExpFuncCustom(args) {}
 
 FuncToList::~FuncToList() {
 
 }
 
 void FuncToList::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    for (const auto& name: funcArgs) {
-        stack.push(new VarList(0, params.find(name)->second->getList()));
-    }
+    const auto& arg1 = params.find("arg1")->second->getList();
+
+    stack.push(new VarList(0, arg1));
 }
 
 std::string FuncToList::toString() const {

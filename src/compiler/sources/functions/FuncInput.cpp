@@ -6,13 +6,10 @@
 #include "FuncInput.h"
 #include "VarString.h"
 
-FuncInput::FuncInput(const std::list<std::string>& args) : ExpFuncCustom(args) {
+FuncInput::FuncInput(const std::list<std::string>& args):
+ExpFuncCustom(args) {}
 
-}
-
-FuncInput::~FuncInput() {
-
-}
+FuncInput::~FuncInput() = default;
 
 void FuncInput::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
     std::string value;

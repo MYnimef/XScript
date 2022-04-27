@@ -13,6 +13,8 @@
 #include "FuncToString.h"
 #include "FuncToList.h"
 #include "FuncSleep.h"
+#include "FuncList.h"
+#include "FuncMap.h"
 
 int main() {
     std::cout <<
@@ -31,15 +33,17 @@ int main() {
 
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
-            { "print1",   new Node( new FuncPrint     ( { "out" } ) ) },
-            { "println1", new Node( new FuncPrintln   ( { "out" } ) ) },
-            { "input0",   new Node( new FuncInput     ( {       } ) ) },
-            { "bool1",    new Node( new FuncToBool    ( { "val" } ) ) },
-            { "int1",     new Node( new FuncToInteger ( { "val" } ) ) },
-            { "float1",   new Node( new FuncToDouble  ( { "val" } ) ) },
-            { "string1",  new Node( new FuncToString  ( { "val" } ) ) },
-            { "list1",    new Node( new FuncToList    ( { "val" } ) ) },
-            { "sleep1",   new Node( new FuncSleep     ( { "val" } ) ) },
+            { "print1",   new Node( new FuncPrint     ( { "arg1" } ) ) },
+            { "println1", new Node( new FuncPrintln   ( { "arg1" } ) ) },
+            { "input0",   new Node( new FuncInput     ( {        } ) ) },
+            { "bool1",    new Node( new FuncToBool    ( { "arg1" } ) ) },
+            { "int1",     new Node( new FuncToInteger ( { "arg1" } ) ) },
+            { "float1",   new Node( new FuncToDouble  ( { "arg1" } ) ) },
+            { "string1",  new Node( new FuncToString  ( { "arg1" } ) ) },
+            { "list0",    new Node( new FuncList      ( {        } ) ) },
+            { "list1",    new Node( new FuncToList    ( { "arg1" } ) ) },
+            { "map0",     new Node( new FuncMap       ( {        } ) ) },
+            { "sleep1",   new Node( new FuncSleep     ( { "arg1" } ) ) },
     };
 
     try {

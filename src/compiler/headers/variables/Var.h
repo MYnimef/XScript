@@ -6,6 +6,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 
 class Var {
 public:
@@ -41,6 +42,7 @@ public:
     [[nodiscard]] virtual long double     getDouble  ()    const;
     [[nodiscard]] virtual std::string     getString  ()    const = 0;
     [[nodiscard]] virtual std::list<Var*> getList    ()    const = 0;
+    [[nodiscard]] virtual std::map<Var*, Var*> getMap()    const;
 
     [[nodiscard]] VarType getType() const;
 

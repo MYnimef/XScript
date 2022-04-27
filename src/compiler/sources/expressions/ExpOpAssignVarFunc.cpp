@@ -5,7 +5,7 @@
 #include "ExpOpAssignVarFunc.h"
 #include "ExcExp.h"
 
-ExpOpAssignVarFunc::ExpOpAssignVarFunc(const int& lineNum, const std::string &value):
+ExpOpAssignVarFunc::ExpOpAssignVarFunc(const int& lineNum, const std::string& value):
 Exp(EXP_OP_ASSIGN_VAR_FUNC, lineNum),
 id(value) {}
 

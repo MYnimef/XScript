@@ -12,9 +12,9 @@ ExpFuncCustom(args) {}
 FuncSleep::~FuncSleep() = default;
 
 void FuncSleep::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    for (const auto& name: funcArgs) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(params.find(name)->second->getInteger()));
-    }
+    const auto& arg1 = params.find("arg1")->second->getInteger();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(arg1));
 }
 
 std::string FuncSleep::toString() const {

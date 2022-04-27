@@ -175,4 +175,10 @@ add_executable(
 
         src/compiler/headers/functions/FuncSleep.h
         src/compiler/sources/functions/FuncSleep.cpp
+
+        src/compiler/headers/functions/FuncList.h
+        src/compiler/sources/functions/FuncList.cpp
+
+        src/compiler/headers/functions/FuncMap.h
+        src/compiler/sources/functions/FuncMap.cpp
 )

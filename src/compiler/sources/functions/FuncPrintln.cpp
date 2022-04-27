@@ -6,18 +6,14 @@
 #include "FuncPrintln.h"
 
 FuncPrintln::FuncPrintln(const std::list<std::string> &args):
-ExpFuncCustom(args) {
+ExpFuncCustom(args) {}
 
-}
-
-FuncPrintln::~FuncPrintln() {
-
-}
+FuncPrintln::~FuncPrintln() = default;
 
 void FuncPrintln::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    for (const auto& name: funcArgs) {
-        std::cout << std::endl << params.find(name)->second->getString();
-    }
+    const auto& arg1 = params.find("arg1")->second->getString();
+
+    std::cout << std::endl << arg1;
 }
 
 std::string FuncPrintln::toString() const {

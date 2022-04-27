@@ -24,4 +24,5 @@ public:
     [[nodiscard]] long double     getDouble  () const override;
     [[nodiscard]] std::string     getString  () const override;
     [[nodiscard]] std::list<Var*> getList    () const override;
+    [[nodiscard]] std::map<Var*, Var*> getMap() const override;
 };
