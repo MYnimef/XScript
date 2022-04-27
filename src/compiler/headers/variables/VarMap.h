@@ -12,16 +12,16 @@ private:
     const std::map<Var*, Var*> value;
 
 public:
-    explicit VarMap(const int& lineNum, const std::list<Var*>& value);
+    explicit VarMap(const int& lineNum, const std::map<Var*, Var*>& value);
 
-    Var* operator + (const Var&) const override;
-    Var* operator - (const Var&) const override;
-    Var* operator * (const Var&) const override;
-    Var* operator / (const Var&) const override;
+    Var* operator + (const Var& second) const override;
+    Var* operator - (const Var& second) const override;
+    Var* operator * (const Var& second) const override;
+    Var* operator / (const Var& second) const override;
 
-    [[nodiscard]] bool getBool() const override;
-    [[nodiscard]] long long getInteger() const override;
-    [[nodiscard]] long double getDouble() const override;
-    [[nodiscard]] std::string getString() const override;
-    [[nodiscard]] std::list<Var*> getList() const override;
+    [[nodiscard]] bool            getBool    () const override;
+    [[nodiscard]] long long       getInteger () const override;
+    [[nodiscard]] long double     getDouble  () const override;
+    [[nodiscard]] std::string     getString  () const override;
+    [[nodiscard]] std::list<Var*> getList    () const override;
 };

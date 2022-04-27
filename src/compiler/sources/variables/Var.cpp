@@ -11,9 +11,7 @@ Var::Var(const int& lineNum, const VarType& type):
 lineNum(lineNum),
 type(type) {}
 
-Var::~Var() {
-
-}
+Var::~Var() = default;
 
 std::string Var::getTypeName() const {
     switch (type) {
@@ -27,6 +25,8 @@ std::string Var::getTypeName() const {
             return "'string'";
         case LIST_VAR:
             return "'list'";
+        case MAP_VAR:
+            return "'map'";
     }
 }
 

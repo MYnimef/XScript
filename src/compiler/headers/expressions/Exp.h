@@ -5,7 +5,6 @@
 #pragma once
 
 #include "InterpreterArgs.h"
-#include "Var.h"
 
 enum ExpressionType {
     EXP_ID,
@@ -33,7 +32,6 @@ enum ExpressionType {
     EXP_IF,
 
     EXP_LOOP_WHILE,
-    EXP_LOOP_FOR,
 
     EXP_FUNC_CALL,
     EXP_FUNC_DEFINITION,
@@ -57,9 +55,9 @@ public:
 
     virtual void action(const InterpreterArgs& args) const = 0;
 
-    [[nodiscard]] bool isOperation() const;
-    [[nodiscard]] bool isUnaryOperation() const;
-    [[nodiscard]] bool isBinaryOperation() const;
+    [[nodiscard]] bool isOperation       () const;
+    [[nodiscard]] bool isUnaryOperation  () const;
+    [[nodiscard]] bool isBinaryOperation () const;
 
     [[nodiscard]] virtual std::string toString() const = 0;
 };

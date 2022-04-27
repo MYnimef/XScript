@@ -5,7 +5,6 @@
 #pragma once
 
 #include <string>
-#include <list>
 
 enum TokenType {
     DECREMENT_OP,
@@ -43,9 +42,9 @@ enum TokenType {
 
 class Token final {
 private:
-    TokenType type;
-    std::string value;
-    int lineNum;
+    const TokenType type;
+    const std::string value;
+    const int lineNum;
 
 public:
     Token(const TokenType&, const std::string&, const int& lineNum);
