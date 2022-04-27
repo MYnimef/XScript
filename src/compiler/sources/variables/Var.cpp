@@ -9,8 +9,7 @@
 
 Var::Var(const int& lineNum, const VarType& type):
 lineNum(lineNum),
-type(type) {
-}
+type(type) {}
 
 Var::~Var() {
 
@@ -60,7 +59,7 @@ Var* Var::operator ! () const {
 }
 
 Var* Var::operator < (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
+    if (type == STRING_VAR || second.getType() == STRING_VAR) {
         return new VarBool(lineNum, getString().length() < second.getString().length());
     } else {
         return new VarBool(lineNum, getDouble() < second.getDouble());
@@ -68,7 +67,7 @@ Var* Var::operator < (const Var& second) const {
 }
 
 Var* Var::operator <= (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
+    if (type == STRING_VAR || second.getType() == STRING_VAR) {
         return new VarBool(lineNum, getString().length() <= second.getString().length());
     } else {
         return new VarBool(lineNum, getDouble() <= second.getDouble());
@@ -76,7 +75,7 @@ Var* Var::operator <= (const Var& second) const {
 }
 
 Var* Var::operator > (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
+    if (type == STRING_VAR || second.getType() == STRING_VAR) {
         return new VarBool(lineNum, getString().length() > second.getString().length());
     } else {
         return new VarBool(lineNum, getDouble() > second.getDouble());
@@ -84,7 +83,7 @@ Var* Var::operator > (const Var& second) const {
 }
 
 Var* Var::operator >= (const Var& second) const {
-    if (second.getType() == STRING_VAR) {
+    if (type == STRING_VAR || second.getType() == STRING_VAR) {
         return new VarBool(lineNum, getString().length() >= second.getString().length());
     } else {
         return new VarBool(lineNum, getDouble() >= second.getDouble());
@@ -109,4 +108,16 @@ Var* Var::operator || (const Var& second) const {
 
 Var::VarType Var::getType() const {
     return type;
+}
+
+bool Var::getBool() const {
+    throwExcConvert(getString(), "'bool'");
+}
+
+long long Var::getInteger() const {
+    throwExcConvert(getString(), "'int'");
+}
+
+long double Var::getDouble() const {
+    throwExcConvert(getString(), "'float'");
 }

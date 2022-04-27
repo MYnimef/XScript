@@ -38,7 +38,7 @@ Var* VarInteger::operator - (const Var& second) const {
             return new VarDouble(lineNum, getDouble() - second.getDouble());
         case LIST_VAR:
         case STRING_VAR:
-            second.throwExcOperator("-");
+            return second.operator - (*this);
     }
 }
 
@@ -50,7 +50,7 @@ Var* VarInteger::operator * (const Var& second) const {
         case DOUBLE_VAR:
             return new VarDouble(lineNum, getDouble() * second.getDouble());
         case LIST_VAR:
-            second.throwExcOperator("*");
+            return second.operator * (*this);
         case STRING_VAR: {
             auto str = second.getString();
             std::string result;
@@ -65,7 +65,7 @@ Var* VarInteger::operator * (const Var& second) const {
 Var* VarInteger::operator / (const Var& second) const {
     const auto& type = second.getType();
     if (type == STRING_VAR || type == LIST_VAR) {
-        second.throwExcOperator("/");
+        return second.operator / (*this);
     } else {
         return new VarDouble(lineNum, getDouble() / second.getDouble());
     }

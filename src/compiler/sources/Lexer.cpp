@@ -14,9 +14,7 @@ Lexer::Lexer(): lexems({
     {LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))"                               ) },
     {LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)"                    ) },
     {LEX_ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)"                         ) },
-}) {
-
-}
+}) {}
 
 Lexer::~Lexer() {
 

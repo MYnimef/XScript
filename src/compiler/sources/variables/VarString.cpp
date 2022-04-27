@@ -49,7 +49,7 @@ long long VarString::getInteger() const {
     try {
         return std::stoll(value);
     } catch (const std::exception& ex) {
-        throwExcConvert(getString(), "'int'");
+        return super::getInteger();
     }
 }
 
@@ -57,7 +57,7 @@ long double VarString::getDouble() const {
     try {
         return std::stold(value);
     } catch (const std::exception& ex) {
-        throwExcConvert(getString(), "'float'");
+        return super::getDouble();
     }
 }
 

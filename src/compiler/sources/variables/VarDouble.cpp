@@ -27,7 +27,7 @@ Var* VarDouble::operator + (const Var& second) const {
 Var* VarDouble::operator - (const Var& second) const {
     const auto& type = second.getType();
     if (type == STRING_VAR || type == LIST_VAR) {
-        second.throwExcOperator("-");
+        return second.operator - (*this);
     } else {
         return new VarDouble(lineNum, getDouble() - second.getDouble());
     }
@@ -36,7 +36,7 @@ Var* VarDouble::operator - (const Var& second) const {
 Var* VarDouble::operator * (const Var& second) const {
     const auto& type = second.getType();
     if (type == STRING_VAR || type == LIST_VAR) {
-        second.throwExcOperator("*");
+        return second.operator * (*this);
     } else {
         return new VarDouble(lineNum, getDouble() * second.getDouble());
     }
@@ -45,7 +45,7 @@ Var* VarDouble::operator * (const Var& second) const {
 Var* VarDouble::operator / (const Var& second) const {
     const auto& type = second.getType();
     if (type == STRING_VAR || type == LIST_VAR) {
-        second.throwExcOperator("/");
+        return second.operator / (*this);
     } else {
         return new VarDouble(lineNum, getDouble() / second.getDouble());
     }
