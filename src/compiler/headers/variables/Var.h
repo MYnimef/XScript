@@ -37,22 +37,24 @@ public:
     Var* operator && (const Var&) const;
     Var* operator || (const Var&) const;
 
-    [[nodiscard]] virtual bool            getBool    ()    const;
-    [[nodiscard]] virtual long long       getInteger ()    const;
-    [[nodiscard]] virtual long double     getDouble  ()    const;
-    [[nodiscard]] virtual std::string     getString  ()    const = 0;
-    [[nodiscard]] virtual std::list<Var*> getList    ()    const = 0;
-    [[nodiscard]] virtual std::map<Var*, Var*> getMap()    const;
+    [[nodiscard]] virtual explicit operator bool            () const;
+    [[nodiscard]] virtual explicit operator long long       () const;
+    [[nodiscard]] virtual explicit operator long double     () const;
+    [[nodiscard]] virtual explicit operator std::string     () const = 0;
+    [[nodiscard]] virtual explicit operator std::list<Var*> () const;
+    [[nodiscard]] virtual explicit operator std::map<Var*, Var*> () const;
 
     [[nodiscard]] VarType getType() const;
+
+    [[nodiscard]] virtual Var* copy(const int& lineNum) const = 0;
 
 private:
     const VarType type;
 
     [[nodiscard]] std::string getTypeName() const;
 
-    [[noreturn]] void throwExcOperator(const std::string& op)                                const;
-    [[noreturn]] void throwExcConvert(const std::string& value, const std::string& typeName) const;
+    [[noreturn]] void throwExcOperator (const std::string& op)                                 const;
+    [[noreturn]] void throwExcConvert  (const std::string& value, const std::string& typeName) const;
 
 protected:
     typedef Var super;

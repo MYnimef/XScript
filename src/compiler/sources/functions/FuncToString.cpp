@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncToString::~FuncToString() = default;
 
 void FuncToString::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    const auto& arg1 = params.find("arg1")->second->getString();
+    const auto& arg1 = (std::string) *params.find("arg1")->second;
 
     stack.push(new VarString(0, arg1));
 }

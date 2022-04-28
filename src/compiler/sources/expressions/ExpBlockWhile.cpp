@@ -34,7 +34,7 @@ void ExpBlockWhile::action(const InterpreterArgs& args) const {
     auto condition = compilerCondition.getStack().top();
     compilerCondition.getStack().pop();
 
-    while (condition->getBool()) {
+    while ((bool) *condition) {
         args.functions.push_front(functions);
 
         Interpreter compilerExecute(args.functions, args.variablesGlobal);

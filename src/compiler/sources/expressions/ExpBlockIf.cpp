@@ -34,7 +34,7 @@ void ExpBlockIf::action(const InterpreterArgs& args) const {
     auto condition = compilerCondition.getStack().top();
     compilerCondition.getStack().pop();
 
-    if (condition->getBool()) {
+    if ((bool) *condition) {
         args.functions.push_front(functions);
 
         Interpreter compilerBlock(args.functions, args.variablesGlobal);

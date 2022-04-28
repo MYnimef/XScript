@@ -16,6 +16,7 @@
 #include "FuncList.h"
 #include "FuncMap.h"
 #include "FuncClearConsole.h"
+#include "FuncAddToMap.h"
 
 int main() {
     std::cout <<
@@ -34,18 +35,19 @@ int main() {
 
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
-            { "print1",   new Node( new FuncPrint        () ) },
-            { "println1", new Node( new FuncPrintln      () ) },
-            { "input0",   new Node( new FuncInput        () ) },
-            { "bool1",    new Node( new FuncToBool       () ) },
-            { "int1",     new Node( new FuncToInteger    () ) },
-            { "float1",   new Node( new FuncToDouble     () ) },
-            { "string1",  new Node( new FuncToString     () ) },
-            { "list0",    new Node( new FuncList         () ) },
-            { "list1",    new Node( new FuncToList       () ) },
-            { "map0",     new Node( new FuncMap          () ) },
-            { "sleep1",   new Node( new FuncSleep        () ) },
-            { "clc0",     new Node( new FuncClearConsole () ) },
+            { "print1",    new Node( new FuncPrint        () ) },
+            { "println1",  new Node( new FuncPrintln      () ) },
+            { "input0",    new Node( new FuncInput        () ) },
+            { "bool1",     new Node( new FuncToBool       () ) },
+            { "int1",      new Node( new FuncToInteger    () ) },
+            { "float1",    new Node( new FuncToDouble     () ) },
+            { "string1",   new Node( new FuncToString     () ) },
+            { "list0",     new Node( new FuncList         () ) },
+            { "list1",     new Node( new FuncToList       () ) },
+            { "map0",      new Node( new FuncMap          () ) },
+            { "addToMap3", new Node( new FuncAddToMap     () ) },
+            { "sleep1",    new Node( new FuncSleep        () ) },
+            { "clc0",      new Node( new FuncClearConsole () ) },
     };
 
     try {

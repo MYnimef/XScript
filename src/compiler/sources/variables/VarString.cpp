@@ -12,11 +12,11 @@ value(value) {}
 
 Var* VarString::operator + (const Var& second) const {
     if (second.getType() == LIST_VAR) {
-        auto list = getList();
-        list.splice(list.end(), second.getList());
+        auto list = (std::list<Var*>) *this;
+        list.splice(list.end(), (std::list<Var*>) second);
         return new VarList(lineNum, list);
     } else {
-        return new VarString(lineNum, getString() + second.getString());
+        return new VarString(lineNum, (std::string) *this + (std::string) second);
     }
 }
 
@@ -26,9 +26,9 @@ Var* VarString::operator - (const Var& second) const {
 
 Var* VarString::operator * (const Var& second) const {
     if (second.getType() == INTEGER_VAR) {
-        auto str = getString();
+        auto str = (std::string) *this;
         std::string result;
-        for (int i = 0; i < second.getInteger(); i++) {
+        for (int i = 0; i < (long long) second; i++) {
             result += str;
         }
         return new VarString(lineNum, result);
@@ -38,33 +38,33 @@ Var* VarString::operator * (const Var& second) const {
 }
 
 Var* VarString::operator / (const Var& second) const {
-    return super::operator / (second);
+    return super::operator/(second);
 }
 
-bool VarString::getBool() const {
+VarString::operator bool() const {
     return !value.empty();
 }
 
-long long VarString::getInteger() const {
+VarString::operator long long() const {
     try {
         return std::stoll(value);
     } catch (const std::exception& ex) {
-        return super::getInteger();
+        return super::operator long long();
     }
 }
 
-long double VarString::getDouble() const {
+VarString::operator long double() const {
     try {
         return std::stold(value);
     } catch (const std::exception& ex) {
-        return super::getDouble();
+        return super::operator long double();
     }
 }
 
-std::string VarString::getString() const {
+VarString::operator std::string() const {
     return value;
 }
 
-std::list<Var*> VarString::getList() const {
-    return { new VarString(lineNum, value) };
+Var *VarString::copy(const int& lineNum) const {
+    return new VarString(lineNum, value);
 }

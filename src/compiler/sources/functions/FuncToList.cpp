@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncToList::~FuncToList() = default;
 
 void FuncToList::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    const auto& arg1 = params.find("arg1")->second->getList();
+    const auto& arg1 = (std::list<Var*>) *params.find("arg1")->second;
 
     stack.push(new VarList(0, arg1));
 }

@@ -14,13 +14,13 @@ value(value) {}
 Var* VarDouble::operator + (const Var& second) const {
     const auto& type = second.getType();
     if (type == STRING_VAR) {
-        return new VarString(lineNum, getString() + second.getString());
+        return new VarString(lineNum, (std::string) *this + (std::string) second);
     } else if (type == LIST_VAR) {
-        auto list = getList();
-        list.splice(list.end(), second.getList());
+        auto list = (std::list<Var*>) *this;
+        list.splice(list.end(), (std::list<Var*>) second);
         return new VarList(lineNum, list);
     } else {
-        return new VarDouble(lineNum, getDouble() + second.getDouble());
+        return new VarDouble(lineNum, (long double) *this + (long double) second);
     }
 }
 
@@ -29,7 +29,7 @@ Var* VarDouble::operator - (const Var& second) const {
     if (type == STRING_VAR || type == LIST_VAR) {
         return second.operator - (*this);
     } else {
-        return new VarDouble(lineNum, getDouble() - second.getDouble());
+        return new VarDouble(lineNum, (long double) *this - (long double) second);
     }
 }
 
@@ -38,7 +38,7 @@ Var* VarDouble::operator * (const Var& second) const {
     if (type == STRING_VAR || type == LIST_VAR) {
         return second.operator * (*this);
     } else {
-        return new VarDouble(lineNum, getDouble() * second.getDouble());
+        return new VarDouble(lineNum, (long double) *this * (long double) second);
     }
 }
 
@@ -47,26 +47,26 @@ Var* VarDouble::operator / (const Var& second) const {
     if (type == STRING_VAR || type == LIST_VAR) {
         return second.operator / (*this);
     } else {
-        return new VarDouble(lineNum, getDouble() / second.getDouble());
+        return new VarDouble(lineNum, (long double) *this / (long double) second);
     }
 }
 
-bool VarDouble::getBool() const {
+VarDouble::operator bool() const {
     return (bool) value;
 }
 
-long long VarDouble::getInteger() const {
+VarDouble::operator long long() const {
     return (long long) value;
 }
 
-long double VarDouble::getDouble() const {
+VarDouble::operator long double() const {
     return value;
 }
 
-std::string VarDouble::getString() const {
+VarDouble::operator std::string() const {
     return std::to_string(value);
 }
 
-std::list<Var*> VarDouble::getList() const {
-    return { new VarDouble(lineNum, value) };
+Var *VarDouble::copy(const int& lineNum) const {
+    return new VarDouble(lineNum, value);
 }

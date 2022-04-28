@@ -184,4 +184,7 @@ add_executable(
 
         src/compiler/headers/functions/FuncClearConsole.h
         src/compiler/sources/functions/FuncClearConsole.cpp
+
+        src/compiler/sources/functions/FuncAddToMap.cpp
+        src/compiler/headers/functions/FuncAddToMap.h
 )
