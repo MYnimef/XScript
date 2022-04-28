@@ -9,7 +9,7 @@
 
 class FuncSleep final: public ExpFuncCustom {
 public:
-    explicit FuncSleep(const std::list<std::string>& args);
+    explicit FuncSleep();
 
     ~FuncSleep() override;
 

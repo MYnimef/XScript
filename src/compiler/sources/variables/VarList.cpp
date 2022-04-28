@@ -41,12 +41,13 @@ long double VarList::getDouble() const {
 
 std::string VarList::getString() const {
     std::string result = "[";
-
-    for (auto element: value) {
-        result += element->getString() + ", ";
+    if (!value.empty()) {
+        for (auto element: value) {
+            result += element->getString() + ", ";
+        }
+        result.pop_back();
+        result.pop_back();
     }
-    result.pop_back();
-    result.pop_back();
     result += "]";
 
     return result;

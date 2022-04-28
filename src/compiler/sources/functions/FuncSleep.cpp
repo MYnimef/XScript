@@ -6,8 +6,8 @@
 #include <thread>
 #include "FuncSleep.h"
 
-FuncSleep::FuncSleep(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncSleep::FuncSleep():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncSleep::~FuncSleep() = default;
 

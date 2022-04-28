@@ -5,8 +5,8 @@
 #include "FuncToInteger.h"
 #include "VarInteger.h"
 
-FuncToInteger::FuncToInteger(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncToInteger::FuncToInteger():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncToInteger::~FuncToInteger() = default;
 

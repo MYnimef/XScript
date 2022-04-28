@@ -38,15 +38,12 @@ long double VarMap::getDouble() const {
 
 std::string VarMap::getString() const {
     std::string result = "{";
-
-    for (auto element: value) {
-        auto key = element.first;
-        auto val = element.second;
-
-        result += " { " + key->getString() + " : " + val->getString() + " },";
+    if (!value.empty()) {
+        for (auto element: value) {
+            result += " { " + element.first->getString() + " : " + element.second->getString() + " },";
+        }
+        result.pop_back();
     }
-
-    result.pop_back();
     result += " }";
 
     return result;

@@ -6,8 +6,8 @@
 #include "FuncInput.h"
 #include "VarString.h"
 
-FuncInput::FuncInput(const std::list<std::string>& args):
-ExpFuncCustom(args) {}
+FuncInput::FuncInput():
+ExpFuncCustom({}) {}
 
 FuncInput::~FuncInput() = default;
 

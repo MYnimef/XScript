@@ -9,7 +9,7 @@
 
 class FuncToDouble final: public ExpFuncCustom {
 public:
-    explicit FuncToDouble(const std::list<std::string>& args);
+    explicit FuncToDouble();
 
     ~FuncToDouble() override;
 

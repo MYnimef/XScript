@@ -181,4 +181,7 @@ add_executable(
 
         src/compiler/headers/functions/FuncMap.h
         src/compiler/sources/functions/FuncMap.cpp
+
+        src/compiler/headers/functions/FuncClearConsole.h
+        src/compiler/sources/functions/FuncClearConsole.cpp
 )

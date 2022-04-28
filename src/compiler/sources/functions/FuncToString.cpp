@@ -5,8 +5,8 @@
 #include "FuncToString.h"
 #include "VarString.h"
 
-FuncToString::FuncToString(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncToString::FuncToString():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncToString::~FuncToString() = default;
 

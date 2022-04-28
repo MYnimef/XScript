@@ -5,8 +5,8 @@
 #include "FuncMap.h"
 #include "VarMap.h"
 
-FuncMap::FuncMap(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncMap::FuncMap():
+ExpFuncCustom({}) {}
 
 FuncMap::~FuncMap() = default;
 

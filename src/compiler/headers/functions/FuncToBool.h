@@ -9,7 +9,7 @@
 
 class FuncToBool final: public ExpFuncCustom {
 public:
-    explicit FuncToBool(const std::list<std::string>& args);
+    explicit FuncToBool();
 
     ~FuncToBool() override;
 

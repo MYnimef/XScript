@@ -5,8 +5,8 @@
 #include "FuncToDouble.h"
 #include "VarDouble.h"
 
-FuncToDouble::FuncToDouble(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncToDouble::FuncToDouble():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncToDouble::~FuncToDouble() = default;
 

@@ -5,12 +5,10 @@
 #include "FuncToList.h"
 #include "VarList.h"
 
-FuncToList::FuncToList(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncToList::FuncToList():
+ExpFuncCustom({ "arg1" }) {}
 
-FuncToList::~FuncToList() {
-
-}
+FuncToList::~FuncToList() = default;
 
 void FuncToList::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
     const auto& arg1 = params.find("arg1")->second->getList();

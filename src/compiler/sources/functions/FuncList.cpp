@@ -5,8 +5,8 @@
 #include "FuncList.h"
 #include "VarList.h"
 
-FuncList::FuncList(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncList::FuncList():
+ExpFuncCustom({}) {}
 
 FuncList::~FuncList() = default;
 

@@ -9,7 +9,7 @@
 
 class FuncMap final: public ExpFuncCustom {
 public:
-    explicit FuncMap(const std::list<std::string>& args);
+    explicit FuncMap();
 
     ~FuncMap() override;
 

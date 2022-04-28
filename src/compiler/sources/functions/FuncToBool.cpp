@@ -5,8 +5,8 @@
 #include "FuncToBool.h"
 #include "VarBool.h"
 
-FuncToBool::FuncToBool(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncToBool::FuncToBool():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncToBool::~FuncToBool() = default;
 

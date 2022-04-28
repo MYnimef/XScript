@@ -5,8 +5,8 @@
 #include <iostream>
 #include "FuncPrintln.h"
 
-FuncPrintln::FuncPrintln(const std::list<std::string> &args):
-ExpFuncCustom(args) {}
+FuncPrintln::FuncPrintln():
+ExpFuncCustom({ "arg1" }) {}
 
 FuncPrintln::~FuncPrintln() = default;
 
