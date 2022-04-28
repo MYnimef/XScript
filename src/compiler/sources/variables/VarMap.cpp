@@ -24,23 +24,11 @@ Var* VarMap::operator / (const Var& second) const {
     return super::operator / (second);
 }
 
-bool VarMap::getBool() const {
-    return super::getBool();
-}
-
-long long VarMap::getInteger() const {
-    return super::getInteger();
-}
-
-long double VarMap::getDouble() const {
-    return super::getDouble();
-}
-
-std::string VarMap::getString() const {
+VarMap::operator std::string() const {
     std::string result = "{";
     if (!value.empty()) {
         for (auto element: value) {
-            result += " { " + element.first->getString() + " : " + element.second->getString() + " },";
+            result += " { " + (std::string) *element.first + " : " + (std::string) *element.second + " },";
         }
         result.pop_back();
     }
@@ -49,10 +37,10 @@ std::string VarMap::getString() const {
     return result;
 }
 
-std::list<Var *> VarMap::getList() const {
-    return { new VarMap(lineNum, value) };
+VarMap::operator std::map<Var*, Var*>() const {
+    return value;
 }
 
-std::map<Var *, Var *> VarMap::getMap() const {
-    return value;
+Var *VarMap::copy(const int& lineNum) const {
+    return new VarMap(lineNum, value);
 }

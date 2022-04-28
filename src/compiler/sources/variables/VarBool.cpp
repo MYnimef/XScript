@@ -16,16 +16,16 @@ value(value) {}
 Var* VarBool::operator + (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
-            return new VarBool(lineNum, getBool() || second.getBool());
+            return new VarBool(lineNum, (bool) *this || (bool) second);
         case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() + second.getInteger());
+            return new VarInteger(lineNum, (long long) *this + (long long) second);
         case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() + second.getDouble());
+            return new VarDouble(lineNum, (long double) *this + (long double) second);
         case STRING_VAR:
-            return new VarString(lineNum, getString() + second.getString());
+            return new VarString(lineNum, (std::string) *this + (std::string) second);
         case LIST_VAR: {
-            auto list = getList();
-            list.splice(list.end(), second.getList());
+            auto list = (std::list<Var*>) *this;
+            list.splice(list.end(), (std::list<Var*>) second);
             return new VarList(lineNum, list);
         }
     }
@@ -35,9 +35,9 @@ Var* VarBool::operator - (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() - second.getInteger());
+            return new VarInteger(lineNum, (long long) *this - (long long) second);
         case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() - second.getDouble());
+            return new VarDouble(lineNum, (long double) *this - (long double) second);
         case STRING_VAR:
         case LIST_VAR:
             return second.operator - (*this);
@@ -48,9 +48,9 @@ Var* VarBool::operator * (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() * second.getInteger());
+            return new VarInteger(lineNum,(long long) *this * (long long) second);
         case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() * second.getDouble());
+            return new VarDouble(lineNum, (long double) *this * (long double) second);
         case STRING_VAR:
         case LIST_VAR:
             return second.operator * (*this);
@@ -62,26 +62,26 @@ Var* VarBool::operator / (const Var& second) const {
     if (type == STRING_VAR || type == LIST_VAR) {
         return second.operator / (*this);
     } else {
-        return new VarDouble(lineNum, getDouble() / second.getDouble());
+        return new VarDouble(lineNum, (long double) *this / (long double) second);
     }
 }
 
-bool VarBool::getBool() const {
+VarBool::operator bool() const {
     return value;
 }
 
-long long VarBool::getInteger() const {
+VarBool::operator long long() const {
     return (long long) value;
 }
 
-long double VarBool::getDouble() const {
+VarBool::operator long double() const {
     return (long double) value;
 }
 
-std::string VarBool::getString() const {
+VarBool::operator std::string() const {
     return (value ? "true" : "false");
 }
 
-std::list<Var*> VarBool::getList() const {
-    return { new VarBool(lineNum, value) };
+Var *VarBool::copy(const int& lineNum) const {
+    return new VarBool(lineNum, value);
 }

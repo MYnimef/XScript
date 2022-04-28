@@ -8,9 +8,7 @@ Exp::Exp(const ExpressionType& type, const int& lineNum):
 type(type),
 lineNum(lineNum) {}
 
-Exp::~Exp() {
-
-}
+Exp::~Exp() = default;
 
 ExpressionType Exp::getType() const {
     return type;

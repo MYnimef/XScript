@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncToBool::~FuncToBool() = default;
 
 void FuncToBool::action(const std::map<std::string, Var *> &params, std::stack<Var *> &stack) const {
-    const auto& arg1 = params.find("arg1")->second->getBool();
+    const auto& arg1 = (bool) params.find("arg1")->second;
 
     stack.push(new VarBool(0, arg1));
 }

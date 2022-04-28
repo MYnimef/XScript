@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncToInteger::~FuncToInteger() = default;
 
 void FuncToInteger::action(const std::map<std::string, Var *> &params, std::stack<Var *> &stack) const {
-    const auto& arg1 = params.find("arg1")->second->getInteger();
+    const auto& arg1 = (long long) *params.find("arg1")->second;
 
     stack.push(new VarInteger(0, arg1));
 }

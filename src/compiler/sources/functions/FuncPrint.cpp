@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncPrint::~FuncPrint() = default;
 
 void FuncPrint::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    const auto& arg1 = params.find("arg1")->second->getString();
+    const auto& arg1 = (std::string) *params.find("arg1")->second;
 
     std::cout << arg1;
 }

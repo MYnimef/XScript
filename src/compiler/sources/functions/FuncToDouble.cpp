@@ -11,7 +11,7 @@ ExpFuncCustom({ "arg1" }) {}
 FuncToDouble::~FuncToDouble() = default;
 
 void FuncToDouble::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    const auto& arg1 = params.find("arg1")->second->getDouble();
+    const auto& arg1 = (long double) *params.find("arg1")->second;
 
     stack.push(new VarDouble(0, arg1));
 }

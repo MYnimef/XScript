@@ -55,73 +55,85 @@ Var* Var::operator / (const Var&) const {
 }
 
 Var* Var::operator ! () const {
-    return new VarBool(lineNum, !getBool());
+    return new VarBool(lineNum, !bool(*this));
 }
 
 Var* Var::operator < (const Var& second) const {
-    if (type == STRING_VAR || second.getType() == STRING_VAR) {
-        return new VarBool(lineNum, getString().length() < second.getString().length());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this < (std::string) second);
     } else {
-        return new VarBool(lineNum, getDouble() < second.getDouble());
+        return new VarBool(lineNum, (long double) *this < (long double) second);
     }
 }
 
 Var* Var::operator <= (const Var& second) const {
-    if (type == STRING_VAR || second.getType() == STRING_VAR) {
-        return new VarBool(lineNum, getString().length() <= second.getString().length());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this <= (std::string) second);
     } else {
-        return new VarBool(lineNum, getDouble() <= second.getDouble());
+        return new VarBool(lineNum, (long double) *this <= (long double) second);
     }
 }
 
 Var* Var::operator > (const Var& second) const {
-    if (type == STRING_VAR || second.getType() == STRING_VAR) {
-        return new VarBool(lineNum, getString().length() > second.getString().length());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this > (std::string) second);
     } else {
-        return new VarBool(lineNum, getDouble() > second.getDouble());
+        return new VarBool(lineNum, (long double) *this > (long double) second);
     }
 }
 
 Var* Var::operator >= (const Var& second) const {
-    if (type == STRING_VAR || second.getType() == STRING_VAR) {
-        return new VarBool(lineNum, getString().length() >= second.getString().length());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this >= (std::string) second);
     } else {
-        return new VarBool(lineNum, getDouble() >= second.getDouble());
+        return new VarBool(lineNum, (long double) *this >= (long double) second);
     }
 }
 
 Var* Var::operator == (const Var& second) const {
-    return new VarBool(lineNum, getString() == second.getString());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this == (std::string) second);
+    } else {
+        return new VarBool(lineNum, (long double) *this == (long double) second);
+    }
 }
 
 Var* Var::operator != (const Var& second) const {
-    return new VarBool(lineNum, getString() != second.getString());
+    if (second.getType() == STRING_VAR) {
+        return new VarBool(lineNum, (std::string) *this != (std::string) second);
+    } else {
+        return new VarBool(lineNum, (long double) *this != (long double) second);
+    }
 }
 
 Var* Var::operator && (const Var& second) const {
-    return new VarBool(lineNum, getBool() && second.getBool());
+    return new VarBool(lineNum, (bool) *this && (bool) second);
 }
 
 Var* Var::operator || (const Var& second) const {
-    return new VarBool(lineNum, getBool() || second.getBool());
+    return new VarBool(lineNum, (bool) *this || (bool) second);
 }
 
 Var::VarType Var::getType() const {
     return type;
 }
 
-bool Var::getBool() const {
-    throwExcConvert(getString(), "'bool'");
+Var::operator bool() const {
+    throwExcConvert(std::string(*this), "'bool'");
 }
 
-long long Var::getInteger() const {
-    throwExcConvert(getString(), "'int'");
+Var::operator long long() const {
+    throwExcConvert(std::string(*this), "'int'");
 }
 
-long double Var::getDouble() const {
-    throwExcConvert(getString(), "'float'");
+Var::operator long double() const {
+    throwExcConvert(std::string(*this), "'float'");
 }
 
-std::map<Var *, Var *> Var::getMap() const {
-    throwExcConvert(getString(), "'map'");
+Var::operator std::list<Var*>() const {
+    return { copy(lineNum) };
+}
+
+Var::operator std::map<Var*, Var*>() const {
+    throwExcConvert(std::string(*this), "'map'");
 }
