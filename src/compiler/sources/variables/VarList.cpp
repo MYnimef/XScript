@@ -3,58 +3,60 @@
 //
 
 #include "VarList.h"
-#include "ExcVar.h"
 
 
 VarList::VarList(const int& lineNum, const std::list<Var*>& value):
-Var(lineNum),
-value(value) {
-    type = LIST_VAR;
-}
+Var(lineNum, LIST_VAR),
+value(value) {}
 
 Var* VarList::operator + (const Var& second) const {
-    auto list = getList();
-    list.splice(list.end(), second.getList());
+    auto list = (std::list<Var*>) *this;
+    list.splice(list.end(), (std::list<Var*>) second);
     return new VarList(lineNum, list);
 }
 
 Var* VarList::operator - (const Var& second) const {
-    throw ExcVar("wrong operand '-' for type 'list'", lineNum);
+    return super::operator - (second);
 }
 
 Var* VarList::operator * (const Var& second) const {
-    throw ExcVar("wrong operand '*' for type 'list'", lineNum);
+    return super::operator * (second);
 }
 
 Var* VarList::operator / (const Var& second) const {
-    throw ExcVar("wrong operand '/' for type 'list'", lineNum);
+    return super::operator / (second);
 }
 
-bool VarList::getBool() const {
+VarList::operator bool() const {
     return !value.empty();
 }
 
-long long VarList::getInteger() const {
+VarList::operator long long() const {
     return (long long) value.size();
 }
 
-long double VarList::getDouble() const {
+VarList::operator long double() const {
     return (long double) value.size();
 }
 
-std::string VarList::getString() const {
+VarList::operator std::string() const {
     std::string result = "[";
-
-    for (auto element: value) {
-        result += element->getString() + ", ";
+    if (!value.empty()) {
+        for (auto element: value) {
+            result += (std::string) *element + ", ";
+        }
+        result.pop_back();
+        result.pop_back();
     }
-    result.pop_back();
-    result.pop_back();
     result += "]";
 
     return result;
 }
 
-std::list<Var*> VarList::getList() const {
+VarList::operator std::list<Var*>() const {
     return value;
+}
+
+Var *VarList::copy(const int& lineNum) const {
+    return new VarList(lineNum, value);
 }

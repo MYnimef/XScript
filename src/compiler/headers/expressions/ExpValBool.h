@@ -8,7 +8,7 @@
 
 class ExpValBool final: public Exp {
 private:
-    bool value;
+    const bool value;
 
 public:
     explicit ExpValBool(const int& lineNum, const std::string& value);

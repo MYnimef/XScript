@@ -14,8 +14,7 @@ ExpBlockIf::ExpBlockIf(
 Exp(EXP_IF, lineNum),
 blockCondition(blockCondition),
 blockExecute(blockExecute),
-functions(functions) {
-}
+functions(functions) {}
 
 ExpBlockIf::~ExpBlockIf() {
     delete blockCondition;
@@ -35,7 +34,7 @@ void ExpBlockIf::action(const InterpreterArgs& args) const {
     auto condition = compilerCondition.getStack().top();
     compilerCondition.getStack().pop();
 
-    if (condition->getBool()) {
+    if ((bool) *condition) {
         args.functions.push_front(functions);
 
         Interpreter compilerBlock(args.functions, args.variablesGlobal);

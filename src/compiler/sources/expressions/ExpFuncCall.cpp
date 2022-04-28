@@ -9,8 +9,7 @@
 ExpFuncCall::ExpFuncCall(const int& lineNum, const std::string &value, const std::list<Node*>& arguments):
 Exp(EXP_FUNC_CALL, lineNum),
 name(value),
-arguments(arguments) {
-}
+arguments(arguments) {}
 
 ExpFuncCall::~ExpFuncCall() {
     for (auto arg: arguments) {

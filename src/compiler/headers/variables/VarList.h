@@ -18,9 +18,11 @@ public:
     Var* operator * (const Var&) const override;
     Var* operator / (const Var&) const override;
 
-    [[nodiscard]] bool getBool() const override;
-    [[nodiscard]] long long getInteger() const override;
-    [[nodiscard]] long double getDouble() const override;
-    [[nodiscard]] std::string getString() const override;
-    [[nodiscard]] std::list<Var*> getList() const override;
+    [[nodiscard]] explicit operator bool            () const override;
+    [[nodiscard]] explicit operator long long       () const override;
+    [[nodiscard]] explicit operator long double     () const override;
+    [[nodiscard]] explicit operator std::string     () const override;
+    [[nodiscard]] explicit operator std::list<Var*> () const override;
+
+    [[nodiscard]] Var* copy(const int& lineNum) const override;
 };

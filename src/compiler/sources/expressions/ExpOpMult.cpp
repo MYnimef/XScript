@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpOpMult::ExpOpMult(const int& lineNum):
-Exp(EXP_OP_MULTIPLICATION, lineNum) {
-}
+Exp(EXP_OP_MULTIPLICATION, lineNum) {}
 
 void ExpOpMult::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

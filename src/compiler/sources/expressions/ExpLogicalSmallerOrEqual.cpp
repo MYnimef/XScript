@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalSmallerOrEqual::ExpLogicalSmallerOrEqual(const int& lineNum):
-Exp(EXP_OP_SMALLER_OR_EQUAL, lineNum) {
-}
+Exp(EXP_OP_SMALLER_OR_EQUAL, lineNum) {}
 
 void ExpLogicalSmallerOrEqual::action(const InterpreterArgs& args) const {
     if (args.stack.size() >= 2) {

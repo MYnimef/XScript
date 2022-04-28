@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalNot::ExpLogicalNot(const int& lineNum):
-Exp(EXP_OP_NOT, lineNum) {
-}
+Exp(EXP_OP_NOT, lineNum) {}
 
 void ExpLogicalNot::action(const InterpreterArgs &args) const {
     if (!args.stack.empty()) {

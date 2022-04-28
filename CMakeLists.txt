@@ -169,4 +169,22 @@ add_executable(
 
         src/compiler/headers/functions/FuncToBool.h
         src/compiler/sources/functions/FuncToBool.cpp
+
+        src/compiler/headers/variables/VarMap.h
+        src/compiler/sources/variables/VarMap.cpp
+
+        src/compiler/headers/functions/FuncSleep.h
+        src/compiler/sources/functions/FuncSleep.cpp
+
+        src/compiler/headers/functions/FuncList.h
+        src/compiler/sources/functions/FuncList.cpp
+
+        src/compiler/headers/functions/FuncMap.h
+        src/compiler/sources/functions/FuncMap.cpp
+
+        src/compiler/headers/functions/FuncClearConsole.h
+        src/compiler/sources/functions/FuncClearConsole.cpp
+
+        src/compiler/sources/functions/FuncAddToMap.cpp
+        src/compiler/headers/functions/FuncAddToMap.h
 )

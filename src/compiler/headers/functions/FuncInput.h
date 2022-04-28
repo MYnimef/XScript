@@ -9,7 +9,7 @@
 
 class FuncInput final: public ExpFuncCustom {
 public:
-    explicit FuncInput(const std::list<std::string>& args);
+    explicit FuncInput();
 
     ~FuncInput() override;
 

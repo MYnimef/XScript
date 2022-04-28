@@ -9,7 +9,7 @@
 
 class FuncPrintln final: public ExpFuncCustom {
 public:
-    explicit FuncPrintln(const std::list<std::string>& args);
+    explicit FuncPrintln();
 
     ~FuncPrintln() override;
 

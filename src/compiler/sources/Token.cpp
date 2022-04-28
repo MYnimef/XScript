@@ -7,20 +7,14 @@
 Token::Token(const TokenType &type, const std::string& value, const int& lineNum):
 type(type),
 value(value),
-lineNum(lineNum) {
-
-}
+lineNum(lineNum) {}
 
 Token::Token(const Token& token):
 type(token.type),
 value(token.value),
-lineNum(token.lineNum) {
+lineNum(token.lineNum) {}
 
-}
-
-Token::~Token() {
-
-}
+Token::~Token() = default;
 
 TokenType Token::getType() const {
     return type;

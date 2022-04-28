@@ -5,19 +5,15 @@
 #include <iostream>
 #include "FuncPrint.h"
 
-FuncPrint::FuncPrint(const std::list<std::string> &args):
-ExpFuncCustom(args) {
+FuncPrint::FuncPrint():
+ExpFuncCustom({ "arg1" }) {}
 
-}
-
-FuncPrint::~FuncPrint() {
-
-}
+FuncPrint::~FuncPrint() = default;
 
 void FuncPrint::action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const {
-    for (const auto& name: funcArgs) {
-        std::cout << params.find(name)->second->getString();
-    }
+    const auto& arg1 = (std::string) *params.find("arg1")->second;
+
+    std::cout << arg1;
 }
 
 std::string FuncPrint::toString() const {

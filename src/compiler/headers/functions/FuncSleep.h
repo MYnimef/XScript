@@ -1,5 +1,5 @@
 //
-// Created by Ivan Markov on 12.04.2022.
+// Created by Ivan Markov on 27.04.2022.
 //
 
 #pragma once
@@ -7,11 +7,11 @@
 
 #include "ExpFuncCustom.h"
 
-class FuncToList final: public ExpFuncCustom {
+class FuncSleep final: public ExpFuncCustom {
 public:
-    explicit FuncToList();
+    explicit FuncSleep();
 
-    ~FuncToList() override;
+    ~FuncSleep() override;
 
     void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const override;
 

@@ -6,8 +6,7 @@
 #include "ExcExp.h"
 
 ExpLogicalAnd::ExpLogicalAnd(const int& lineNum):
-Exp(EXP_LOGICAL_AND, lineNum) {
-}
+Exp(EXP_LOGICAL_AND, lineNum) {}
 
 void ExpLogicalAnd::action(const InterpreterArgs &args) const {
     if (args.stack.size() >= 2) {

@@ -44,9 +44,7 @@ syntax({
     { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})"                           ) },
     { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})"                        ) },
     { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})"                         ) },
-}) {
-    tree = node;
-}
+}) {}
 
 Parser::Parser(
         Node* node, std::map<std::string, Node*>* functions,
@@ -57,12 +55,9 @@ Parser::Parser(
         tree(node),
         functions(functions),
         val(actions),
-        syntax(grammatics) {
-}
+        syntax(grammatics) {}
 
-Parser::~Parser() {
-
-}
+Parser::~Parser() = default;
 
 void Parser::addTokens(const std::list<Token>& tokens) {
     std::list<Token> tokensLine;

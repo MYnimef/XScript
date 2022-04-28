@@ -5,18 +5,15 @@
 #include "FuncToBool.h"
 #include "VarBool.h"
 
-FuncToBool::FuncToBool(const std::list<std::string> &args) : ExpFuncCustom(args) {
+FuncToBool::FuncToBool():
+ExpFuncCustom({ "arg1" }) {}
 
-}
-
-FuncToBool::~FuncToBool() {
-
-}
+FuncToBool::~FuncToBool() = default;
 
 void FuncToBool::action(const std::map<std::string, Var *> &params, std::stack<Var *> &stack) const {
-    for (const auto& name: funcArgs) {
-        stack.push(new VarBool(0, params.find(name)->second->getBool()));
-    }
+    const auto& arg1 = (bool) params.find("arg1")->second;
+
+    stack.push(new VarBool(0, arg1));
 }
 
 std::string FuncToBool::toString() const {

@@ -9,7 +9,7 @@
 
 class FuncToString final: public ExpFuncCustom {
 public:
-    explicit FuncToString(const std::list<std::string>& args);
+    explicit FuncToString();
 
     ~FuncToString() override;
 

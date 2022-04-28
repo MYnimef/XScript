@@ -6,42 +6,38 @@
 #include "VarDouble.h"
 #include "VarString.h"
 #include "VarList.h"
-#include "ExcVar.h"
+
 
 VarInteger::VarInteger(const int& lineNum, long long value):
-Var(lineNum),
-value(value) {
-    type = INTEGER_VAR;
-}
+Var(lineNum, INTEGER_VAR),
+value(value) {}
 
 Var* VarInteger::operator + (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() + second.getInteger());
+            return new VarInteger(lineNum, (long long) *this + (long long) second);
         case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() + second.getDouble());
+            return new VarDouble(lineNum, (long double) *this  + (long double) second);
         case LIST_VAR: {
-            auto list = getList();
-            list.splice(list.end(), second.getList());
+            auto list = (std::list<Var*>) *this;
+            list.splice(list.end(), (std::list<Var*>) second);
             return new VarList(lineNum, list);
         }
         case STRING_VAR:
-            return new VarString(lineNum, getString() + second.getString());
+            return new VarString(lineNum, (std::string) *this + (std::string) second);
     }
 }
 
 Var* VarInteger::operator - (const Var& second) const {
-    switch (second.getType()) {
-        case BOOL_VAR:
-        case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() - second.getInteger());
-        case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() - second.getDouble());
-        case LIST_VAR:
-            throw ExcVar("wrong operand '-' for type 'list'", lineNum);
-        case STRING_VAR:
-            throw ExcVar("wrong operand '-' for type 'string'", lineNum);
+    const auto& type = second.getType();
+
+    if (type == BOOL_VAR || type == INTEGER_VAR) {
+        return new VarInteger(lineNum, (long long) *this - (long long) second);
+    } else if (type == DOUBLE_VAR) {
+        return new VarDouble(lineNum, (long double) *this - (long double) second);
+    } else {
+        return second.operator - (*this);
     }
 }
 
@@ -49,15 +45,15 @@ Var* VarInteger::operator * (const Var& second) const {
     switch (second.getType()) {
         case BOOL_VAR:
         case INTEGER_VAR:
-            return new VarInteger(lineNum, getInteger() * second.getInteger());
+            return new VarInteger(lineNum, (long long) *this * (long long) second);
         case DOUBLE_VAR:
-            return new VarDouble(lineNum, getDouble() * second.getDouble());
+            return new VarDouble(lineNum, (long double) *this * (long double) second);
         case LIST_VAR:
-            throw ExcVar("wrong operand '*' for type 'list'", lineNum);
+            return second.operator * (*this);
         case STRING_VAR: {
-            auto str = second.getString();
+            auto str = (std::string) second;
             std::string result;
-            for (int i = 0; i < getInteger(); i++) {
+            for (int i = 0; i < (long long) *this; i++) {
                 result += str;
             }
             return new VarString(lineNum, result);
@@ -66,32 +62,30 @@ Var* VarInteger::operator * (const Var& second) const {
 }
 
 Var* VarInteger::operator / (const Var& second) const {
-    auto type = second.getType();
-    if (type == STRING_VAR) {
-        throw ExcVar("wrong operand '/' for type 'string'", lineNum);
-    } else if (type == LIST_VAR) {
-        throw ExcVar("wrong operand '/' for type 'list'", lineNum);
+    const auto& type = second.getType();
+    if (type == STRING_VAR || type == LIST_VAR) {
+        return second.operator / (*this);
     } else {
-        return new VarDouble(lineNum, getDouble() / second.getDouble());
+        return new VarDouble(lineNum, (long double) *this / (long double) second);
     }
 }
 
-bool VarInteger::getBool() const {
+VarInteger::operator bool() const {
     return (bool) value;
 }
 
-long long VarInteger::getInteger() const {
+VarInteger::operator long long() const {
     return value;
 }
 
-long double VarInteger::getDouble() const {
+VarInteger::operator long double() const {
     return (long double) value;
 }
 
-std::string VarInteger::getString() const {
+VarInteger::operator std::string() const {
     return std::to_string(value);
 }
 
-std::list<Var*> VarInteger::getList() const {
-    return { new VarInteger(lineNum, value) };
+Var *VarInteger::copy(const int& lineNum) const {
+    return new VarInteger(lineNum, value);
 }

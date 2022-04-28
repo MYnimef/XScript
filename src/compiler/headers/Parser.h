@@ -37,11 +37,12 @@ private:
     void parseAssignment(std::list<Token>&);
     void parseIncrementDecrement(std::list<Token>&);
     std::list<Exp*> parseOperations(std::list<Token>&);
-    void subOperations(std::list<Exp*>& expressions, std::list<Token>& localTokens);
     void parseFuncDefinition(std::list<Token>&);
     void parseIf(std::list<Token>&);
     void parseWhile(std::list<Token>&);
     void parseFunctionCall(std::list<Token>&);
+
+    void subOperations(std::list<Exp*>& expressions, std::list<Token>& localTokens);
     Exp* subFunction(std::list<Token>&);
 
     std::list<Exp*> toPostfix(std::list<Exp*>&);
@@ -49,8 +50,17 @@ private:
     Node* addNodeExpr(const std::list<Exp*>&);
 
 public:
-    explicit Parser(Node* node, std::map<std::string, Node*>* functions);
-    explicit Parser(Node* node, std::map<std::string, Node*>* functions, const std::string& actions, const std::map<GrammarType, std::regex>&);
+    explicit Parser(
+            Node* node,
+            std::map<std::string, Node*>* functions
+            );
+    explicit Parser(
+            Node* node,
+            std::map<std::string,
+            Node*>* functions,
+            const std::string& actions,
+            const std::map<GrammarType, std::regex>&
+            );
     ~Parser();
 
     void addTokens(const std::list<Token>&);

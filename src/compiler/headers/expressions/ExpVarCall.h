@@ -10,7 +10,7 @@
 
 class ExpVarCall final: public Exp {
 private:
-    std::string id;
+    const std::string id;
 
     bool callVariableFrom(std::map<std::string, Var*>* container, std::stack<Var*>& stack) const;
 

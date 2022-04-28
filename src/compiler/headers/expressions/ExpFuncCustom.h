@@ -10,7 +10,7 @@
 #include "Node.h"
 
 class ExpFuncCustom: public Exp {
-protected:
+private:
     const std::list<std::string> funcArgs;
 
 public:

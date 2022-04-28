@@ -9,7 +9,7 @@
 
 class FuncToInteger final: public ExpFuncCustom {
 public:
-    explicit FuncToInteger(const std::list<std::string>& args);
+    explicit FuncToInteger();
 
     ~FuncToInteger() override;
 

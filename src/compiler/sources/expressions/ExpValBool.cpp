@@ -7,8 +7,7 @@
 
 ExpValBool::ExpValBool(const int& lineNum, const std::string &value):
 Exp(EXP_BOOL, lineNum),
-value(value == "true") {
-}
+value(value == "true") {}
 
 void ExpValBool::action(const InterpreterArgs& args) const {
     args.stack.push(new VarBool(lineNum, value));
