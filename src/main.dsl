@@ -1,6 +1,5 @@
 
-hm = map()
-hm = (hm, 3,  5)
-hm = (hm, 3,  5)
-hm = (hm, 3,  5)
+hm = addToMap(map(), "dima",  5)
+hm = addToMap(hm, true,  "hm")
+hm = addToMap(hm, "test",  hm)
 println(hm)
