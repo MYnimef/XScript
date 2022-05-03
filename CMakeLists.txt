@@ -50,6 +50,9 @@ add_executable(
         src/compiler/headers/variables/VarList.h
         src/compiler/sources/variables/VarList.cpp
 
+        src/compiler/headers/variables/VarMap.h
+        src/compiler/sources/variables/VarMap.cpp
+
         src/compiler/headers/expressions/Exp.h
         src/compiler/sources/expressions/Exp.cpp
 
@@ -131,12 +134,6 @@ add_executable(
         src/compiler/headers/expressions/ExpFuncCustom.h
         src/compiler/sources/expressions/ExpFuncCustom.cpp
 
-        src/compiler/headers/functions/FuncPrint.h
-        src/compiler/sources/functions/FuncPrint.cpp
-
-        src/compiler/headers/functions/FuncPrintln.h
-        src/compiler/sources/functions/FuncPrintln.cpp
-
         src/compiler/headers/exceptions/Exc.h
         src/compiler/sources/exceptions/Exc.cpp
 
@@ -151,6 +148,12 @@ add_executable(
 
         src/compiler/headers/exceptions/ExcExp.h
         src/compiler/sources/exceptions/ExcExp.cpp
+
+        src/compiler/headers/functions/FuncPrint.h
+        src/compiler/sources/functions/FuncPrint.cpp
+
+        src/compiler/headers/functions/FuncPrintln.h
+        src/compiler/sources/functions/FuncPrintln.cpp
 
         src/compiler/headers/functions/FuncInput.h
         src/compiler/sources/functions/FuncInput.cpp
@@ -169,9 +172,6 @@ add_executable(
 
         src/compiler/headers/functions/FuncToBool.h
         src/compiler/sources/functions/FuncToBool.cpp
-
-        src/compiler/headers/variables/VarMap.h
-        src/compiler/sources/variables/VarMap.cpp
 
         src/compiler/headers/functions/FuncSleep.h
         src/compiler/sources/functions/FuncSleep.cpp
