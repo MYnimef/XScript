@@ -16,7 +16,6 @@ public:
         DOUBLE_VAR,
         STRING_VAR,
         LIST_VAR,
-        MAP_VAR,
     };
 
     explicit Var(const int& lineNum, const VarType& type);
@@ -42,7 +41,6 @@ public:
     [[nodiscard]] virtual explicit operator long double     () const;
     [[nodiscard]] virtual explicit operator std::string     () const = 0;
     [[nodiscard]] virtual explicit operator std::list<Var*> () const;
-    [[nodiscard]] virtual explicit operator std::map<Var*, Var*> () const;
 
     [[nodiscard]] VarType getType() const;
 

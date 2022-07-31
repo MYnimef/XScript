@@ -14,9 +14,7 @@
 #include "FuncToList.h"
 #include "FuncSleep.h"
 #include "FuncList.h"
-#include "FuncMap.h"
 #include "FuncClearConsole.h"
-#include "FuncAddToMap.h"
 
 int main() {
     std::cout <<
@@ -44,8 +42,6 @@ int main() {
             { "string1",   new Node( new FuncToString     () ) },
             { "list0",     new Node( new FuncList         () ) },
             { "list1",     new Node( new FuncToList       () ) },
-            { "map0",      new Node( new FuncMap          () ) },
-            { "addToMap3", new Node( new FuncAddToMap     () ) },
             { "sleep1",    new Node( new FuncSleep        () ) },
             { "clc0",      new Node( new FuncClearConsole () ) },
     };
