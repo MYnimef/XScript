@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 28.04.2022.
 //
 
-#include "FuncClearConsole.h"
+#include "../headers/FuncClearConsole.h"
 
 FuncClearConsole::FuncClearConsole():
 ExpFuncCustom({}) {}

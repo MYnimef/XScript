@@ -25,8 +25,6 @@ std::string Var::getTypeName() const {
             return "'string'";
         case LIST_VAR:
             return "'list'";
-        case MAP_VAR:
-            return "'map'";
     }
 }
 
@@ -132,8 +130,4 @@ Var::operator long double() const {
 
 Var::operator std::list<Var*>() const {
     return { copy(lineNum) };
-}
-
-Var::operator std::map<Var*, Var*>() const {
-    throwExcConvert(std::string(*this), "'map'");
 }

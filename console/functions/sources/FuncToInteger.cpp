@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 12.04.2022.
 //
 
-#include "FuncToInteger.h"
+#include "../headers/FuncToInteger.h"
 #include "VarInteger.h"
 
 FuncToInteger::FuncToInteger():

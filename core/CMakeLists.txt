@@ -1,0 +1,55 @@
+include_directories(
+        ${CMAKE_CURRENT_LIST_DIR}/headers
+        ${CMAKE_CURRENT_LIST_DIR}/headers/exceptions
+        ${CMAKE_CURRENT_LIST_DIR}/headers/expressions
+        ${CMAKE_CURRENT_LIST_DIR}/headers/variables
+)
+
+add_library(
+        dsl_core STATIC
+
+        ${CMAKE_CURRENT_LIST_DIR}/sources/Token.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/Lexer.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/Parser.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/Node.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/Interpreter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/InterpreterArgs.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/Var.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/VarInteger.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/VarDouble.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/VarString.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/VarBool.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/variables/VarList.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/Exp.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpValInteger.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpValString.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpValDouble.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpSum.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpSub.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpMult.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpDiv.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpAssignVar.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpVarCall.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpFuncCall.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpValBool.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpBlockIf.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalSmaller.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalSmallerOrEqual.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalGreater.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalGreaterOrEqual.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalEqual.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalNotEqual.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalOr.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalAnd.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpLogicalNot.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpBlockWhile.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpBlock.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpFuncDef.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpAssignVarFunc.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpFuncCustom.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/Exc.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcParser.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcLexer.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcVar.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcExp.cpp
+)

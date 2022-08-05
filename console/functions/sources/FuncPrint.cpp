@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "FuncPrint.h"
+#include "../headers/FuncPrint.h"
 
 FuncPrint::FuncPrint():
 ExpFuncCustom({ "arg1" }) {}

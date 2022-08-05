@@ -34,6 +34,6 @@ private:
 public:
     Lexer();
     ~Lexer();
-    void scanFile(const std::string&);
+    void scanLine(const int& lineNum, const std::string& codeLine);
     std::list<Token> getTokens();
 };

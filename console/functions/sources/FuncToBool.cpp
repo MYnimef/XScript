@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 12.04.2022.
 //
 
-#include "FuncToBool.h"
+#include "../headers/FuncToBool.h"
 #include "VarBool.h"
 
 FuncToBool::FuncToBool():
