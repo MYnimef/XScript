@@ -6,7 +6,8 @@
 #include <Parser.h>
 #include <ExpBlock.h>
 #include <sstream>
-#include "FuncPrintln.h"
+#include <FuncPrint.h>
+#include <FuncPrintln.h>
 
 
 extern "C"
@@ -14,6 +15,7 @@ JNIEXPORT void JNICALL
 Java_com_mynimef_dsl_DSLViewModel_execute(JNIEnv* env, jobject obj, jstring code) {
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
+            { "print1",    new Node( new FuncPrint      (env, obj) ) },
             { "println1",  new Node( new FuncPrintln      (env, obj) ) },
     };
 

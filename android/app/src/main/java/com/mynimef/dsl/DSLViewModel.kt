@@ -13,18 +13,16 @@ class DSLViewModel: ViewModel() {
         }
     }
 
-    val consoleOutput = MutableLiveData<String>()
+    val consoleOutput = MutableLiveData("")
 
     fun run(code: String) {
+        consoleOutput.postValue("")
         Thread {
             execute(code)
-            println("end")
         }.start()
     }
 
     fun addToOutput(output: String) {
-
-        println("start")
         consoleOutput.postValue(consoleOutput.value + output)
     }
 }

@@ -22,7 +22,8 @@ add_library( # Sets the name of the library.
 
         # Provides a relative path to your source file(s).
         dsl.cpp
-        FuncPrintln.cpp
+        functions/sources/FuncPrint.cpp
+        functions/sources/FuncPrintln.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -51,3 +52,6 @@ target_link_libraries( # Specifies the target library.
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../../../core/CMakeLists.txt)
 target_link_libraries(dsl dsl_core)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/functions/CMakeLists.txt)
+target_link_libraries(dsl dsl_functions)

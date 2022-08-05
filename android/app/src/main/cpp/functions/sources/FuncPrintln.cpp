@@ -13,7 +13,7 @@ void FuncPrintln::action(
         const std::map<std::string, Var*>& params,
         std::stack<Var*>& stack
         ) const {
-    const auto& arg1 = (std::string) *params.find("arg1")->second;
+    const auto& arg1 = (std::string) *params.find("arg1")->second + "\n";
 
     jstring jstr = env->NewStringUTF(arg1.c_str());
     jclass clazz = env->FindClass("com/mynimef/dsl/DSLViewModel");
@@ -25,6 +25,4 @@ std::string FuncPrintln::toString() const {
     return "println";
 }
 
-FuncPrintln::~FuncPrintln() {
-
-}
+FuncPrintln::~FuncPrintln() = default;
