@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 27.04.2022.
 //
 
-#include "FuncList.h"
+#include "../headers/FuncList.h"
 #include "VarList.h"
 
 FuncList::FuncList():

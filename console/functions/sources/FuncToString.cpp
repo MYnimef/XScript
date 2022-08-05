@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 12.04.2022.
 //
 
-#include "FuncToString.h"
+#include "../headers/FuncToString.h"
 #include "VarString.h"
 
 FuncToString::FuncToString():

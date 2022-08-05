@@ -1,20 +1,22 @@
 #include <iostream>
+#include <fstream>
 #include "Lexer.h"
 #include "Parser.h"
 #include "Interpreter.h"
 #include "ExcParser.h"
 #include "ExpBlock.h"
-#include "FuncPrint.h"
-#include "FuncPrintln.h"
-#include "FuncInput.h"
-#include "FuncToInteger.h"
-#include "FuncToBool.h"
-#include "FuncToDouble.h"
-#include "FuncToString.h"
-#include "FuncToList.h"
-#include "FuncSleep.h"
-#include "FuncList.h"
-#include "FuncClearConsole.h"
+#include "functions/headers/FuncPrint.h"
+#include "functions/headers/FuncPrintln.h"
+#include "functions/headers/FuncInput.h"
+#include "functions/headers/FuncToInteger.h"
+#include "functions/headers/FuncToBool.h"
+#include "functions/headers/FuncToDouble.h"
+#include "functions/headers/FuncToString.h"
+#include "functions/headers/FuncToList.h"
+#include "functions/headers/FuncSleep.h"
+#include "functions/headers/FuncList.h"
+#include "functions/headers/FuncClearConsole.h"
+
 
 int main() {
     std::cout <<
@@ -47,32 +49,29 @@ int main() {
     };
 
     try {
-        Lexer lexer;
-        lexer.scanFile("main.dsl");
+        std::ifstream file("../main.dsl");
 
-        /*
-        for (const auto& token: lexer.getTokens()) {
-            if (token.getType() != SEMICOLON) {
-                std::cout << token.toString() << std::endl;
+        if (!file.is_open()) {
+            file.close();
+            throw "end";
+        }
+
+        Lexer lexer;
+
+        std::string line;
+        for (int i = 0; getline(file, line); i++) {
+            if (!line.empty()) {
+                lexer.scanLine(i, line);
             }
         }
-        */
+
+        file.close();
 
         Parser parser(application, functions);
         parser.addTokens(lexer.getTokens());
 
-        //std::cout << std::endl << parser.getTree()->toString() << std::endl;
-
         Interpreter compiler(functions);
         compiler.execute(application);
-
-        /*
-        std::cout << std::endl;
-        for (const auto& var: *compiler.getVariables()) {
-            std::cout << std::endl << var.first + " = " + var.second->getString();
-        }
-        std::cout << std::endl;
-        */
     } catch (const std::exception& ex) {
         std::cout << std::endl << "\033[1;31m" << ex.what() << "\033[0m";
     }

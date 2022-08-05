@@ -2,9 +2,10 @@
 // Created by Ivan Markov on 05.03.2022.
 //
 
-#include <fstream>
+#include <sstream>
 #include "Lexer.h"
 #include "ExcLexer.h"
+
 
 Lexer::Lexer(): lexems({
     { LEX_ONE_CHAR,     std::regex( R"([!;,\+\-\*\/=\}\{\)\(<>])"                      ) },
@@ -18,44 +19,30 @@ Lexer::Lexer(): lexems({
 
 Lexer::~Lexer() = default;
 
-void Lexer::scanFile(const std::string& filename) {
-    std::ifstream file("../src/" + filename);
+void Lexer::scanLine(const int& lineNum, const std::string& line) {
+    std::string oldStr;
 
-    if (!file.is_open()) {
-        file.close();
-        throw ExcLexer("can't open file " + filename, 0);
-    }
+    for (int startIndex = 0, endIndex = 1; endIndex <= line.size(); endIndex++) {
+        if (startIndex < endIndex) {
+            std::string newStr = line.substr(startIndex, endIndex - startIndex);
 
-    std::string line;
-    for (int i = 0; getline(file, line); i++) {
-        if (!line.empty()) {
-            std::string oldStr;
-
-            for (int startIndex = 0, endIndex = 1; endIndex <= line.size(); endIndex++) {
-                if (startIndex < endIndex) {
-                    std::string newStr = line.substr(startIndex, endIndex - startIndex);
-
-                    if (newStr == " ") {
-                        startIndex++;
-                        continue;
-                    } else if (std::regex_match(newStr, std::regex(R"(("[^"]*)|(\|)|(&))"))) {
-                        continue;
-                    } else if (!checkToken(newStr)) {
-                        addToken(oldStr.empty() ? newStr : oldStr, i + 1);
-                        endIndex--;
-                        startIndex = endIndex;
-                    } else if (endIndex == line.size()) {
-                        addToken(newStr, i + 1);
-                        tokens.emplace_back(SEMICOLON, ";", i + 1);
-                    }
-
-                    oldStr = newStr;
-                }
+            if (newStr == " ") {
+                startIndex++;
+                continue;
+            } else if (std::regex_match(newStr, std::regex(R"(("[^"]*)|(\|)|(&))"))) {
+                continue;
+            } else if (!checkToken(newStr)) {
+                addToken(oldStr.empty() ? newStr : oldStr, lineNum + 1);
+                endIndex--;
+                startIndex = endIndex;
+            } else if (endIndex == line.size()) {
+                addToken(newStr, lineNum + 1);
+                tokens.emplace_back(SEMICOLON, ";", lineNum + 1);
             }
+
+            oldStr = newStr;
         }
     }
-
-    file.close();
 }
 
 bool Lexer::checkToken(const std::string& input) {
