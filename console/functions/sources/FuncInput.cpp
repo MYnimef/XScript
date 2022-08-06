@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include "../headers/FuncInput.h"
+#include "FuncInput.h"
 #include "VarString.h"
 
 FuncInput::FuncInput():

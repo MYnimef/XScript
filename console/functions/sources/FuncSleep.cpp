@@ -4,7 +4,7 @@
 
 #include <chrono>
 #include <thread>
-#include "../headers/FuncSleep.h"
+#include "FuncSleep.h"
 
 FuncSleep::FuncSleep():
 ExpFuncCustom({ "arg1" }) {}

@@ -1,5 +1,5 @@
 //
-// Created by Ivan Markov on 28.04.2022.
+// Created by Ivan Markov on 06.08.2022.
 //
 
 #pragma once
@@ -7,11 +7,11 @@
 
 #include "ExpFuncCustom.h"
 
-class FuncAddToMap final: public ExpFuncCustom {
+class FuncToInteger final: public ExpFuncCustom {
 public:
-    explicit FuncAddToMap();
+    explicit FuncToInteger();
 
-    ~FuncAddToMap() override;
+    ~FuncToInteger() override;
 
     void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const override;
 
