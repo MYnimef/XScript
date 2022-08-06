@@ -2,7 +2,7 @@
 // Created by Ivan Markov on 12.04.2022.
 //
 
-#include "../headers/FuncToDouble.h"
+#include "FuncToDouble.h"
 #include "VarDouble.h"
 
 FuncToDouble::FuncToDouble():
