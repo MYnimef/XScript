@@ -1,7 +1,6 @@
 package com.mynimef.dsl
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +47,7 @@ class FragmentCodeEditor: Fragment() {
                 binding.editCode.setText(
                     HtmlCompat.fromHtml(
                         viewModel.highlightText(text),
-                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                        HtmlCompat.FROM_HTML_MODE_COMPACT
                     )
                 )
                 binding.editCode.setSelection(start + count)
