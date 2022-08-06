@@ -23,6 +23,7 @@ class DSLViewModel: ViewModel() {
     }
 
     fun run(code: String) {
+        output = ""
         consoleOutputLive.postValue("")
         Thread {
             execute(code.replace(" ", " "))
