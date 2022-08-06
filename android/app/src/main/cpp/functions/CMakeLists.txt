@@ -11,4 +11,5 @@ add_library(
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToDouble.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToInteger.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToString.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/FuncSleep.cpp
 )

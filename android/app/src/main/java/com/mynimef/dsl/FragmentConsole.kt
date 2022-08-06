@@ -31,6 +31,10 @@ class FragmentConsole: Fragment() {
             binding.textOutput.text = output
         }
 
+        binding.verticalScroll.post {
+            binding.verticalScroll.fullScroll(View.FOCUS_DOWN)
+        }
+
     }
 
     override fun onDestroyView() {

@@ -2,7 +2,18 @@
 // Created by Ivan Markov on 06.08.2022.
 //
 
-#ifndef DSL_FUNCSLEEP_H
-#define DSL_FUNCSLEEP_H
+#pragma once
 
-#endif //DSL_FUNCSLEEP_H
+
+#include "ExpFuncCustom.h"
+
+class FuncSleep final: public ExpFuncCustom {
+public:
+    explicit FuncSleep();
+
+    ~FuncSleep() override;
+
+    void action(const std::map<std::string, Var*>& params, std::stack<Var*>& stack) const override;
+
+    [[nodiscard]] std::string toString() const override;
+};

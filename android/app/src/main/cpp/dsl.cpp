@@ -12,6 +12,7 @@
 #include <FuncToBool.h>
 #include <FuncToDouble.h>
 #include <FuncToString.h>
+#include <FuncSleep.h>
 
 
 extern "C"
@@ -25,6 +26,7 @@ Java_com_mynimef_dsl_DSLViewModel_execute(JNIEnv* env, jobject obj, jstring code
             { "bool1",     new Node( new FuncToBool    (        ) ) },
             { "float1",    new Node( new FuncToDouble  (        ) ) },
             { "string1",   new Node( new FuncToString  (        ) ) },
+            { "sleep1",    new Node( new FuncSleep     (        ) ) },
     };
 
     try {
