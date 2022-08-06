@@ -24,6 +24,10 @@ add_library( # Sets the name of the library.
         dsl.cpp
         functions/sources/FuncPrint.cpp
         functions/sources/FuncPrintln.cpp
+        functions/sources/FuncToBool.cpp
+        functions/sources/FuncToDouble.cpp
+        functions/sources/FuncToInteger.cpp
+        functions/sources/FuncToString.cpp
         )
 
 # Searches for a specified prebuilt library and stores the path as a
