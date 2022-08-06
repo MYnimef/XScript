@@ -1,6 +1,7 @@
 package com.mynimef.dsl
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,13 +42,15 @@ class FragmentCodeEditor: Fragment() {
             viewModel.run(binding.editCode.text.toString())
         }
 
-        binding.editCode.doOnTextChanged { text, start, before, count ->
+        binding.editCode.doOnTextChanged { text, start, _, count ->
             if (!text.isNullOrEmpty() && modifyEnabled) {
                 modifyEnabled = false
-                val modifiedText = text
-                    .replace("\n".toRegex(), "<br />")
-                    .replace("while".toRegex(), "<font color='red'>while</font>")
-                binding.editCode.setText(HtmlCompat.fromHtml(modifiedText, HtmlCompat.FROM_HTML_MODE_LEGACY))
+                binding.editCode.setText(
+                    HtmlCompat.fromHtml(
+                        viewModel.highlightText(text),
+                        HtmlCompat.FROM_HTML_MODE_LEGACY
+                    )
+                )
                 binding.editCode.setSelection(start + count)
             } else {
                 modifyEnabled = true
