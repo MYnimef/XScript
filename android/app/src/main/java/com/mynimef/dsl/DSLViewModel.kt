@@ -1,5 +1,6 @@
 package com.mynimef.dsl
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -14,17 +15,23 @@ class DSLViewModel: ViewModel() {
         }
     }
 
-    val consoleOutput = MutableLiveData("")
+    private var output = ""
+    private val consoleOutputLive = MutableLiveData("")
+
+    fun getOutput(): LiveData<String> {
+        return consoleOutputLive
+    }
 
     fun run(code: String) {
-        consoleOutput.postValue("")
+        consoleOutputLive.postValue("")
         Thread {
             execute(code.replace(" ", " "))
         }.start()
     }
 
     fun addToOutput(output: String) {
-        consoleOutput.postValue(consoleOutput.value + output)
+        this.output += output
+        consoleOutputLive.postValue(this.output)
     }
 
     private val codeHighlights = mapOf(

@@ -27,14 +27,9 @@ class FragmentConsole: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.consoleOutput.observe(viewLifecycleOwner) { output ->
+        viewModel.getOutput().observe(viewLifecycleOwner) { output ->
             binding.textOutput.text = output
         }
-
-        binding.verticalScroll.post {
-            binding.verticalScroll.fullScroll(View.FOCUS_DOWN)
-        }
-
     }
 
     override fun onDestroyView() {
