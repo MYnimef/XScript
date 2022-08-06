@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.commit
@@ -15,6 +17,8 @@ class FragmentCodeEditor: Fragment() {
 
     private var _binding: FragmentCodeEditorBinding? = null
     private val binding get() = _binding!!
+
+    private var modifyEnabled = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,19 @@ class FragmentCodeEditor: Fragment() {
                 add(R.id.containerView, FragmentConsole())
             }
             viewModel.run(binding.editCode.text.toString())
+        }
+
+        binding.editCode.doOnTextChanged { text, start, before, count ->
+            if (!text.isNullOrEmpty() && modifyEnabled) {
+                modifyEnabled = false
+                val modifiedText = text
+                    .replace("\n".toRegex(), "<br />")
+                    .replace("while".toRegex(), "<font color='red'>while</font>")
+                binding.editCode.setText(HtmlCompat.fromHtml(modifiedText, HtmlCompat.FROM_HTML_MODE_LEGACY))
+                binding.editCode.setSelection(start + count)
+            } else {
+                modifyEnabled = true
+            }
         }
     }
 
