@@ -46,7 +46,11 @@ class DSLViewModel: ViewModel() {
         var modifiedString = text
             .replace("\n".toRegex(), "<br/>")
             .replace(" ".toRegex(), "&nbsp;")
+
+
+
         codeHighlights.forEach { map ->
+            val matcher = map.key.matches(text)
             modifiedString = modifiedString.replace(map.key) {
                 "<font color='${map.value}'>${it.value}</font>"
             }
