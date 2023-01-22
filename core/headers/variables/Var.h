@@ -25,6 +25,7 @@ public:
     virtual Var* operator - (const Var&) const;
     virtual Var* operator * (const Var&) const;
     virtual Var* operator / (const Var&) const;
+    virtual Var* operator % (const Var&) const;
 
     Var* operator !  (          ) const;
     Var* operator <  (const Var&) const;

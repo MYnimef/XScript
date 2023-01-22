@@ -76,6 +76,8 @@ std::string Token::typeToString() const {
             return "*";
         case DIV_OP:
             return "/";
+        case MOD_OP:
+            return "%";
         case COMMA:
             return ",";
         case SEMICOLON:
@@ -108,6 +110,7 @@ bool Token::isOperator() const {
             type == SUB_OP ||
             type == MULT_OP ||
             type == DIV_OP ||
+            type == MOD_OP ||
             type == EQUAL_OP ||
             type == NOT_EQUAL_OP ||
             type == SMALLER_OP ||
@@ -125,6 +128,7 @@ bool Token::isKeyWord() const {
             type == FUNC_KW ||
             type == IF_KW ||
             type == ELSE_KW ||
-            type == WHILE_KW
+            type == WHILE_KW ||
+            type == BREAK_KW
             );
 }

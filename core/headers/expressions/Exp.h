@@ -15,6 +15,7 @@ enum ExpressionType {
 
     EXP_OP_MULTIPLICATION,
     EXP_OP_DIVISION,
+    EXP_OP_MOD,
     EXP_OP_SUM,
     EXP_OP_SUBTRACTION,
     EXP_OP_SMALLER,

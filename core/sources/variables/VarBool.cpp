@@ -66,6 +66,10 @@ Var* VarBool::operator / (const Var& second) const {
     }
 }
 
+Var* VarBool::operator % (const Var& second) const {
+    return super::operator % (second);
+}
+
 VarBool::operator bool() const {
     return value;
 }

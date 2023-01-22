@@ -28,6 +28,7 @@ enum TokenType {
     SUB_OP,
     MULT_OP,
     DIV_OP,
+    MOD_OP,
     OR_OP,
     AND_OP,
     GREATER_OP,

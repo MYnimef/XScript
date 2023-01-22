@@ -27,6 +27,10 @@ Var* VarList::operator / (const Var& second) const {
     return super::operator / (second);
 }
 
+Var* VarList::operator % (const Var& second) const {
+    return super::operator % (second);
+}
+
 VarList::operator bool() const {
     return !value.empty();
 }

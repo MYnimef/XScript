@@ -4,6 +4,7 @@
 
 #include <stack>
 #include <regex>
+#include <ExpOpMod.h>
 #include "Parser.h"
 #include "ExpValBool.h"
 #include "ExpValInteger.h"
@@ -35,10 +36,10 @@
 Parser::Parser(Node* node, std::map<std::string, Node*>* functions):
 tree(node),
 functions(functions),
-val(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
+val(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/%<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
 syntax({
     { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" ) },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/]=)" + val                               ) },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/%]=)" + val                               ) },
     { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val                                         ) },
     { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])"                                            ) },
     { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})"                           ) },
@@ -237,6 +238,8 @@ std::list<Exp*> Parser::parseOperations(std::list<Token>& tokens) {
                     expressions.emplace_back(new ExpOpMult(lineNum));
                 } else if (type == DIV_OP) {
                     expressions.emplace_back(new ExpOpDiv(lineNum));
+                } else if (type == MOD_OP) {
+                    expressions.emplace_back(new ExpOpMod(lineNum));
                 } else if (type == AND_OP) {
                     expressions.emplace_back(new ExpLogicalAnd(lineNum));
                 } else if (type == OR_OP) {

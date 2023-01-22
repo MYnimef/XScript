@@ -52,6 +52,10 @@ Var* Var::operator / (const Var&) const {
     throwExcOperator("/");
 }
 
+Var* Var::operator % (const Var&) const {
+    throwExcOperator("%");
+}
+
 Var* Var::operator ! () const {
     return new VarBool(lineNum, !bool(*this));
 }

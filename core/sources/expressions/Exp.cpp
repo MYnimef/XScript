@@ -32,6 +32,7 @@ bool Exp::isBinaryOperation() const {
             type == EXP_OP_SUBTRACTION ||
             type == EXP_OP_MULTIPLICATION ||
             type == EXP_OP_DIVISION ||
+            type == EXP_OP_MOD ||
             type == EXP_OP_EQUAL ||
             type == EXP_OP_NOT_EQUAL ||
             type == EXP_OP_GREATER_OR_EQUAL ||

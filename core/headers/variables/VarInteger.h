@@ -17,7 +17,7 @@ public:
     Var* operator - (const Var&) const override;
     Var* operator * (const Var&) const override;
     Var* operator / (const Var&) const override;
-
+    Var* operator % (const Var&) const override;
 
     [[nodiscard]] explicit operator bool            () const override;
     [[nodiscard]] explicit operator long long       () const override;

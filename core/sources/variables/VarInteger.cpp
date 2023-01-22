@@ -70,6 +70,15 @@ Var* VarInteger::operator / (const Var& second) const {
     }
 }
 
+Var* VarInteger::operator % (const Var& second) const {
+    const auto& type = second.getType();
+    if (type == INTEGER_VAR) {
+        return new VarInteger(lineNum, (long double) *this / (long double) second);
+    } else {
+        return super::operator % (second);
+    }
+}
+
 VarInteger::operator bool() const {
     return (bool) value;
 }

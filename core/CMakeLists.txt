@@ -52,4 +52,5 @@ add_library(
         ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcLexer.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcVar.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcExp.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpMod.cpp
 )

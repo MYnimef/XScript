@@ -8,7 +8,7 @@
 
 
 Lexer::Lexer(): lexems({
-    { LEX_ONE_CHAR,     std::regex( R"([!;,\+\-\*\/=\}\{\)\(<>])"                      ) },
+    { LEX_ONE_CHAR,     std::regex( R"([!;,\+\-\*\/%=\}\{\)\(<>])"                      ) },
     { LEX_TWO_CHAR,     std::regex( R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" ) },
     { LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(break)|(true)|(false))"     ) },
     { LEX_STRING,       std::regex( R"("([^"]*(\\")*)*")"                                       ) },
@@ -141,6 +141,8 @@ TokenType Lexer::checkOneChar(const std::string& input) {
         return MULT_OP;
     } else if (input == "/") {
         return DIV_OP;
+    } else if (input == "%") {
+        return MOD_OP;
     } else {
         return NOT_OP;
     }

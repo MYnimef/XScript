@@ -41,6 +41,10 @@ Var* VarString::operator / (const Var& second) const {
     return super::operator/(second);
 }
 
+Var* VarString::operator % (const Var& second) const {
+    return super::operator % (second);
+}
+
 VarString::operator bool() const {
     return !value.empty();
 }
