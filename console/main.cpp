@@ -16,6 +16,8 @@
 #include "FuncSleep.h"
 #include "FuncList.h"
 #include "FuncClearConsole.h"
+#include "FuncSin.h"
+#include "FuncCos.h"
 
 
 int main() {
@@ -46,6 +48,8 @@ int main() {
             { "list1",     new Node( new FuncToList       () ) },
             { "sleep1",    new Node( new FuncSleep        () ) },
             { "clc0",      new Node( new FuncClearConsole () ) },
+            { "sin1",      new Node( new FuncSin          () ) },
+            { "cos1",      new Node( new FuncCos          () ) },
     };
 
     try {

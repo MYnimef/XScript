@@ -31,6 +31,8 @@ private:
     static TokenType checkOneChar(const std::string& input);
     static TokenType checkTwoChar(const std::string& input);
 
+    static void replaceAll(std::string& str, const std::string& from, const std::string& to);
+
 public:
     Lexer();
     ~Lexer();

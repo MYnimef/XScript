@@ -16,4 +16,6 @@ add_library(
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToInteger.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToList.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncToString.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/FuncCos.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/FuncSin.cpp
 )

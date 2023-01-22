@@ -11,7 +11,7 @@ Lexer::Lexer(): lexems({
     { LEX_ONE_CHAR,     std::regex( R"([!;,\+\-\*\/=\}\{\)\(<>])"                      ) },
     { LEX_TWO_CHAR,     std::regex( R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" ) },
     { LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(true)|(false))"     ) },
-    { LEX_STRING,       std::regex( R"("[^"]*")"                                       ) },
+    { LEX_STRING,       std::regex( R"("([^"]*(\\")*)*")"                                       ) },
     { LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))"                               ) },
     { LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)"                    ) },
     { LEX_ID,           std::regex( R"([a-zA-Z][a-zA-Z0-9_]*)"                         ) },
@@ -29,7 +29,7 @@ void Lexer::scanLine(const int& lineNum, const std::string& line) {
             if (newStr == " ") {
                 startIndex++;
                 continue;
-            } else if (std::regex_match(newStr, std::regex(R"(("[^"]*)|(\|)|(&))"))) {
+            } else if (std::regex_match(newStr, std::regex(R"(("([^"]*(\\")*)*)|(\|)|(&))"))) {
                 continue;
             } else if (!checkToken(newStr)) {
                 addToken(oldStr.empty() ? newStr : oldStr, lineNum + 1);
@@ -67,9 +67,16 @@ void Lexer::addToken(const std::string& input, const int& lineNum) {
                 case LEX_KEY_WORD:
                     tokens.emplace_back(checkKeyWord(input), input, lineNum);
                     break;
-                case LEX_STRING:
-                    tokens.emplace_back(STRING, input, lineNum);
+                case LEX_STRING: {
+                    auto modStr = input;
+                    replaceAll(modStr, "\\\\", "DSL_REPLACE_CODE_0001");
+                    replaceAll(modStr, "\\\"", "\"");
+                    replaceAll(modStr, "\\n", "\n");
+                    replaceAll(modStr, "\\t", "\t");
+                    replaceAll(modStr, "DSL_REPLACE_CODE_0001", "\\");
+                    tokens.emplace_back(STRING, modStr, lineNum);
                     break;
+                }
                 case LEX_INT_DIGIT:
                     tokens.emplace_back(INT_DIGIT, input, lineNum);
                     break;
@@ -154,5 +161,18 @@ TokenType Lexer::checkTwoChar(const std::string &input) {
         return SMALLER_OR_EQUAL_OP;
     } else {
         return GREATER_OR_EQUAL_OP;
+    }
+}
+
+void Lexer::replaceAll(std::string &str, const std::string &from, const std::string &to) {
+    if (from.empty()) {
+        return;
+    }
+
+    size_t start_pos = 0;
+
+    while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+        str.replace(start_pos, from.length(), to);
+        start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
     }
 }
