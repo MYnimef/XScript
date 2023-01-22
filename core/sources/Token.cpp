@@ -52,6 +52,8 @@ std::string Token::typeToString() const {
             return "else";
         case WHILE_KW:
             return "while";
+        case BREAK_KW:
+            return "break";
         case L_BRACKET:
             return "(";
         case R_BRACKET:

@@ -26,14 +26,12 @@ ExpFuncDef::~ExpFuncDef() {
 }
 
 void ExpFuncDef::action(const InterpreterArgs &args) const {
-    args.variablesGlobal.push_front(args.variables);
     args.functions.push_front(functions);
 
-    Interpreter compiler(args.functions, args.variablesGlobal);
+    Interpreter compiler(args.functions);
     compiler.execute(body);
 
     args.functions.pop_front();
-    args.variablesGlobal.pop_front();
 }
 
 std::string ExpFuncDef::toString() const {

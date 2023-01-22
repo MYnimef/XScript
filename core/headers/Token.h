@@ -18,6 +18,7 @@ enum TokenType {
     IF_KW,
     ELSE_KW,
     WHILE_KW,
+    BREAK_KW,
     L_BRACKET,
     R_BRACKET,
     L_BRACE,

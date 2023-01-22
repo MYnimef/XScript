@@ -9,6 +9,11 @@ Interpreter::Interpreter(std::map<std::string, Node*>* functions) {
     variables = new std::map<std::string, Var*>();
 }
 
+Interpreter::Interpreter(const std::list<std::map<std::string, Node*>*>& functions):
+functions(functions) {
+    variables = new std::map<std::string, Var*>();
+}
+
 Interpreter::Interpreter(
         const std::list<std::map<std::string, Node*>*>& functions,
         const std::list<std::map<std::string, Var*>*>& variablesGlobal

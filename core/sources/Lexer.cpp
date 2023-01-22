@@ -10,7 +10,7 @@
 Lexer::Lexer(): lexems({
     { LEX_ONE_CHAR,     std::regex( R"([!;,\+\-\*\/=\}\{\)\(<>])"                      ) },
     { LEX_TWO_CHAR,     std::regex( R"((\-\-)|(\+\+)|(&&)|(\|\|)|(==)|(!=)|(<=)|(>=))" ) },
-    { LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(true)|(false))"     ) },
+    { LEX_KEY_WORD,     std::regex( R"((func)|(if)|(else)|(while)|(break)|(true)|(false))"     ) },
     { LEX_STRING,       std::regex( R"("([^"]*(\\")*)*")"                                       ) },
     { LEX_INT_DIGIT,    std::regex( R"(0|([1-9][0-9]*))"                               ) },
     { LEX_DOUBLE_DIGIT, std::regex( R"((0|([1-9][0-9]*))\.*[0-9]*)"                    ) },
@@ -107,6 +107,8 @@ TokenType Lexer::checkKeyWord(const std::string& input) {
         return ELSE_KW;
     } else if (input == "while") {
         return WHILE_KW;
+    } else if (input == "break") {
+        return BREAK_KW;
     } else {
         return BOOL;
     }

@@ -23,6 +23,7 @@ private:
 
 public:
     explicit Interpreter(std::map<std::string, Node*>* functions);
+    explicit Interpreter(const std::list<std::map<std::string, Node*>*>& functions);
     explicit Interpreter(
             const std::list<std::map<std::string, Node*>*>& functions,
             const std::list<std::map<std::string, Var*>*>& variablesGlobal
