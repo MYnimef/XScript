@@ -3,6 +3,7 @@ include_directories(
         ${CMAKE_CURRENT_LIST_DIR}/headers/exceptions
         ${CMAKE_CURRENT_LIST_DIR}/headers/expressions
         ${CMAKE_CURRENT_LIST_DIR}/headers/variables
+        ${CMAKE_CURRENT_LIST_DIR}/headers/functions
 )
 
 add_library(
@@ -53,4 +54,12 @@ add_library(
         ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcVar.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/exceptions/ExcExp.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/expressions/ExpOpMod.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncCos.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncSin.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncSleep.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncToBool.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncToDouble.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncToInteger.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncToList.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/sources/functions/FuncToString.cpp
 )

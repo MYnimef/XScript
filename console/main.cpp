@@ -1,5 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <FuncToBool.h>
+#include <FuncToInteger.h>
+#include <FuncToDouble.h>
+#include <FuncToString.h>
+#include <FuncToList.h>
+#include <FuncSin.h>
+#include <FuncCos.h>
+#include <FuncSleep.h>
+
 #include "Lexer.h"
 #include "Parser.h"
 #include "Interpreter.h"
@@ -8,16 +17,8 @@
 #include "FuncPrint.h"
 #include "FuncPrintln.h"
 #include "FuncInput.h"
-#include "FuncToInteger.h"
-#include "FuncToBool.h"
-#include "FuncToDouble.h"
-#include "FuncToString.h"
-#include "FuncToList.h"
-#include "FuncSleep.h"
 #include "FuncList.h"
 #include "FuncClearConsole.h"
-#include "FuncSin.h"
-#include "FuncCos.h"
 
 
 int main() {

@@ -67,4 +67,10 @@ func donut() {
     }
 }
 
-main()
+func test() {
+    in = int(input())
+    out = in + 5
+    print(out)
+}
+
+test()
