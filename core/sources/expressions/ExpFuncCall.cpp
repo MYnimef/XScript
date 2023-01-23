@@ -18,14 +18,12 @@ ExpFuncCall::~ExpFuncCall() {
 }
 
 void ExpFuncCall::action(const InterpreterArgs& args) const {
-    for (auto functions: args.functions) {
-        auto func = functions->find(name);
-        if (func != functions->end()) {
-            executeFunction(func->second, args);
-            return;
-        }
+    auto func = args.functions->find(name);
+    if (func != args.functions->end()) {
+        executeFunction(func->second, args);
+    } else {
+        throw ExcExp("usage of undeclared function " + name, lineNum);
     }
-    throw ExcExp("usage of undeclared function " + name, lineNum);
 }
 
 void ExpFuncCall::executeFunction(Node* func, const InterpreterArgs& args) const {

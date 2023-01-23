@@ -13,14 +13,12 @@ class ExpFuncDef final: public Exp {
 private:
     const std::string name;
     const Node* body;
-    std::map<std::string, Node*>* functions;
 
 public:
     explicit ExpFuncDef(
             const int& lineNum,
             const std::string& value,
-            const Node* body,
-            std::map<std::string,Node*>* functions
+            const Node* body
             );
 
     ~ExpFuncDef() override;

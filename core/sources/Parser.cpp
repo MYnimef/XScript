@@ -48,13 +48,12 @@ syntax({
 }) {}
 
 Parser::Parser(
-        Node* node, std::map<std::string, Node*>* functions,
+        Node* node,
         const std::string& actions,
-        const std::map<GrammarType,
-        std::regex>& grammatics
+        const std::map<GrammarType, std::regex>& grammatics
         ):
         tree(node),
-        functions(functions),
+        functions(nullptr),
         val(actions),
         syntax(grammatics) {}
 
@@ -139,9 +138,14 @@ void Parser::generateExpression(std::list<Token>& tokens) {
         case GR_LOOP_WHILE:
             parseWhile(tokens);
             break;
-        case GR_FUNC_DEFINITION:
-            parseFuncDefinition(tokens);
-            break;
+        case GR_FUNC_DEFINITION: {
+            if (functions != nullptr) {
+                parseFuncDefinition(tokens);
+                break;
+            } else {
+                throw ExcParser("attempt to declare a local function", tokens.front().getLineNum());
+            }
+        }
     }
 }
 
@@ -370,11 +374,10 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
         throw ExcParser("attempt to re-declare function " + id, lineNum);
     } else {
         auto funcBody = new Node(new ExpBlock(lineNum, funcName));
-        auto functionsLocal = new std::map<std::string, Node*>();
-        Parser parser(funcBody, functionsLocal, val, syntax);
+        Parser parser(funcBody, val, syntax);
         parser.addTokens(tokens);
 
-        auto node = new Node(new ExpFuncDef(lineNum, funcName, funcBody, functionsLocal), arguments);
+        auto node = new Node(new ExpFuncDef(lineNum, funcName, funcBody), arguments);
         functions->insert_or_assign(funcName, node);
     }
 }
@@ -384,7 +387,6 @@ void Parser::parseIf(std::list<Token>& tokens) {
 
     auto conditionBlocks = new std::list<Node*>;
     auto executeBlocks = new std::list<Node*>;
-    auto functionsIf = new std::list<std::map<std::string, Node*>*>;
 
     while (!tokens.empty()) {
         if (tokens.front().getType() == ELSE_KW) {
@@ -437,14 +439,12 @@ void Parser::parseIf(std::list<Token>& tokens) {
         tokens.pop_front(); // remove }
 
         Node *executeBlock = new Node(new ExpBlock(lineNum, "if"));
-        auto functionsLocal = new std::map<std::string, Node *>();
-        Parser parser(executeBlock, functionsLocal, val, syntax);
+        Parser parser(executeBlock, val, syntax);
         parser.addTokens(executeTokens);
         executeBlocks->push_back(executeBlock);
-        functionsIf->push_back(functionsLocal);
     }
 
-    tree->addChildBack(new Node(new ExpBlockIf(lineNum, conditionBlocks, executeBlocks, functionsIf)));
+    tree->addChildBack(new Node(new ExpBlockIf(lineNum, conditionBlocks, executeBlocks)));
 }
 
 void Parser::parseWhile(std::list<Token>& tokens) {
@@ -475,11 +475,10 @@ void Parser::parseWhile(std::list<Token>& tokens) {
 
     Node* blockExecute = new Node(new ExpBlock(lineNum, "while"));
 
-    auto functionsLocal = new std::map<std::string, Node*>();
-    Parser parser(blockExecute, functionsLocal, val, syntax);
+    Parser parser(blockExecute, val, syntax);
     parser.addTokens(tokens);
 
-    tree->addChildBack(new Node(new ExpBlockWhile(lineNum, conditionBlock, blockExecute, functionsLocal)));
+    tree->addChildBack(new Node(new ExpBlockWhile(lineNum, conditionBlock, blockExecute)));
 }
 
 void Parser::parseFunctionCall(std::list<Token>& tokens) {

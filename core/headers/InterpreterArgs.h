@@ -12,7 +12,7 @@
 class Node;
 
 struct InterpreterArgs {
-    std::list<std::map<std::string, Node*>*>& functions;
+    std::map<std::string, Node*>* functions;
 
     std::list<std::map<std::string, Var*>*>& variablesGlobal;
     std::map<std::string, Var*>* variables;
@@ -20,7 +20,7 @@ struct InterpreterArgs {
     std::stack<Var*>& stack;
 
     InterpreterArgs(
-            std::list<std::map<std::string, Node*>*>& functions,
+            std::map<std::string, Node*>* functions,
             std::list<std::map<std::string, Var*>*>& variablesGlobal,
             std::map<std::string, Var*>* variables,
             std::stack<Var*>& stack

@@ -56,8 +56,6 @@ public:
             );
     explicit Parser(
             Node* node,
-            std::map<std::string,
-            Node*>* functions,
             const std::string& actions,
             const std::map<GrammarType, std::regex>&
             );

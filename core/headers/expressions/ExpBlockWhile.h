@@ -11,14 +11,12 @@ class ExpBlockWhile final: public Exp {
 private:
     const Node* blockCondition;
     const Node* blockExecute;
-    std::map<std::string, Node*>* functions;
 
 public:
     explicit ExpBlockWhile(
             const int& lineNum,
             const Node* blockCondition,
-            const Node* blockExecute,
-            std::map<std::string, Node*>* functions
+            const Node* blockExecute
             );
     ~ExpBlockWhile() override;
 

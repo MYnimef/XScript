@@ -86,4 +86,20 @@ func test2() {
     print( i * 2)
 }
 
-test2()
+func test3(i) {
+    sleep(i)
+    i *= 2
+}
+
+func AA() {
+    a = 4
+    BB(a)
+    print(a)
+}
+
+func BB(a) {
+    print(a)
+    a *= 2
+}
+
+test()

@@ -8,13 +8,11 @@
 ExpBlockIf::ExpBlockIf(
         const int& lineNum,
         const std::list<Node*>* blockConditions,
-        const std::list<Node*>* blockExecutes,
-        const std::list<std::map<std::string, Node*>*>* functions
+        const std::list<Node*>* blockExecutes
 ):
 Exp(EXP_IF, lineNum),
 blockConditions(blockConditions),
-blockExecutes(blockExecutes),
-functions(functions) {}
+blockExecutes(blockExecutes) {}
 
 ExpBlockIf::~ExpBlockIf() {
     for (auto block: *blockConditions) {
@@ -25,13 +23,6 @@ ExpBlockIf::~ExpBlockIf() {
         delete block;
     }
     delete blockExecutes;
-    for (auto funcBlock: *functions) {
-        for (const auto &func: *funcBlock) {
-            delete func.second;
-        }
-        delete funcBlock;
-    }
-    delete functions;
 }
 
 void ExpBlockIf::action(const InterpreterArgs& args) const {
@@ -39,8 +30,7 @@ void ExpBlockIf::action(const InterpreterArgs& args) const {
 
     auto it1 = blockConditions->begin();
     auto it2 = blockExecutes->begin();
-    auto it3 = functions->begin();
-    for (; it1 != blockConditions->end(); it1++, it2++, it3++) {
+    for (; it1 != blockConditions->end(); it1++, it2++) {
         Interpreter compilerCondition(args.functions, args.variablesGlobal);
         compilerCondition.executeChild(*it1);
         auto condition = compilerCondition.getStack().top();
@@ -49,20 +39,16 @@ void ExpBlockIf::action(const InterpreterArgs& args) const {
         delete condition;
 
         if (flag) {
-            args.functions.push_front(*it3);
             Interpreter compilerBlock(args.functions, args.variablesGlobal);
             compilerBlock.execute(*it2);
-            args.functions.pop_front();
             args.variablesGlobal.pop_front();
             return;
         }
     }
 
     if (it2 != blockExecutes->end()) {
-        args.functions.push_front(*it3);
         Interpreter compilerBlock(args.functions, args.variablesGlobal);
         compilerBlock.execute(*it2);
-        args.functions.pop_front();
     }
     args.variablesGlobal.pop_front();
 }

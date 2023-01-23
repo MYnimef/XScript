@@ -8,30 +8,20 @@
 ExpFuncDef::ExpFuncDef(
         const int& lineNum,
         const std::string& value,
-        const Node* body,
-        std::map<std::string,Node*>* functions
+        const Node* body
 ):
 Exp(EXP_FUNC_DEFINITION, lineNum),
 name(value),
-body(body),
-functions(functions) {
+body(body) {
 }
 
 ExpFuncDef::~ExpFuncDef() {
     delete body;
-    for (const auto& func: *functions) {
-        delete func.second;
-    }
-    delete functions;
 }
 
 void ExpFuncDef::action(const InterpreterArgs &args) const {
-    args.functions.push_front(functions);
-
-    Interpreter compiler(args.functions);
+    Interpreter compiler(args.functions, args.variables);
     compiler.execute(body);
-
-    args.functions.pop_front();
 }
 
 std::string ExpFuncDef::toString() const {

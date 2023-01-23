@@ -8,21 +8,15 @@
 ExpBlockWhile::ExpBlockWhile(
         const int& lineNum,
         const Node* blockCondition,
-        const Node* blockExecute,
-        std::map<std::string, Node*>* functions
+        const Node* blockExecute
 ):
 Exp(EXP_LOOP_WHILE, lineNum),
 blockCondition(blockCondition),
-blockExecute(blockExecute),
-functions(functions) {}
+blockExecute(blockExecute) {}
 
 ExpBlockWhile::~ExpBlockWhile() {
    delete blockCondition;
    delete blockExecute;
-    for (const auto& func: *functions) {
-        delete func.second;
-    }
-    delete functions;
 }
 
 void ExpBlockWhile::action(const InterpreterArgs& args) const {
@@ -35,12 +29,8 @@ void ExpBlockWhile::action(const InterpreterArgs& args) const {
     compilerCondition.getStack().pop();
 
     while ((bool) *condition) {
-        args.functions.push_front(functions);
-
         Interpreter compilerExecute(args.functions, args.variablesGlobal);
         compilerExecute.execute(blockExecute);
-
-        args.functions.pop_front();
 
         compilerCondition.executeChild(blockCondition);
         delete condition;

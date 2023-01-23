@@ -1,5 +1,13 @@
 #include <iostream>
 #include <fstream>
+#include <FuncToBool.h>
+#include <FuncToInteger.h>
+#include <FuncToDouble.h>
+#include <FuncToString.h>
+#include <FuncToList.h>
+#include <FuncSleep.h>
+#include <FuncSin.h>
+#include <FuncCos.h>
 
 #include "Lexer.h"
 #include "Parser.h"
@@ -30,6 +38,15 @@ int main() {
 
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
+            { "bool1",     new Node( new FuncToBool       () ) },
+            { "int1",      new Node( new FuncToInteger    () ) },
+            { "float1",    new Node( new FuncToDouble     () ) },
+            { "string1",   new Node( new FuncToString     () ) },
+            { "list1",     new Node( new FuncToList       () ) },
+            { "sleep1",    new Node( new FuncSleep        () ) },
+            { "sin1",      new Node( new FuncSin          () ) },
+            { "cos1",      new Node( new FuncCos          () ) },
+
             { "print1",    new Node( new FuncPrint        () ) },
             { "println1",  new Node( new FuncPrintln      () ) },
             { "input0",    new Node( new FuncInput        () ) },
