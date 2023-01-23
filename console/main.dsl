@@ -17,8 +17,8 @@ func donut() {
     char b[1760]
 
     while true {
-        memset(b, 32, 1760);
-        memset(z, 0, 7040);
+        memset(b, 32, 1760)
+        memset(z, 0, 7040)
 
         j = 0
         while j < 6.28 {
@@ -81,4 +81,9 @@ func test() {
     }
 }
 
-test()
+func test2() {
+    i = int(input())
+    print( i * 2)
+}
+
+test2()
