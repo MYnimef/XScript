@@ -25,7 +25,7 @@ void ExpFuncCall::action(const InterpreterArgs& args) const {
             return;
         }
     }
-    throw ExcExp("usage of undeclared func " + name, lineNum);
+    throw ExcExp("usage of undeclared function " + name, lineNum);
 }
 
 void ExpFuncCall::executeFunction(Node* func, const InterpreterArgs& args) const {

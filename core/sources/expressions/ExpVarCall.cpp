@@ -17,7 +17,7 @@ void ExpVarCall::action(const InterpreterArgs& args) const {
     }
 
     if (!callVariableFrom(args.variables, args.stack)) {
-        throw ExcExp("usage of undeclared var '" + id +  "'", lineNum);
+        throw ExcExp("usage of undeclared variable '" + id +  "'", lineNum);
     }
 }
 
