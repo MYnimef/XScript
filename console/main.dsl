@@ -9,7 +9,7 @@ func main() {
 
 func donut() {
     A = 0; B = 0; k = 0;
-    float z[1760]
+    //float z[1760]
     char b[1760]
 
     while true {

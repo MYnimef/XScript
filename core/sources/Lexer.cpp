@@ -19,7 +19,8 @@ Lexer::Lexer(): lexems({
 
 Lexer::~Lexer() = default;
 
-void Lexer::scanLine(const int& lineNum, const std::string& line) {
+void Lexer::scanLine(const int& lineNum, const std::string& lineIn) {
+    std::string line = std::regex_replace(lineIn, std::regex(R"(\/\/.*$)"), " ");
     std::string oldStr;
 
     for (int startIndex = 0, endIndex = 1; endIndex <= line.size(); endIndex++) {
