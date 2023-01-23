@@ -14,11 +14,11 @@ func main() {
 func donut() {
     A = 0; B = 0; k = 0;
     //float z[1760]
-    char b[1760]
+    //char b[1760]
 
     while true {
-        memset(b, 32, 1760)
-        memset(z, 0, 7040)
+        //memset(b, 32, 1760)
+        //memset(z, 0, 7040)
 
         j = 0
         while j < 6.28 {
@@ -41,10 +41,10 @@ func donut() {
                 o = int(x + 80 * y)
                 N = int(8 * ((f * e - c * d * g) * m - c * d * e - f * g - l * d * n))
 
-                if 22 > y && y > 0 && x > 0 && 80 > x && D > z[o] {
-                    z[o] = D;
-                    b[o] = ".,-~:;=!*#$@"[N > 0 ? N : 0];
-                }
+                //if 22 > y && y > 0 && x > 0 && 80 > x && D > z[o] {
+                    //z[o] = D;
+                    //b[o] = ".,-~:;=!*#$@"[N > 0 ? N : 0];
+                //}
                 i += 0.02
             }
             j += 0.07
@@ -55,9 +55,9 @@ func donut() {
         k = 0
         while k < 1761 {
             if k % 80 {
-                print(b[k])
+                //print(b[k])
             } else {
-                print("\n")
+                //print("\n")
             }
 
             A += 0.00004
