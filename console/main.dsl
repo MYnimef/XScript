@@ -52,8 +52,7 @@ func donut() {
         while k < 1761 {
             if k % 80 {
                 print(b[k])
-            }
-            if !(k % 80) {
+            } else {
                 print("\n")
             }
 
@@ -68,9 +67,14 @@ func donut() {
 }
 
 func test() {
-    in = int(input())
-    out = in + 5
-    print(out)
+    print("hi")
+    if 5 < 3 {
+        print("hi")
+    } else if 7 > 8 {
+        print("hh")
+    } else {
+        print("gaga")
+    }
 }
 
 test()

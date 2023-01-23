@@ -9,16 +9,16 @@
 
 class ExpBlockIf final: public Exp {
 private:
-    const Node* blockCondition;
-    const Node* blockExecute;
-    std::map<std::string, Node*>* functions;
+    const std::list<Node*>* blockConditions;
+    const std::list<Node*>* blockExecutes;
+    const std::list<std::map<std::string, Node*>*>* functions;
 
 public:
     explicit ExpBlockIf(
             const int& lineNum,
-            const Node* blockCondition,
-            const Node* blockExecute,
-            std::map<std::string, Node*>* functions
+            const std::list<Node*>* blockConditions,
+            const std::list<Node*>* blockExecutes,
+            const std::list<std::map<std::string, Node*>*>* functions
             );
     ~ExpBlockIf() override;
 

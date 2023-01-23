@@ -7,20 +7,29 @@
 
 ExpBlockIf::ExpBlockIf(
         const int& lineNum,
-        const Node* blockCondition,
-        const Node* blockExecute,
-        std::map<std::string, Node*>* functions
+        const std::list<Node*>* blockConditions,
+        const std::list<Node*>* blockExecutes,
+        const std::list<std::map<std::string, Node*>*>* functions
 ):
 Exp(EXP_IF, lineNum),
-blockCondition(blockCondition),
-blockExecute(blockExecute),
+blockConditions(blockConditions),
+blockExecutes(blockExecutes),
 functions(functions) {}
 
 ExpBlockIf::~ExpBlockIf() {
-    delete blockCondition;
-    delete blockExecute;
-    for (const auto& func: *functions) {
-        delete func.second;
+    for (auto block: *blockConditions) {
+        delete block;
+    }
+    delete blockConditions;
+    for (auto block: *blockExecutes) {
+        delete block;
+    }
+    delete blockExecutes;
+    for (auto funcBlock: *functions) {
+        for (const auto &func: *funcBlock) {
+            delete func.second;
+        }
+        delete funcBlock;
     }
     delete functions;
 }
@@ -28,25 +37,36 @@ ExpBlockIf::~ExpBlockIf() {
 void ExpBlockIf::action(const InterpreterArgs& args) const {
     args.variablesGlobal.push_front(args.variables);
 
-    Interpreter compilerCondition(args.functions, args.variablesGlobal);
-    compilerCondition.executeChild(blockCondition);
+    auto it1 = blockConditions->begin();
+    auto it2 = blockExecutes->begin();
+    auto it3 = functions->begin();
+    for (; it1 != blockConditions->end(); it1++, it2++, it3++) {
+        Interpreter compilerCondition(args.functions, args.variablesGlobal);
+        compilerCondition.executeChild(*it1);
+        auto condition = compilerCondition.getStack().top();
+        compilerCondition.getStack().pop();
+        bool flag = (bool) *condition;
+        delete condition;
 
-    auto condition = compilerCondition.getStack().top();
-    compilerCondition.getStack().pop();
-
-    if ((bool) *condition) {
-        args.functions.push_front(functions);
-
-        Interpreter compilerBlock(args.functions, args.variablesGlobal);
-        compilerBlock.execute(blockExecute);
-
-        args.functions.pop_front();
+        if (flag) {
+            args.functions.push_front(*it3);
+            Interpreter compilerBlock(args.functions, args.variablesGlobal);
+            compilerBlock.execute(*it2);
+            args.functions.pop_front();
+            args.variablesGlobal.pop_front();
+            return;
+        }
     }
 
+    if (it2 != blockExecutes->end()) {
+        args.functions.push_front(*it3);
+        Interpreter compilerBlock(args.functions, args.variablesGlobal);
+        compilerBlock.execute(*it2);
+        args.functions.pop_front();
+    }
     args.variablesGlobal.pop_front();
-    delete condition;
 }
 
 std::string ExpBlockIf::toString() const {
-    return "if\n        " + blockCondition->toString(2) + "\n        execute " + blockExecute->toString(2);
+    return "if\n        ";
 }

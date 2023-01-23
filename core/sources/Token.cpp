@@ -127,7 +127,6 @@ bool Token::isKeyWord() const {
     return (
             type == FUNC_KW ||
             type == IF_KW ||
-            type == ELSE_KW ||
             type == WHILE_KW ||
             type == BREAK_KW
             );

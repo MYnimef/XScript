@@ -38,13 +38,13 @@ tree(node),
 functions(functions),
 val(R"(([!\-]?\()*[!\-]?((@\(.*\))|[@bids])\)*(([\+\-\*\/%<>GSEN\|&])*(!?\(\-?)*!?((@\(.*\))|[@bids])\)*)*)"),
 syntax({
-    { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))" ) },
-    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/%]=)" + val                               ) },
-    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val                                         ) },
-    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])"                                            ) },
-    { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\})"                           ) },
-    { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})"                        ) },
-    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})"                         ) },
+    { GR_FUNC,                    std::regex( R"(@\((()" + val + R"(,)*)" + val + R"()?)" + R"(\))"                 ) },
+    { GR_VAR_ASSIGNMENT_COMPLEX,  std::regex( R"(@[\+\-\*\/%]=)" + val                                              ) },
+    { GR_VAR_ASSIGNMENT,          std::regex( R"(@=)" + val                                                         ) },
+    { GR_VAR_INCREMENT_DECREMENT, std::regex( R"(@[ID])"                                                            ) },
+    { GR_IF,                      std::regex( R"(if)" + val + R"(\{.*\}(elseif)" + val + R"(\{.*\})*(else\{.*\})?)" ) },
+    { GR_LOOP_WHILE,              std::regex( R"(while)" + val + R"(\{.*\})"                                        ) },
+    { GR_FUNC_DEFINITION,         std::regex( R"(func@\(((@,)*@)?\)\{.*\})"                                         ) },
 }) {}
 
 Parser::Parser(
@@ -382,35 +382,69 @@ void Parser::parseFuncDefinition(std::list<Token>& tokens) {
 void Parser::parseIf(std::list<Token>& tokens) {
     int lineNum = tokens.front().getLineNum();
 
-    tokens.pop_front(); // remove if
+    auto conditionBlocks = new std::list<Node*>;
+    auto executeBlocks = new std::list<Node*>;
+    auto functionsIf = new std::list<std::map<std::string, Node*>*>;
 
-    std::list<Token> localTokens;
-    int amount = 0;
-    for (const auto& token: tokens) {
-        if (token.getType() != L_BRACE) {
-            localTokens.push_back(token);
-            amount++;
-        } else {
-            break;
+    while (!tokens.empty()) {
+        if (tokens.front().getType() == ELSE_KW) {
+            tokens.pop_front(); // remove else
         }
+
+        if (tokens.front().getType() == IF_KW) {
+            tokens.pop_front(); // remove if
+
+            std::list<Token> conditionTokens;
+            int amountCondition = 0;
+            for (const auto &token: tokens) {
+                if (token.getType() != L_BRACE) {
+                    conditionTokens.push_back(token);
+                    amountCondition++;
+                } else {
+                    break;
+                }
+            }
+            for (int i = 0; i < amountCondition; i++) {
+                tokens.pop_front();
+            }
+
+            auto condition = parseOperations(conditionTokens);
+            auto conditionBlock = addNodeExpr(toPostfix(condition));
+            conditionBlocks->push_back(conditionBlock);
+        }
+
+        tokens.pop_front(); // remove {
+        std::list<Token> executeTokens;
+        int amountExecute = 0;
+        int braces = 0;
+        for (const auto &token: tokens) {
+            const auto &type = token.getType();
+            if (type == R_BRACE) {
+                if (braces == 0) {
+                    break;
+                } else {
+                    braces--;
+                }
+            } else if (type == L_BRACE) {
+                braces++;
+            }
+            executeTokens.push_back(token);
+            amountExecute++;
+        }
+        for (int i = 0; i < amountExecute; i++) {
+            tokens.pop_front();
+        }
+        tokens.pop_front(); // remove }
+
+        Node *executeBlock = new Node(new ExpBlock(lineNum, "if"));
+        auto functionsLocal = new std::map<std::string, Node *>();
+        Parser parser(executeBlock, functionsLocal, val, syntax);
+        parser.addTokens(executeTokens);
+        executeBlocks->push_back(executeBlock);
+        functionsIf->push_back(functionsLocal);
     }
 
-    for (int i = 0; i < amount; i++) {
-        tokens.pop_front();
-    }
-
-    auto condition = parseOperations(localTokens);
-    auto conditionBlock = addNodeExpr(toPostfix(condition));
-
-    tokens.pop_front(); // remove {
-    tokens.pop_back();  // remove }
-
-    Node* blockExecute = new Node(new ExpBlock(lineNum, "if"));
-    auto functionsLocal = new std::map<std::string, Node*>();
-    Parser parser(blockExecute, functionsLocal, val, syntax);
-    parser.addTokens(tokens);
-
-    tree->addChildBack(new Node(new ExpBlockIf(lineNum, conditionBlock, blockExecute, functionsLocal)));
+    tree->addChildBack(new Node(new ExpBlockIf(lineNum, conditionBlocks, executeBlocks, functionsIf)));
 }
 
 void Parser::parseWhile(std::list<Token>& tokens) {
