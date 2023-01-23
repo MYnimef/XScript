@@ -1,3 +1,7 @@
+//
+// Some example of code that could be written
+//
+
 func main() {
     ghoul = 1000
     while ghoul > 0 {
