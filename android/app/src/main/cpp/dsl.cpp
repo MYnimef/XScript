@@ -13,6 +13,9 @@
 #include <FuncToDouble.h>
 #include <FuncToString.h>
 #include <FuncSleep.h>
+#include <FuncToList.h>
+#include <FuncSin.h>
+#include <FuncCos.h>
 
 
 extern "C"
@@ -20,13 +23,17 @@ JNIEXPORT void JNICALL
 Java_com_mynimef_dsl_DSLViewModel_execute(JNIEnv* env, jobject obj, jstring code) {
     auto application = new Node(new ExpBlock(0, "main"));
     auto functions = new std::map<std::string, Node*> {
+            { "bool1",     new Node( new FuncToBool       () ) },
+            { "int1",      new Node( new FuncToInteger    () ) },
+            { "float1",    new Node( new FuncToDouble     () ) },
+            { "string1",   new Node( new FuncToString     () ) },
+            { "list1",     new Node( new FuncToList       () ) },
+            { "sleep1",    new Node( new FuncSleep        () ) },
+            { "sin1",      new Node( new FuncSin          () ) },
+            { "cos1",      new Node( new FuncCos          () ) },
+
             { "print1",    new Node( new FuncPrint     (env, obj) ) },
             { "println1",  new Node( new FuncPrintln   (env, obj) ) },
-            { "int1",      new Node( new FuncToInteger (        ) ) },
-            { "bool1",     new Node( new FuncToBool    (        ) ) },
-            { "float1",    new Node( new FuncToDouble  (        ) ) },
-            { "string1",   new Node( new FuncToString  (        ) ) },
-            { "sleep1",    new Node( new FuncSleep     (        ) ) },
     };
 
     try {
