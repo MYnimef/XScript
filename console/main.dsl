@@ -102,4 +102,4 @@ func BB(a) {
     a *= 2
 }
 
-test()
+main()
