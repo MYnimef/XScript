@@ -79,7 +79,7 @@ int main() {
     std::cout <<
     std::endl <<
     "\033[1;32m" <<
-    "Program compiled in " <<
+    "Executed in " <<
     (double) (clock() - start) / CLOCKS_PER_SEC <<
     " seconds"  << "\033[0m" <<
     std::endl;
