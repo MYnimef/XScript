@@ -3,7 +3,7 @@ include_directories(
 )
 
 add_library(
-        dsl_console_functions STATIC
+        XScript_console_functions STATIC
 
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncClearConsole.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/FuncInput.cpp

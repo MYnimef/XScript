@@ -7,7 +7,7 @@ include_directories(
 )
 
 add_library(
-        dsl_core STATIC
+        XScript_core STATIC
 
         ${CMAKE_CURRENT_LIST_DIR}/sources/Token.cpp
         ${CMAKE_CURRENT_LIST_DIR}/sources/Lexer.cpp
