@@ -1,7 +1,7 @@
 # The XScript Programming Language
 
 This is the source code repository for XScript.
-OverScript is a simple and powerful Pyhton-like dynamically-typed language written in C++.
+XScript is a simple and powerful Pyhton-like dynamically-typed language written in C++.
 
 Simple code example:
 ```
